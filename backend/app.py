@@ -10,7 +10,15 @@ import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
-CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+
+# CORS configuration - allow specific frontend URL in production, all origins in development
+frontend_url = os.environ.get('FRONTEND_URL', '*')
+if frontend_url == '*':
+    # Development: allow all origins
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+else:
+    # Production: allow specific frontend URL
+    CORS(app, resources={r"/api/*": {"origins": frontend_url}}, supports_credentials=True)
 
 # File paths - use absolute paths based on this file's location
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
