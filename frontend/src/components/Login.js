@@ -25,7 +25,20 @@ const Login = () => {
       login(response.data.token, response.data.username);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.error || 'An error occurred');
+      // Show more specific error messages
+      if (err.request && !err.response) {
+        // Network error - backend not reachable
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+        setError(`Cannot connect to backend server. Please check if the backend is running at ${apiUrl}. If deployed, ensure REACT_APP_API_URL is set in Vercel.`);
+      } else if (err.response?.data?.error) {
+        // Server responded with error
+        setError(err.response.data.error);
+      } else if (err.message) {
+        // Other error with message
+        setError(err.message);
+      } else {
+        setError('An error occurred. Please try again.');
+      }
     } finally {
       setLoading(false);
     }

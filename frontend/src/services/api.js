@@ -17,7 +17,8 @@ api.interceptors.response.use(
     } else if (error.request) {
       // Request was made but no response received
       console.error('Network Error: No response from server. Is the backend running?');
-      error.message = 'Cannot connect to server. Please make sure the backend is running on http://localhost:5000';
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+      error.message = `Cannot connect to backend at ${apiUrl}. Please check if the backend is running and REACT_APP_API_URL is set correctly in Vercel.`;
     } else {
       // Something else happened
       console.error('Error:', error.message);
