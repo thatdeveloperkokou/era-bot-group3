@@ -1,0 +1,3 @@
+# This file ensures the data directory is tracked in git
+# Actual data files (users.json, power_logs.csv) are ignored via .gitignore
+
