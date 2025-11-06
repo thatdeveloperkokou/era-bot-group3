@@ -1,190 +1,170 @@
-# 💡 Electricity Supply Logger Bot
+# Electricity Supply Logger Bot
 
-A full-stack application for tracking power outages and electricity supply with a beautiful React frontend and Python Flask backend.
+**Live Site:** [https://era-bot-group3-nx3x.vercel.app/](https://era-bot-group3-nx3x.vercel.app/)
 
-## Features
+## The Problem
 
-- 🔐 **User Authentication** - Secure login and registration
-- 💬 **Chat Interface** - Log power events through a chat-like interface
-- 📊 **Data Visualization** - Interactive charts showing daily/weekly/monthly statistics
-- ⚡ **Real-time Logging** - Track when power comes on and goes off
-- 📈 **Statistics** - View total light hours for day, week, or month
-- 📋 **Report Command** - Type "report" in chat to get a brief summary of electricity data
-- 📱 **Mobile Responsive** - Fully optimized for mobile devices with collapsible charts
+In many areas, electricity is unreliable. Without proper tracking, people don't really know:
 
-## Project Structure
+• How many hours of power they actually get each day
 
-```
-.
-├── backend/
-│   ├── app.py              # Flask API server
-│   └── requirements.txt    # Python dependencies
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── context/        # Auth context
-│   │   ├── services/       # API service
-│   │   ├── App.js
-│   │   └── index.js
-│   └── package.json
-└── README.md
-```
+• When and how often power goes off
 
-## Setup Instructions
+• How to plan daily tasks around power availability
 
-### Backend Setup
+• How to hold utility companies(NEPA) accountable with real data
 
-1. Navigate to the backend directory:
-```bash
-cd backend
-```
+This app makes it easy for anyone to log, track, and analyze their electricity supply — all from their phone or computer.
 
-2. Create a virtual environment (recommended):
-```bash
-python -m venv venv
-```
+## What the App Can Do
 
-3. Activate the virtual environment:
-- On Windows:
-```bash
-venv\Scripts\activate
-```
-- On macOS/Linux:
-```bash
-source venv/bin/activate
-```
+### User Authentication
 
-4. Install dependencies:
-```bash
-pip install -r requirements.txt
-```
+• Register and log in securely
 
-5. Run the Flask server:
-```bash
-python app.py
-```
+• Each user's data is private and separate
 
-The backend will run on `http://localhost:5000`
+• Uses JWT (JSON Web Token) for secure access
 
-### Frontend Setup
+## Power Logging process
 
-1. Navigate to the frontend directory:
-```bash
-cd frontend
-```
+• Tap "Power ON" or "Power OFF" buttons
 
-2. Install dependencies:
-```bash
-npm install
-```
+• Or type natural commands like "power on", "power off", or "report"
 
-3. Start the development server:
-```bash
-npm start
-```
+• Every event is saved automatically with the date and time
 
-The frontend will run on `http://localhost:3000`
+## How Data is Visualized
 
-### Testing the Backend
+• Interactive charts show your daily electricity hours
 
-To verify the backend is running correctly, you can:
+• View data by day, week, or month
 
-1. **Manual test**: Open `http://localhost:5000` in your browser. You should see a JSON response with API status.
+• Clearly see patterns of when power is usually available or gone
 
-2. **Use the test script** (optional):
-```bash
-cd backend
-pip install requests  # Only needed for the test script
-python test_backend.py
-```
+## Statistics and Reports Given by the Bot
 
-## Troubleshooting
+• Get total light hours for any time period
 
-### Backend returns 404 errors
+• See daily breakdowns of electricity usage
 
-If you're getting 404 errors from the backend:
+• Type "report" to get a quick summary of:
+  - Today's total hours
+  - Weekly and monthly averages
+  - Last power event time
 
-1. **Check if the backend is running**:
-   - Make sure you see "Starting Electricity Supply Logger API..." message
-   - Verify the server is listening on `http://localhost:5000`
+## Real-Time Updates
 
-2. **Check the port**:
-   - Make sure port 5000 is not being used by another application
-   - You can change the port in `backend/app.py` if needed
+• Data refreshes automatically every 30 seconds
 
-3. **Verify CORS is enabled**:
-   - The backend should have CORS enabled (already configured)
-   - Check browser console for CORS errors
+• Chat and charts update instantly when you log a new event
 
-4. **Check API endpoint URLs**:
-   - Frontend calls `http://localhost:5000/api/*`
-   - Make sure the backend is accessible at that URL
+## How Our Bot Works
 
-5. **Common issues**:
-   - **Firewall blocking**: Windows Firewall might block Python
-   - **Port already in use**: Another app might be using port 5000
-   - **Virtual environment**: Make sure you activated the virtual environment and installed dependencies
+### 1. Authentication Flow
 
-## Usage
+• User signs up or logs in
 
-1. **Register/Login**: Create an account or login with existing credentials
-2. **Log Power Events**: 
-   - Use the "Power ON" or "Power OFF" buttons
-   - Or type "power on" / "power off" in the chat input
-3. **View Statistics**: 
-   - See total light hours in the statistics panel
-   - Switch between Today, Week, and Month views
-   - View detailed charts showing daily breakdown
-   - On mobile: Click "Show Charts" button to toggle chart visibility
-4. **Get Report**: 
-   - Type "report" or "summary" in the chat to get a brief summary
-   - Shows today's hours, week's hours, month's hours, and average daily hours
+• Password is encrypted
 
-## Team Members
+• Backend sends a JWT token to the frontend
 
-- Eklo Kokou Salomon
-- Adedoyin Ebenezer
-- Babalola Ridwan
+• Token is stored in the browser (localStorage)
 
-## Technologies Used
+• All future requests use the token for verification
 
-- **Frontend**: React, React Router, Recharts, Axios
-- **Backend**: Python, Flask, Flask-CORS, JWT
-- **Data Storage**: CSV files (can be easily migrated to a database)
+### When the user logs "Power ON/OFF"
 
-## API Endpoints
+→ React frontend sends it to Flask API
 
-- `POST /api/register` - Register a new user
-- `POST /api/login` - Login user
-- `POST /api/log-power` - Log a power event (on/off)
-- `GET /api/stats?period=week` - Get statistics (day/week/month)
-- `GET /api/recent-events?limit=10` - Get recent power events
+→ Backend checks the token and records the event
+
+→ Data is stored in a CSV file (with user ID, event type, and timestamp)
+
+### How Statistics is Calculated
+
+When a user requests stats,
+
+→ Backend reads their CSV logs
+
+→ Filters data for the requested time range
+
+→ Calculates total power hours by pairing ON and OFF times
+
+→ Sends back total hours, daily breakdowns, and averages
+
+### Data Flow Summary
+
+User → React Interface → Axios (API call) → Flask Backend → CSV File → Stats Engine → JSON Response → React UI
+
+### How Report is Generated
+
+Typing "report" gives:
+
+• Total hours for today
+
+• Weekly and monthly summaries
+
+• Averages and recent events
+
+## Tech Stack
+
+### Frontend
+
+• React for UI
+
+• React Router for Navigation
+
+• Recharts for Charts and graphs
+
+• Axios for API calls
+
+• CSS3 for Styling
+
+### Backend
+
+• Python and Flask 3.0 for logic and API server
+
+• Flask-CORS to help communicate with our frontend
+
+• PyJWT for Authentication tokens to store login data
+
+• CSV files for Data storage
 
 ## Deployment
 
-This project is configured for deployment on:
-- **Frontend**: Vercel (React static hosting)
-- **Backend**: Railway (Python Flask hosting)
+• Vercel for Frontend hosting
 
-For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+• Railway for Backend hosting
 
-### Quick Deployment Steps:
+• GitHub to help with collaboration with my team members and Version control
 
-1. **Push to GitHub**: Follow the steps in DEPLOYMENT.md to push your code
-2. **Deploy Backend to Railway**: 
-   - Connect your GitHub repo
-   - Set root directory to `backend`
-   - Railway will auto-detect and deploy
-3. **Deploy Frontend to Vercel**:
-   - Connect your GitHub repo
-   - Set root directory to `frontend`
-   - Add environment variable: `REACT_APP_API_URL` = your Railway backend URL
-   - Deploy!
+## Why Our Project Matters
 
-## Notes
+• Empowers people to understand their power supply
 
-- The backend uses CSV files for data storage. For production, consider migrating to a database like SQLite or PostgreSQL.
-- JWT tokens are stored in localStorage. For enhanced security, consider using httpOnly cookies.
-- The secret key in `app.py` should be changed for production use (use environment variable `SECRET_KEY`).
+• Helps users plan better and live smarter
 
+• Provides real data for community and government accountability
+
+• Easy to use, even for non-technical users
+
+• Scalable and privacy-focused
+
+## Future Enhancements
+
+HERE ARE THINGS WE WISH TO DO IN THE FUTURE IF POSSIBLE
+
+• Move data storage to a real database
+
+• Add notifications when power changes
+
+## Credits
+
+**THIS PROJECT WAS MADE POSSIBLE BY THE DELEGATED STUDENTS OF GROUP 3 IN ENGINEER GONI'S EXPERT SYSTEM'S CLASS:**
+
+1. Eklo Kokou Salomon
+2. Adedoyin Ebenezer
+3. Babalola Ridwan
+
+**ESTAM School**
