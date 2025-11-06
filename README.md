@@ -167,4 +167,4 @@ HERE ARE THINGS WE WISH TO DO IN THE FUTURE IF POSSIBLE
 2. Adedoyin Ebenezer
 3. Babalola Ridwan
 
-**ESTAM School**
+**ESTAM University**
