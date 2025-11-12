@@ -90,9 +90,13 @@ const Landing = () => {
     // CSS animations handle hero section (transform only, no opacity changes)
     // GSAP only for scroll-triggered animations (features, stats)
 
+    // Capture ref values at the start of the effect
+    const featuresElement = featuresRef.current;
+    const statsElement = statsRef.current;
+
     // Features animation (scroll-triggered, so opacity animation is OK)
-    if (featuresRef.current && featuresRef.current.children) {
-      gsap.fromTo(featuresRef.current.children,
+    if (featuresElement && featuresElement.children) {
+      gsap.fromTo(featuresElement.children,
         {
           y: 40,
           opacity: 0
@@ -105,7 +109,7 @@ const Landing = () => {
           delay: 0.3,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: featuresRef.current,
+            trigger: featuresElement,
             start: 'top 85%',
             toggleActions: 'play none none reverse'
           },
@@ -122,8 +126,8 @@ const Landing = () => {
     }
 
     // Stats animation (scroll-triggered)
-    if (statsRef.current && statsRef.current.children) {
-      gsap.fromTo(statsRef.current.children,
+    if (statsElement && statsElement.children) {
+      gsap.fromTo(statsElement.children,
         {
           scale: 0.9,
           opacity: 0,
@@ -137,7 +141,7 @@ const Landing = () => {
           stagger: 0.1,
           ease: 'power3.out',
           scrollTrigger: {
-            trigger: statsRef.current,
+            trigger: statsElement,
             start: 'top 85%',
             toggleActions: 'play none none reverse'
           },
@@ -153,9 +157,7 @@ const Landing = () => {
     }
 
     return () => {
-      // Clean up any GSAP animations
-      const featuresElement = featuresRef.current;
-      const statsElement = statsRef.current;
+      // Clean up any GSAP animations using captured values
       if (featuresElement) gsap.killTweensOf(featuresElement.children);
       if (statsElement) gsap.killTweensOf(statsElement.children);
     };
