@@ -154,8 +154,10 @@ const Landing = () => {
 
     return () => {
       // Clean up any GSAP animations
-      if (featuresRef.current) gsap.killTweensOf(featuresRef.current.children);
-      if (statsRef.current) gsap.killTweensOf(statsRef.current.children);
+      const featuresElement = featuresRef.current;
+      const statsElement = statsRef.current;
+      if (featuresElement) gsap.killTweensOf(featuresElement.children);
+      if (statsElement) gsap.killTweensOf(statsElement.children);
     };
   }, []);
 
@@ -381,10 +383,10 @@ const Landing = () => {
               and analyzing supply patterns.
             </p>
             <div className="footer-social">
-              <a href="#" aria-label="Facebook"><FaFacebook /></a>
-              <a href="#" aria-label="Twitter"><FaTwitter /></a>
-              <a href="#" aria-label="LinkedIn"><FaLinkedin /></a>
-              <a href="#" aria-label="GitHub"><FaGithub /></a>
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><FaFacebook /></a>
+              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter"><FaTwitter /></a>
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><FaLinkedin /></a>
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><FaGithub /></a>
             </div>
           </div>
           <div className="footer-section">
@@ -399,19 +401,19 @@ const Landing = () => {
           <div className="footer-section">
             <h4>Company</h4>
             <ul>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Blog</a></li>
-              <li><a href="#">Careers</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="/about">About Us</a></li>
+              <li><a href="/blog">Blog</a></li>
+              <li><a href="/careers">Careers</a></li>
+              <li><a href="/contact">Contact</a></li>
             </ul>
           </div>
           <div className="footer-section">
             <h4>Support</h4>
             <ul>
-              <li><a href="#">Help Center</a></li>
-              <li><a href="#">Documentation</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-              <li><a href="#">Terms of Service</a></li>
+              <li><a href="/help">Help Center</a></li>
+              <li><a href="/docs">Documentation</a></li>
+              <li><a href="/privacy">Privacy Policy</a></li>
+              <li><a href="/terms">Terms of Service</a></li>
             </ul>
           </div>
           <div className="footer-section">
