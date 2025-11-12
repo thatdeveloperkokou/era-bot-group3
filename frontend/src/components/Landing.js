@@ -269,7 +269,7 @@ const Landing = () => {
         <div className="hero-image">
           <div className="illustration-container">
             <img 
-              src="/images/WhatsApp Image 2025-11-12 at 21.24.24.jpeg" 
+              src="/images/2025-11-13 00.05(1).jpeg" 
               alt="Solar Energy House" 
               className="country-svg"
             />
