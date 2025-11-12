@@ -269,8 +269,8 @@ const Landing = () => {
         <div className="hero-image">
           <div className="illustration-container">
             <img 
-              src="/images/country.svg" 
-              alt="Electricity Grid Map" 
+              src="/images/WhatsApp Image 2025-11-12 at 21.24.24.jpeg" 
+              alt="Solar Energy House" 
               className="country-svg"
             />
           </div>
