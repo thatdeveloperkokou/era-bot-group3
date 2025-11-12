@@ -200,6 +200,27 @@ Whenever you make changes to your code:
 - Consider using environment variables for all sensitive data
 - For production, consider using a proper database instead of CSV files
 
+### ⚠️ Data Persistence Warning
+
+**IMPORTANT:** The app currently uses file-based storage (`users.json`, `power_logs.csv`). On most deployment platforms (Heroku, Railway free tier, etc.), these files are stored in an **ephemeral filesystem** which means:
+
+- ❌ Data is **LOST** on server restart
+- ❌ Data is **LOST** on deployment
+- ❌ Users will **NOT** see their previous activities after deployment
+
+**Solutions:**
+
+1. **Railway Persistent Volumes (Quick Fix):**
+   - Go to Railway dashboard → Your service → Settings → Volumes
+   - Create a persistent volume for `/app/data`
+   - This will keep data between deployments
+
+2. **Database Migration (Recommended):**
+   - Migrate to PostgreSQL or MongoDB
+   - See `backend/DATA_PERSISTENCE.md` for details
+
+**See `backend/DATA_PERSISTENCE.md` for complete data persistence guide.**
+
 ### Troubleshooting:
 
 **Backend not connecting:**

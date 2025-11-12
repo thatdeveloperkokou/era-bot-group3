@@ -11,8 +11,35 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+* {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Ensure text rendering is crisp */
+h1, h2, h3, h4, h5, h6, p, span, a, label {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent GSAP from leaving low opacity on text elements */
+.hero-title,
+.hero-subtitle,
+.login-header h1,
+.login-header p,
+.dashboard-header h1,
+.stats-header h2 {
+  opacity: 1 !important;
+  filter: none !important;
+  visibility: visible !important;
 }
 
 code {

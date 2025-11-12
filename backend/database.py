@@ -1,0 +1,147 @@
+"""
+Database models and configuration for PostgreSQL
+"""
+from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+import os
+
+db = SQLAlchemy()
+
+class User(db.Model):
+    """User model"""
+    __tablename__ = 'users'
+    
+    username = db.Column(db.String(100), primary_key=True)
+    password = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(255), unique=True, nullable=True)  # Allow null for backward compatibility
+    location = db.Column(db.String(500), nullable=True)
+    email_verified = db.Column(db.Boolean, default=False, nullable=False)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    
+    # Relationships
+    power_logs = db.relationship('PowerLog', backref='user', lazy=True, cascade='all, delete-orphan')
+    device_ids = db.relationship('DeviceId', backref='user', lazy=True, cascade='all, delete-orphan')
+    
+    @property
+    def verified_devices(self):
+        """Get list of verified device IDs"""
+        return [device.device_id for device in self.device_ids]
+    
+    def to_dict(self):
+        """Convert user to dictionary"""
+        return {
+            'username': self.username,
+            'email': self.email,
+            'location': self.location,
+            'email_verified': self.email_verified,
+            'created_at': self.created_at.isoformat() if self.created_at else None,
+            'verified_devices': self.verified_devices
+        }
+
+class PowerLog(db.Model):
+    """Power log model"""
+    __tablename__ = 'power_logs'
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.String(100), db.ForeignKey('users.username'), nullable=False)
+    event_type = db.Column(db.String(10), nullable=False)  # 'on' or 'off'
+    timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    date = db.Column(db.Date, nullable=False)
+    location = db.Column(db.String(500), nullable=True)
+    
+    def to_dict(self):
+        """Convert power log to dictionary"""
+        return {
+            'user_id': self.user_id,
+            'event_type': self.event_type,
+            'timestamp': self.timestamp.isoformat() if self.timestamp else None,
+            'date': self.date.isoformat() if self.date else None,
+            'location': self.location
+        }
+
+class VerificationCode(db.Model):
+    """Verification code model"""
+    __tablename__ = 'verification_codes'
+    
+    email = db.Column(db.String(255), primary_key=True)
+    code = db.Column(db.String(6), nullable=False)
+    expires_at = db.Column(db.DateTime, nullable=False)
+    username = db.Column(db.String(100), nullable=True)
+    password = db.Column(db.String(255), nullable=True)
+    location = db.Column(db.String(500), nullable=True)
+    device_id = db.Column(db.String(255), nullable=True)
+    
+    def is_expired(self):
+        """Check if verification code is expired"""
+        return datetime.utcnow() > self.expires_at
+    
+    def to_dict(self):
+        """Convert verification code to dictionary"""
+        return {
+            'email': self.email,
+            'code': self.code,
+            'expires_at': self.expires_at.isoformat() if self.expires_at else None,
+            'username': self.username,
+            'location': self.location,
+            'device_id': self.device_id
+        }
+
+class DeviceId(db.Model):
+    """Device ID model"""
+    __tablename__ = 'device_ids'
+    
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.String(100), db.ForeignKey('users.username'), nullable=False)
+    device_id = db.Column(db.String(255), nullable=False)
+    
+    # Unique constraint on user_id and device_id combination
+    __table_args__ = (db.UniqueConstraint('user_id', 'device_id', name='unique_user_device'),)
+    
+    def to_dict(self):
+        """Convert device ID to dictionary"""
+        return {
+            'user_id': self.user_id,
+            'device_id': self.device_id
+        }
+
+def init_db(app):
+    """Initialize database"""
+    # Get database URL from environment
+    database_url = os.environ.get('DATABASE_URL')
+    
+    if not database_url:
+        # Fallback to local PostgreSQL if DATABASE_URL not set
+        db_user = os.environ.get('DB_USER', 'postgres')
+        db_password = os.environ.get('DB_PASSWORD', 'postgres')
+        db_host = os.environ.get('DB_HOST', 'localhost')
+        db_port = os.environ.get('DB_PORT', '5432')
+        db_name = os.environ.get('DB_NAME', 'electricity_logger')
+        
+        database_url = f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
+        print(f"⚠️  DATABASE_URL not set, using local PostgreSQL: {db_host}:{db_port}/{db_name}")
+    else:
+        print(f"✅ Using DATABASE_URL from environment")
+    
+    # Handle Railway/Heroku DATABASE_URL format (may include postgres:// instead of postgresql://)
+    if database_url.startswith('postgres://'):
+        database_url = database_url.replace('postgres://', 'postgresql://', 1)
+    
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
+        'pool_pre_ping': True,
+        'pool_recycle': 300,
+    }
+    
+    db.init_app(app)
+    
+    with app.app_context():
+        try:
+            # Create all tables
+            db.create_all()
+            print("✅ Database tables created successfully")
+        except Exception as e:
+            print(f"⚠️  Error creating database tables: {str(e)}")
+            print(f"   Make sure PostgreSQL is running and DATABASE_URL is correct")
+            raise
+

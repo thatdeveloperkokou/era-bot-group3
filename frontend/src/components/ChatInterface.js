@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
+import { FaLightbulb, FaPowerOff, FaCheckCircle, FaChartBar } from 'react-icons/fa';
 import './ChatInterface.css';
 
 const ChatInterface = ({ onLogEvent }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
   const messagesEndRef = useRef(null);
 
   const scrollToBottom = () => {
@@ -51,9 +53,8 @@ const ChatInterface = ({ onLogEvent }) => {
 
   const fetchReport = async () => {
     try {
+      setIsProcessing(true);
       setLoading(true);
-      const response = await api.get('/report');
-      const report = response.data;
       
       const userMessage = {
         id: Date.now(),
@@ -64,12 +65,18 @@ const ChatInterface = ({ onLogEvent }) => {
       };
       setMessages(prev => [...prev, userMessage]);
       
+      // Show loading indicator for a moment
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      const response = await api.get('/report');
+      const report = response.data;
+      
       // Format report message
       const lastEventText = report.summary.last_event.type 
         ? `Last event: Power ${report.summary.last_event.type.toUpperCase()} (${report.summary.last_event.hours_ago} hours ago)`
         : 'No events logged yet';
       
-      const reportText = `📊 ELECTRICITY REPORT
+      const reportText = `ELECTRICITY REPORT
 
 Today: ${report.summary.today_hours} hours
 This Week: ${report.summary.week_hours} hours
@@ -83,16 +90,15 @@ Total Events:
 • This Week: ${report.totals.week_events}
 • This Month: ${report.totals.month_events}`;
       
-      setTimeout(() => {
-        const botMessage = {
-          id: Date.now() + 1,
-          text: reportText,
-          timestamp: new Date().toLocaleString(),
-          type: 'report',
-          isUser: false
-        };
-        setMessages(prev => [...prev, botMessage]);
-      }, 500);
+      const botMessage = {
+        id: Date.now() + 1,
+        text: reportText,
+        timestamp: new Date().toLocaleString(),
+        type: 'report',
+        isUser: false,
+        icon: <FaChartBar />
+      };
+      setMessages(prev => [...prev, botMessage]);
       
     } catch (error) {
       const errorMessage = {
@@ -105,13 +111,14 @@ Total Events:
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setLoading(false);
+      setIsProcessing(false);
     }
   };
 
   const logPowerEvent = async (eventType) => {
     try {
+      setIsProcessing(true);
       setLoading(true);
-      await api.post('/log-power', { event_type: eventType });
       
       const newMessage = {
         id: Date.now(),
@@ -123,17 +130,21 @@ Total Events:
       
       setMessages(prev => [...prev, newMessage]);
       
+      // Show loading indicator for a moment
+      await new Promise(resolve => setTimeout(resolve, 800));
+      
+      await api.post('/log-power', { event_type: eventType });
+      
       // Add bot confirmation
-      setTimeout(() => {
-        const botMessage = {
-          id: Date.now() + 1,
-          text: `✓ Logged! Power is now ${eventType === 'on' ? 'ON' : 'OFF'}`,
-          timestamp: new Date().toLocaleString(),
-          type: 'info',
-          isUser: false
-        };
-        setMessages(prev => [...prev, botMessage]);
-      }, 500);
+      const botMessage = {
+        id: Date.now() + 1,
+        text: `Logged! Power is now ${eventType === 'on' ? 'ON' : 'OFF'}`,
+        timestamp: new Date().toLocaleString(),
+        type: 'info',
+        isUser: false,
+        icon: <FaCheckCircle />
+      };
+      setMessages(prev => [...prev, botMessage]);
       
       if (onLogEvent) {
         onLogEvent();
@@ -149,47 +160,51 @@ Total Events:
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setLoading(false);
+      setIsProcessing(false);
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!input.trim() || loading) return;
+    if (!input.trim() || loading || isProcessing) return;
 
     const lowerInput = input.toLowerCase().trim();
+    const userInput = input.trim();
+    
+    // Save user message immediately
+    const userMessage = {
+      id: Date.now(),
+      text: userInput,
+      timestamp: new Date().toLocaleString(),
+      type: 'user',
+      isUser: true
+    };
+    setMessages(prev => [...prev, userMessage]);
+    setInput('');
+    
+    // Show loading indicator
+    setIsProcessing(true);
+    
+    // Small delay to show loading state
+    await new Promise(resolve => setTimeout(resolve, 600));
     
     if (lowerInput === 'report' || lowerInput === 'summary') {
-      fetchReport();
-      setInput('');
+      await fetchReport();
     } else if (lowerInput.includes('power on') || (lowerInput.includes('on') && !lowerInput.includes('off'))) {
-      logPowerEvent('on');
-      setInput('');
+      await logPowerEvent('on');
     } else if (lowerInput.includes('power off') || lowerInput.includes('off')) {
-      logPowerEvent('off');
-      setInput('');
+      await logPowerEvent('off');
     } else {
-      const userMessage = {
-        id: Date.now(),
-        text: input,
+      // Bot response for unrecognized commands
+      const botMessage = {
+        id: Date.now() + 1,
+        text: 'Type "power on" or "power off" to log electricity events. Type "report" for a summary. Or use the buttons below.',
         timestamp: new Date().toLocaleString(),
-        type: 'user',
-        isUser: true
+        type: 'info',
+        isUser: false
       };
-      setMessages(prev => [...prev, userMessage]);
-      
-      // Bot response
-      setTimeout(() => {
-        const botMessage = {
-          id: Date.now() + 1,
-          text: 'Type "power on" or "power off" to log electricity events. Type "report" for a summary. Or use the buttons below.',
-          timestamp: new Date().toLocaleString(),
-          type: 'info',
-          isUser: false
-        };
-        setMessages(prev => [...prev, botMessage]);
-      }, 500);
-      
-      setInput('');
+      setMessages(prev => [...prev, botMessage]);
+      setIsProcessing(false);
     }
   };
 
@@ -207,11 +222,27 @@ Total Events:
             className={`message ${message.isUser ? 'user-message' : 'bot-message'} ${message.type}`}
           >
             <div className="message-content">
-              <div className="message-text">{message.text}</div>
+              <div className="message-text">
+                {message.icon && <span className="message-icon">{message.icon}</span>}
+                <span>{message.text}</span>
+              </div>
               <div className="message-timestamp">{message.timestamp}</div>
             </div>
           </div>
         ))}
+        {isProcessing && (
+          <div className="message bot-message">
+            <div className="message-content">
+              <div className="message-text">
+                <div className="typing-indicator">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         <div ref={messagesEndRef} />
       </div>
       
@@ -221,14 +252,16 @@ Total Events:
           disabled={loading}
           className="action-btn power-on"
         >
-          💡 Power ON
+          <FaLightbulb className="action-icon" />
+          Power ON
         </button>
         <button
           onClick={() => logPowerEvent('off')}
           disabled={loading}
           className="action-btn power-off"
         >
-          ⚫ Power OFF
+          <FaPowerOff className="action-icon" />
+          Power OFF
         </button>
       </div>
       
@@ -238,10 +271,10 @@ Total Events:
           value={input}
           onChange={(e) => setInput(e.target.value)}
           placeholder="Type 'power on', 'power off', or 'report'..."
-          disabled={loading}
+          disabled={loading || isProcessing}
           className="chat-input"
         />
-        <button type="submit" disabled={loading || !input.trim()} className="send-btn">
+        <button type="submit" disabled={loading || isProcessing || !input.trim()} className="send-btn">
           Send
         </button>
       </form>

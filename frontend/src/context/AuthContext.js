@@ -39,6 +39,7 @@ export const AuthProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    // Note: We keep deviceId stored even after logout for future logins
     delete api.defaults.headers.common['Authorization'];
     setIsAuthenticated(false);
     setUsername(null);

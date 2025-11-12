@@ -2,6 +2,42 @@
 
 **Live Site:** [https://era-bot-group3-nx3x.vercel.app/](https://era-bot-group3-nx3x.vercel.app/)
 
+## 🚀 Quick Setup
+
+### Email Configuration
+
+See **[EMAIL_SETUP.md](./backend/EMAIL_SETUP.md)** for detailed email configuration instructions.
+
+### 🗄️ Database Configuration
+
+**The application now uses PostgreSQL for data storage!**
+
+**Setup:**
+- See **[POSTGRESQL_SETUP.md](./backend/POSTGRESQL_SETUP.md)** for detailed PostgreSQL setup instructions
+- **Railway (Recommended):** Add PostgreSQL database in Railway dashboard
+- **Local Development:** Install PostgreSQL and configure connection
+- **Migration:** Run `python backend/migrate_to_postgresql.py` to migrate existing data
+
+**Benefits:**
+- ✅ Data persists permanently
+- ✅ Scalable and reliable
+- ✅ Industry standard
+- ✅ Better performance
+- ✅ Built-in backups (on cloud providers)
+
+**Quick summary:**
+1. **Gmail (Recommended for Development):**
+   - Enable 2FA on your Google account
+   - Create an App Password: https://myaccount.google.com/apppasswords
+   - Add credentials to `backend/.env`
+
+2. **Other Options:** Outlook, Yahoo, SendGrid, Mailgun
+   - See `backend/EMAIL_SETUP.md` for setup instructions
+
+3. **Without email:** Verification codes will be printed to backend console (development only)
+
+**Note:** ProtonMail does NOT support SMTP for regular accounts. Use Gmail, Outlook, or a transactional email service instead.
+
 ## The Problem
 
 In many areas, electricity is unreliable. Without proper tracking, people don't really know:
@@ -141,7 +177,7 @@ Typing "report" gives:
 
 ## Why Our Project Matters
 
-• Empowers people to understand their power supply
+• Empowers people to understand their power supply.
 
 • Helps users plan better and live smarter
 

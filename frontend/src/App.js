@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
+import Landing from './components/Landing';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 
@@ -15,6 +16,7 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/dashboard"
@@ -24,7 +26,6 @@ function App() {
               </PrivateRoute>
             }
           />
-          <Route path="/" element={<Navigate to="/dashboard" />} />
         </Routes>
       </Router>
     </AuthProvider>

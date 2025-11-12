@@ -3,6 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import ChatInterface from './ChatInterface';
 import StatsChart from './StatsChart';
+import { FaBolt, FaChartBar } from 'react-icons/fa';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -50,7 +51,10 @@ const Dashboard = () => {
     <div className="dashboard">
       <div className="dashboard-header">
         <div className="header-content">
-          <h1>💡 Electricity Supply Logger</h1>
+          <h1>
+            <FaBolt className="header-icon" />
+            Electricity Logger
+          </h1>
           <div className="header-actions">
             <span className="username">Welcome, {username}</span>
             <button onClick={handleLogout} className="logout-btn">
@@ -89,7 +93,7 @@ const Dashboard = () => {
           {loading ? (
             <div className="loading">Loading statistics...</div>
           ) : stats ? (
-            <>
+            <div className="stats-content">
               <div className="total-hours">
                 <h3>Total Light Hours</h3>
                 <p className="hours-value">{stats.total_hours} hours</p>
@@ -100,10 +104,11 @@ const Dashboard = () => {
                 onClick={() => setShowCharts(!showCharts)}
                 aria-label="Toggle charts"
               >
-                {showCharts ? '📊 Hide Charts' : '📊 Show Charts'}
+                <FaChartBar className="toggle-icon" />
+                {showCharts ? 'Hide Charts' : 'Show Charts'}
               </button>
               {showCharts && <StatsChart data={stats.daily_stats} />}
-            </>
+            </div>
           ) : (
             <div className="no-data">No data available</div>
           )}
