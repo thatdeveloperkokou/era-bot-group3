@@ -58,8 +58,9 @@ def send_verification_email(email, code):
         # Check if email is configured
         if not app.config['MAIL_USERNAME'] or not app.config['MAIL_PASSWORD']:
             print(f"⚠️  Email not configured. Verification code for {email}: {code}")
-            print(f"   To enable email, configure MAIL_USERNAME and MAIL_PASSWORD in .env")
+            print(f"   To enable email, configure MAIL_USERNAME and MAIL_PASSWORD in Railway environment variables")
             print(f"   See EMAIL_SETUP.md for instructions")
+            print(f"   Current config: MAIL_SERVER={app.config['MAIL_SERVER']}, MAIL_USERNAME={'set' if app.config['MAIL_USERNAME'] else 'NOT SET'}, MAIL_PASSWORD={'set' if app.config['MAIL_PASSWORD'] else 'NOT SET'}")
             return True  # Return True for development (allow registration to continue)
         
         # Create email message
@@ -142,16 +143,29 @@ def send_verification_email(email, code):
         
     except Exception as e:
         error_msg = str(e)
-        print(f"❌ Error sending email to {email}: {error_msg}")
+        error_type = type(e).__name__
+        print(f"❌ Error sending email to {email}")
+        print(f"   Error type: {error_type}")
+        print(f"   Error message: {error_msg}")
+        print(f"   MAIL_SERVER: {app.config['MAIL_SERVER']}")
+        print(f"   MAIL_PORT: {app.config['MAIL_PORT']}")
+        print(f"   MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
+        print(f"   MAIL_USERNAME: {'set' if app.config['MAIL_USERNAME'] else 'NOT SET'}")
+        print(f"   MAIL_PASSWORD: {'set' if app.config['MAIL_PASSWORD'] else 'NOT SET'}")
+        print(f"   MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
         
         # Provide helpful error messages
-        if "Authentication failed" in error_msg or "535" in error_msg:
-            print(f"   💡 Tip: Make sure you're using an App Password, not your regular password")
+        if "Authentication failed" in error_msg or "535" in error_msg or "534" in error_msg:
+            print(f"   💡 Tip: Authentication failed - Make sure you're using an App Password, not your regular password")
             print(f"   💡 For Gmail: https://myaccount.google.com/apppasswords")
-        elif "Connection" in error_msg or "timeout" in error_msg.lower():
-            print(f"   💡 Tip: Check your internet connection and SMTP server settings")
+            print(f"   💡 For Outlook: https://account.microsoft.com/security")
+        elif "Connection" in error_msg or "timeout" in error_msg.lower() or "refused" in error_msg.lower():
+            print(f"   💡 Tip: Connection issue - Check SMTP server and port settings")
+            print(f"   💡 Try: MAIL_SERVER={app.config['MAIL_SERVER']}, MAIL_PORT={app.config['MAIL_PORT']}")
         elif "550" in error_msg or "553" in error_msg:
-            print(f"   💡 Tip: Verify the sender email address is correct")
+            print(f"   💡 Tip: Sender verification failed - Verify MAIL_DEFAULT_SENDER is correct")
+        elif "SSL" in error_msg or "TLS" in error_msg:
+            print(f"   💡 Tip: SSL/TLS issue - Try MAIL_USE_TLS=true for port 587, or MAIL_USE_SSL=true for port 465")
         
         # In development, print the code so registration can continue
         print(f"   📧 Verification code for {email}: {code}")
