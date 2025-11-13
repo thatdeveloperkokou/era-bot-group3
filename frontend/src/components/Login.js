@@ -104,13 +104,30 @@ const Login = () => {
         }
       }
     } catch (err) {
+      // Improved error handling - show actual error messages from API
       if (err.response?.data?.error) {
+        // Backend returned an error message
         setError(err.response.data.error);
+      } else if (err.message) {
+        // Error object has a message (from our interceptor)
+        setError(err.message);
+      } else if (err.response?.data) {
+        // Backend returned data but no error field
+        const data = err.response.data;
+        if (typeof data === 'string') {
+          setError(data);
+        } else if (data.message) {
+          setError(data.message);
+        } else {
+          setError(`Server error: ${JSON.stringify(data)}`);
+        }
       } else if (err.request && !err.response) {
+        // Network error - no response from server
         const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
         setError(`Cannot connect to backend server. Please check if the backend is running at ${apiUrl}.`);
       } else {
-        setError('An error occurred. Please try again.');
+        // Unknown error
+        setError(err.message || 'An error occurred. Please try again.');
       }
     } finally {
       setLoading(false);

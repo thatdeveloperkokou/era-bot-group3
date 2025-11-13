@@ -24,7 +24,20 @@ api.interceptors.response.use(
   (error) => {
     if (error.response) {
       // Server responded with error status
-      console.error('API Error:', error.response.status, error.response.data);
+      const status = error.response.status;
+      const data = error.response.data;
+      console.error(`API Error ${status}:`, data);
+      
+      // Attach error message to error object for easier access
+      if (data && data.error) {
+        error.message = data.error;
+      } else if (data && typeof data === 'string') {
+        error.message = data;
+      } else if (data && data.message) {
+        error.message = data.message;
+      } else {
+        error.message = `Server error (${status})`;
+      }
     } else if (error.request) {
       // Request was made but no response received
       console.error('Network Error: No response from server. Is the backend running?');
