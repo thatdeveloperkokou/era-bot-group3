@@ -17,9 +17,13 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy application code
 COPY . .
 
+# Copy and make start script executable
+COPY start.sh /app/start.sh
+RUN chmod +x /app/start.sh
+
 # Expose port (Railway sets PORT dynamically)
 EXPOSE 5000
 
-# Run the application (Railway sets PORT environment variable)
-CMD ["sh", "-c", "gunicorn app:app --bind 0.0.0.0:${PORT:-5000}"]
+# Run the application via start.sh which expands PORT safely
+CMD ["sh", "/app/start.sh"]
 
