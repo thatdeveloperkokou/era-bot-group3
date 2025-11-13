@@ -816,8 +816,10 @@ def verify_device():
         print(f"Error in verify_device: {str(e)}")
         return jsonify({'error': 'An error occurred during device verification'}), 500
 
+# Set the port to the value of the PORT environment variable or default to 5000
+port = int(os.environ.get("PORT", 5000))
+
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_ENV') == 'development'
     print("Starting Electricity Supply Logger API...")
     print(f"API will be available at http://localhost:{port}")

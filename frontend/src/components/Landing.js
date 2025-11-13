@@ -237,7 +237,7 @@ const Landing = () => {
         className="hero-section" 
         ref={heroRef}
         style={{
-          backgroundImage: `url('/images/2025-11-12%2012.29.png')`
+          backgroundImage: `url(${encodeURI('/images/2025-11-12 12.29.png')})`
         }}
       >
         <div className="hero-content">
@@ -269,7 +269,7 @@ const Landing = () => {
         <div className="hero-image">
           <div className="illustration-container">
             <img 
-              src="/images/2025-11-13 00.05(1).jpeg" 
+              src={encodeURI('/images/2025-11-13 00.05(1).jpeg')} 
               alt="Solar Energy House" 
               className="country-svg"
             />
@@ -294,7 +294,7 @@ const Landing = () => {
         id="features" 
         className="features-section"
         style={{
-          backgroundImage: `url('/images/2025-11-12%2013.48%20(1).jpg')`
+          backgroundImage: `url(${encodeURI('/images/2025-11-12 13.48 (1).jpg')})`
         }}
       >
         <div className="section-header">
@@ -331,7 +331,7 @@ const Landing = () => {
         id="use-cases" 
         className="use-cases-section"
         style={{
-          backgroundImage: `url('/images/2025-11-12%2013.48.jpg')`
+          backgroundImage: `url(${encodeURI('/images/2025-11-12 13.48.jpg')})`
         }}
       >
         <div className="section-header">
