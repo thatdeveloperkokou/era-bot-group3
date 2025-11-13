@@ -27,6 +27,7 @@ app.config['MAIL_USE_SSL'] = mail_use_tls == 'false' and int(os.environ.get('MAI
 app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', '')
+app.config['MAIL_SUPPRESS_SEND'] = os.environ.get('MAIL_SUPPRESS_SEND', 'false').lower() == 'true'
 
 mail = Mail(app)
 
@@ -59,6 +60,10 @@ def send_verification_email(email, code):
     Returns False if email sending failed.
     """
     try:
+        if app.config.get('MAIL_SUPPRESS_SEND'):
+            print(f"📧 MAIL_SUPPRESS_SEND enabled. Skipping actual email send for {email}. Verification code: {code}")
+            return True
+        
         # Check if email is configured
         if not app.config['MAIL_USERNAME'] or not app.config['MAIL_PASSWORD']:
             print(f"⚠️  Email not configured. Verification code for {email}: {code}")
