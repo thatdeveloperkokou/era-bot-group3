@@ -25,5 +25,6 @@ RUN chmod +x /app/start.sh
 EXPOSE 5000
 
 # Run the application via start.sh which expands PORT safely
-CMD ["sh", "/app/start.sh"]
+# Use shell form to ensure environment variables are expanded
+CMD sh /app/start.sh
 
