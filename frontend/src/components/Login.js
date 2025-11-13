@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
-import { FaBolt, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaBolt, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFacebook, FaTwitter, FaLinkedin, FaGithub, FaCheckCircle } from 'react-icons/fa';
 import LocationAutocomplete from './LocationAutocomplete';
 import './Login.css';
 
@@ -16,13 +16,16 @@ const Login = () => {
   const [location, setLocation] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
-  const [showVerification, setShowVerification] = useState(false);
-  const [verificationType, setVerificationType] = useState('email'); // 'email' or 'device'
+  const [successModal, setSuccessModal] = useState({
+    visible: false,
+    title: '',
+    message: ''
+  });
   const { login } = useAuth();
   const navigate = useNavigate();
   const cardRef = useRef(null);
   const illustrationRef = useRef(null);
+  const modalTimeoutRef = useRef(null);
 
   // Update isLogin state when URL parameter changes
   useEffect(() => {
@@ -34,10 +37,45 @@ const Login = () => {
     // If no mode parameter, default to login (isLogin = true, which is the default)
   }, [mode]);
 
+  useEffect(() => {
+    return () => {
+      if (modalTimeoutRef.current) {
+        clearTimeout(modalTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleLocationSelect = (locationData) => {
     setLocation(locationData.address);
-    // Store location data for future API usage
-    console.log('Location selected:', locationData);
+  };
+
+  const handleAuthSuccess = (data, action) => {
+    if (data.deviceId) {
+      localStorage.setItem('deviceId', data.deviceId);
+    }
+
+    login(data.token, data.username);
+
+    setSuccessModal({
+      visible: true,
+      title: action === 'login' ? 'Welcome back!' : 'Registration complete',
+      message: action === 'login'
+        ? 'You are now signed in. Redirecting to your dashboard...'
+        : 'Your account is ready. Redirecting to your dashboard...'
+    });
+
+    if (modalTimeoutRef.current) {
+      clearTimeout(modalTimeoutRef.current);
+    }
+
+    modalTimeoutRef.current = setTimeout(() => {
+      setSuccessModal({
+        visible: false,
+        title: '',
+        message: ''
+      });
+      navigate('/dashboard');
+    }, 1500);
   };
 
   const handleSubmit = async (e) => {
@@ -47,61 +85,26 @@ const Login = () => {
 
     try {
       if (isLogin) {
-        // Login flow - check if device is new
-        const deviceId = localStorage.getItem('deviceId');
-        // Send username field - backend will check both username and email
-        const response = await api.post('/login', { 
-          username: username.trim(),  // Can be username or email
-          password,
-          deviceId: deviceId || null
-        });
-        
-        // Check if email verification is required
-        if (response.data.requiresVerification) {
-          setShowVerification(true);
-          setVerificationType('device');
-          setEmail(response.data.email);
-          return;
+        const payload = {
+          username: username.trim(),
+          password
+        };
+
+        const storedDeviceId = localStorage.getItem('deviceId');
+        if (storedDeviceId) {
+          payload.deviceId = storedDeviceId;
         }
-        
-        // Store device ID if first time
-        if (response.data.deviceId && !localStorage.getItem('deviceId')) {
-          localStorage.setItem('deviceId', response.data.deviceId);
-        }
-        
-        login(response.data.token, response.data.username);
-        navigate('/dashboard');
+
+        const response = await api.post('/login', payload);
+        handleAuthSuccess(response.data, 'login');
       } else {
-        // Registration flow
-        if (!showVerification) {
-          // Step 1: Register and send verification email
-          const response = await api.post('/register', { 
-            username, 
-            email, 
-            password, 
-            location 
-          });
-          
-          if (response.data.message === 'Verification email sent') {
-            setShowVerification(true);
-            setVerificationType('email');
-          }
-        } else {
-          // Step 2: Verify email with code
-          const response = await api.post('/verify-email', {
-            email,
-            code: verificationCode
-          });
-          
-          if (response.data.verified) {
-            // Store device ID
-            if (response.data.deviceId) {
-              localStorage.setItem('deviceId', response.data.deviceId);
-            }
-            login(response.data.token, response.data.username);
-            navigate('/dashboard');
-          }
-        }
+        const response = await api.post('/register', {
+          username: username.trim(),
+          email: email.trim(),
+          password,
+          location
+        });
+        handleAuthSuccess(response.data, 'register');
       }
     } catch (err) {
       // Improved error handling - show actual error messages from API
@@ -134,49 +137,17 @@ const Login = () => {
     }
   };
 
-  const handleDeviceVerification = async () => {
-    setError('');
-    setLoading(true);
-
-    try {
-      const response = await api.post('/verify-device', {
-        email,
-        code: verificationCode
-      });
-
-      if (response.data.deviceId) {
-        localStorage.setItem('deviceId', response.data.deviceId);
-      }
-      login(response.data.token, response.data.username);
-      navigate('/dashboard');
-    } catch (err) {
-      if (err.response?.data?.error) {
-        setError(err.response.data.error);
-      } else {
-        setError('An error occurred. Please try again.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendCode = async () => {
-    try {
-      if (verificationType === 'email') {
-        await api.post('/resend-verification', { email });
-      } else {
-        // For device verification, we need to resend via login endpoint
-        await api.post('/login', { username, password });
-      }
-      setError('');
-      alert('Verification code resent to your email');
-    } catch (err) {
-      setError('Failed to resend code. Please try again.');
-    }
-  };
-
   return (
     <div className="login-container">
+      {successModal.visible && (
+        <div className="success-modal-backdrop">
+          <div className="success-modal-card">
+            <FaCheckCircle className="success-modal-icon" />
+            <h2>{successModal.title}</h2>
+            <p>{successModal.message}</p>
+          </div>
+        </div>
+      )}
       {/* Simple Navbar */}
       <nav className="login-navbar">
         <div className="login-navbar-container">
@@ -213,99 +184,57 @@ const Login = () => {
             </div>
             <p>{isLogin ? 'Welcome back! Sign in to continue tracking your electricity supply.' : 'Create your account to start monitoring your electricity data'}</p>
           </div>
-          
-          {showVerification ? (
-            <div className="verification-form">
-              <h2>Verify Your Email</h2>
-              <p>We've sent a verification code to <strong>{email}</strong></p>
+          <form onSubmit={handleSubmit} className="login-form">
+            <div className="form-group">
               <input
                 type="text"
-                placeholder="Enter verification code"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                className="verification-input"
-                maxLength="6"
+                placeholder={isLogin ? "Email or Username" : "Username"}
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
               />
-              <button 
-                onClick={handleResendCode}
-                className="resend-btn"
-                type="button"
-              >
-                Resend Code
-              </button>
-              <button 
-                onClick={verificationType === 'email' ? handleSubmit : handleDeviceVerification}
-                disabled={loading || !verificationCode}
-                className="submit-btn"
-                type="button"
-              >
-                {loading ? 'Verifying...' : 'Verify'}
-              </button>
-              <button 
-                onClick={() => {
-                  setShowVerification(false);
-                  setVerificationCode('');
-                  setError('');
-                }}
-                className="back-btn"
-                type="button"
-              >
-                Back
-              </button>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="login-form">
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder={isLogin ? "Email or Username" : "Username"}
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </div>
-              
-              {!isLogin && (
-                <>
-                  <div className="form-group">
-                    <input
-                      type="email"
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                  
-                  <div className="form-group">
-                    <LocationAutocomplete
-                      value={location}
-                      onChange={setLocation}
-                      onSelect={handleLocationSelect}
-                      placeholder="Enter your location (e.g., Lagos, Nigeria)"
-                      required
-                    />
-                  </div>
-                </>
-              )}
-              
-              <div className="form-group">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
-              </div>
-              
-              {error && <div className="error-message">{error}</div>}
-              
-              <button type="submit" disabled={loading} className="submit-btn">
-                {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
-              </button>
-            </form>
-          )}
+            
+            {!isLogin && (
+              <>
+                <div className="form-group">
+                  <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <LocationAutocomplete
+                    value={location}
+                    onChange={setLocation}
+                    onSelect={handleLocationSelect}
+                    placeholder="Enter your location (e.g., Lagos, Nigeria)"
+                    required
+                  />
+                </div>
+              </>
+            )}
+            
+            <div className="form-group">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            
+            {error && <div className="error-message">{error}</div>}
+            
+            <button type="submit" disabled={loading} className="submit-btn">
+              {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
+            </button>
+          </form>
           
           <div className="toggle-auth">
             <p>
@@ -313,10 +242,15 @@ const Login = () => {
               <span onClick={() => {
                 setIsLogin(!isLogin);
                 setError('');
-                setShowVerification(false);
-                setVerificationCode('');
                 setEmail('');
                 setLocation('');
+                setUsername('');
+                setPassword('');
+                setSuccessModal({
+                  visible: false,
+                  title: '',
+                  message: ''
+                });
               }} className="toggle-link">
                 {isLogin ? 'Register' : 'Login'}
               </span>

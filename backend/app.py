@@ -1,35 +1,20 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 import os
 import hashlib
 import jwt
 from functools import wraps
-import secrets
 import uuid
 from dotenv import load_dotenv
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy import or_, and_, func
-from database import db, User, PowerLog, VerificationCode, DeviceId, init_db
+from database import db, User, PowerLog, DeviceId, init_db
 
 load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-in-production')
-
-# Email configuration
-app.config['MAIL_SERVER'] = os.environ.get('MAIL_SERVER', 'smtp.gmail.com')
-app.config['MAIL_PORT'] = int(os.environ.get('MAIL_PORT', 587))
-mail_use_tls = os.environ.get('MAIL_USE_TLS', 'true').lower()
-app.config['MAIL_USE_TLS'] = mail_use_tls == 'true'
-app.config['MAIL_USE_SSL'] = mail_use_tls == 'false' and int(os.environ.get('MAIL_PORT', 587)) == 465
-app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
-app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', '')
-app.config['MAIL_SUPPRESS_SEND'] = os.environ.get('MAIL_SUPPRESS_SEND', 'false').lower() == 'true'
-
-mail = Mail(app)
 
 # Initialize database
 init_db(app)
@@ -50,139 +35,6 @@ else:
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-def generate_verification_code():
-    return str(secrets.randbelow(1000000)).zfill(6)
-
-def send_verification_email(email, code):
-    """
-    Send verification email to user.
-    Returns True if email was sent successfully or if email is not configured (for development).
-    Returns False if email sending failed.
-    """
-    try:
-        if app.config.get('MAIL_SUPPRESS_SEND'):
-            print(f"📧 MAIL_SUPPRESS_SEND enabled. Skipping actual email send for {email}. Verification code: {code}")
-            return True
-        
-        # Check if email is configured
-        if not app.config['MAIL_USERNAME'] or not app.config['MAIL_PASSWORD']:
-            print(f"⚠️  Email not configured. Verification code for {email}: {code}")
-            print(f"   To enable email, configure MAIL_USERNAME and MAIL_PASSWORD in Railway environment variables")
-            print(f"   See EMAIL_SETUP.md for instructions")
-            print(f"   Current config: MAIL_SERVER={app.config['MAIL_SERVER']}, MAIL_USERNAME={'set' if app.config['MAIL_USERNAME'] else 'NOT SET'}, MAIL_PASSWORD={'set' if app.config['MAIL_PASSWORD'] else 'NOT SET'}")
-            return True  # Return True for development (allow registration to continue)
-        
-        # Create email message
-        msg = Message(
-            subject='Verify Your Email - Electricity Supply Logger',
-            recipients=[email],
-            html=f'''
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    body {{
-                        font-family: Arial, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                    }}
-                    .container {{
-                        max-width: 600px;
-                        margin: 0 auto;
-                        padding: 20px;
-                        background-color: #f9f9f9;
-                    }}
-                    .header {{
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
-                        padding: 20px;
-                        text-align: center;
-                        border-radius: 10px 10px 0 0;
-                    }}
-                    .content {{
-                        background: white;
-                        padding: 30px;
-                        border-radius: 0 0 10px 10px;
-                    }}
-                    .code {{
-                        font-size: 32px;
-                        font-weight: bold;
-                        color: #667eea;
-                        text-align: center;
-                        padding: 20px;
-                        background: #f0f4ff;
-                        border-radius: 8px;
-                        margin: 20px 0;
-                        letter-spacing: 5px;
-                    }}
-                    .footer {{
-                        margin-top: 20px;
-                        padding-top: 20px;
-                        border-top: 1px solid #e0e0e0;
-                        font-size: 12px;
-                        color: #666;
-                    }}
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>🔌 Electricity Supply Logger</h1>
-                    </div>
-                    <div class="content">
-                        <h2>Email Verification</h2>
-                        <p>Thank you for registering! Please use the verification code below to verify your email address:</p>
-                        <div class="code">{code}</div>
-                        <p><strong>This code will expire in 10 minutes.</strong></p>
-                        <p>If you didn't request this verification code, please ignore this email.</p>
-                        <div class="footer">
-                            <p>This is an automated message. Please do not reply to this email.</p>
-                        </div>
-                    </div>
-                </div>
-            </body>
-            </html>
-            '''
-        )
-        
-        # Send email
-        mail.send(msg)
-        print(f"✅ Verification email sent successfully to {email}")
-        return True
-        
-    except Exception as e:
-        error_msg = str(e)
-        error_type = type(e).__name__
-        print(f"❌ Error sending email to {email}")
-        print(f"   Error type: {error_type}")
-        print(f"   Error message: {error_msg}")
-        print(f"   MAIL_SERVER: {app.config['MAIL_SERVER']}")
-        print(f"   MAIL_PORT: {app.config['MAIL_PORT']}")
-        print(f"   MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
-        print(f"   MAIL_USERNAME: {'set' if app.config['MAIL_USERNAME'] else 'NOT SET'}")
-        print(f"   MAIL_PASSWORD: {'set' if app.config['MAIL_PASSWORD'] else 'NOT SET'}")
-        print(f"   MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
-        
-        # Provide helpful error messages
-        if "Authentication failed" in error_msg or "535" in error_msg or "534" in error_msg:
-            print(f"   💡 Tip: Authentication failed - Make sure you're using an App Password, not your regular password")
-            print(f"   💡 For Gmail: https://myaccount.google.com/apppasswords")
-            print(f"   💡 For Outlook: https://account.microsoft.com/security")
-        elif "Connection" in error_msg or "timeout" in error_msg.lower() or "refused" in error_msg.lower():
-            print(f"   💡 Tip: Connection issue - Check SMTP server and port settings")
-            print(f"   💡 Try: MAIL_SERVER={app.config['MAIL_SERVER']}, MAIL_PORT={app.config['MAIL_PORT']}")
-        elif "550" in error_msg or "553" in error_msg:
-            print(f"   💡 Tip: Sender verification failed - Verify MAIL_DEFAULT_SENDER is correct")
-        elif "SSL" in error_msg or "TLS" in error_msg:
-            print(f"   💡 Tip: SSL/TLS issue - Try MAIL_USE_TLS=true for port 587, or MAIL_USE_SSL=true for port 465")
-        
-        # In development, print the code so registration can continue
-        print(f"   📧 Verification code for {email}: {code}")
-        print(f"   ⚠️  Email sending failed, but code is displayed above for development")
-        
-        # Return False to indicate email sending failed
-        # But still allow the code to be used (code is saved in database)
-        return False
 
 def generate_token(user_id):
     token = jwt.encode({'user_id': user_id}, app.config['SECRET_KEY'], algorithm='HS256')
@@ -233,9 +85,6 @@ def health_check():
         'endpoints': {
             'register': '/api/register',
             'login': '/api/login',
-            'verify-email': '/api/verify-email',
-            'verify-device': '/api/verify-device',
-            'resend-verification': '/api/resend-verification',
             'log-power': '/api/log-power',
             'stats': '/api/stats',
             'recent-events': '/api/recent-events',
@@ -280,31 +129,38 @@ def register():
         if existing_email:
             return jsonify({'error': 'Email already registered'}), 400
         
-        # Generate verification code
-        verification_code = generate_verification_code()
-        expires_at = datetime.utcnow() + timedelta(minutes=10)
-        
-        # Save verification code to database
-        verif_code = VerificationCode(
-            email=email,
-            code=verification_code,
-            expires_at=expires_at,
+        username = username.strip()
+        email = email.strip()
+        hashed_password = hash_password(password)
+        location = location.strip() if isinstance(location, str) else ''
+
+        user = User(
             username=username,
-            password=hash_password(password),
-            location=location
+            password=hashed_password,
+            email=email,
+            location=location,
+            email_verified=True,
+            created_at=datetime.utcnow()
         )
-        db.session.add(verif_code)
+        db.session.add(user)
+
+        device_id = str(uuid.uuid4())
+        device_record = DeviceId(
+            user_id=username,
+            device_id=device_id
+        )
+        db.session.add(device_record)
+
         db.session.commit()
+
+        token = generate_token(username)
+        return jsonify({
+            'message': 'Registration successful',
+            'token': token,
+            'username': username,
+            'deviceId': device_id
+        }), 201
         
-        # Send verification email
-        if send_verification_email(email, verification_code):
-            return jsonify({
-                'message': 'Verification email sent',
-                'email': email
-            }), 200
-        else:
-            return jsonify({'error': 'Failed to send verification email. Please check your email configuration.'}), 500
-            
     except IntegrityError as e:
         db.session.rollback()
         return jsonify({'error': 'Database error: User or email already exists'}), 400
@@ -327,7 +183,7 @@ def login():
         if not data:
             return jsonify({'error': 'Invalid JSON data'}), 400
         
-        username_or_email = data.get('username') or data.get('email')
+        username_or_email = (data.get('username') or data.get('email') or '').strip()
         password = data.get('password')
         device_id = data.get('deviceId')
         
@@ -345,56 +201,39 @@ def login():
         if user.password != hash_password(password):
             return jsonify({'error': 'Invalid credentials'}), 401
         
-        # Check if device is verified
-        verified_devices = user.verified_devices or []
-        
-        # For backward compatibility: if user has no email, allow login without verification
-        if not user.email:
-            # Old user without email - allow login
-            token = generate_token(user.username)
-            return jsonify({
-                'message': 'Login successful',
-                'token': token,
-                'username': user.username
-            }), 200
-        
-        if device_id and device_id in verified_devices:
-            # Device is verified, allow login
-            token = generate_token(user.username)
-            return jsonify({
-                'message': 'Login successful',
-                'token': token,
-                'username': user.username
-            }), 200
-        else:
-            # New device or no device ID, require email verification
-            # Generate verification code for device
-            verification_code = generate_verification_code()
-            expires_at = datetime.utcnow() + timedelta(minutes=10)
-            
-            # Delete old device verification code if exists
-            VerificationCode.query.filter_by(email=f"{user.email}_device").delete()
-            
-            # Save new verification code
-            verif_code = VerificationCode(
-                email=f"{user.email}_device",
-                code=verification_code,
-                expires_at=expires_at,
-                username=user.username,
+        response_device_id = device_id if device_id else str(uuid.uuid4())
+        device_exists = False
+
+        if device_id:
+            existing_device = DeviceId.query.filter_by(
+                user_id=user.username,
                 device_id=device_id
-            )
-            db.session.add(verif_code)
-            db.session.commit()
-            
-            # Send verification email
-            if send_verification_email(user.email, verification_code):
-                return jsonify({
-                    'requiresVerification': True,
-                    'email': user.email,
-                    'message': 'Device verification required. Check your email.'
-                }), 200
-            else:
-                return jsonify({'error': 'Failed to send verification email'}), 500
+            ).first()
+            device_exists = existing_device is not None
+
+        if not device_exists:
+            db.session.add(DeviceId(
+                user_id=user.username,
+                device_id=response_device_id
+            ))
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+                # Device already stored by another concurrent request
+                existing_device = DeviceId.query.filter_by(
+                    user_id=user.username,
+                    device_id=response_device_id
+                ).first()
+                if not existing_device:
+                    raise
+        token = generate_token(user.username)
+        return jsonify({
+            'message': 'Login successful',
+            'token': token,
+            'username': user.username,
+            'deviceId': response_device_id
+        }), 200
                 
     except SQLAlchemyError as e:
         db.session.rollback()
@@ -647,197 +486,6 @@ def get_report(current_user):
         db.session.rollback()
         print(f"Error in get_report: {str(e)}")
         return jsonify({'error': 'An error occurred while fetching report'}), 500
-
-@app.route('/api/verify-email', methods=['POST', 'OPTIONS'])
-def verify_email():
-    if request.method == 'OPTIONS':
-        return jsonify({}), 200
-    
-    try:
-        data = request.get_json() or request.json
-        if not data:
-            return jsonify({'error': 'Invalid JSON data'}), 400
-        
-        email = data.get('email')
-        code = data.get('code')
-        
-        if not email or not code:
-            return jsonify({'error': 'Email and verification code are required'}), 400
-        
-        # Get verification code
-        verif_code = VerificationCode.query.filter_by(email=email).first()
-        if not verif_code:
-            return jsonify({'error': 'Invalid verification code'}), 400
-        
-        if datetime.utcnow() > verif_code.expires_at:
-            db.session.delete(verif_code)
-            db.session.commit()
-            return jsonify({'error': 'Verification code has expired'}), 400
-        
-        if verif_code.code != code:
-            return jsonify({'error': 'Invalid verification code'}), 400
-        
-        # Create user account
-        user = User(
-            username=verif_code.username,
-            password=verif_code.password,
-            email=email,
-            location=verif_code.location,
-            email_verified=True,
-            created_at=datetime.utcnow()
-        )
-        db.session.add(user)
-        
-        # Generate device ID
-        device_id = str(uuid.uuid4())
-        device_id_record = DeviceId(
-            user_id=verif_code.username,
-            device_id=device_id
-        )
-        db.session.add(device_id_record)
-        
-        # Remove verification code
-        db.session.delete(verif_code)
-        db.session.commit()
-        
-        token = generate_token(verif_code.username)
-        return jsonify({
-            'message': 'Email verified successfully',
-            'verified': True,
-            'token': token,
-            'username': verif_code.username,
-            'deviceId': device_id
-        }), 200
-        
-    except IntegrityError as e:
-        db.session.rollback()
-        return jsonify({'error': 'User already exists'}), 400
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
-    except Exception as e:
-        db.session.rollback()
-        print(f"Error in verify_email: {str(e)}")
-        return jsonify({'error': 'An error occurred during email verification'}), 500
-
-@app.route('/api/resend-verification', methods=['POST', 'OPTIONS'])
-def resend_verification():
-    if request.method == 'OPTIONS':
-        return jsonify({}), 200
-    
-    try:
-        data = request.get_json() or request.json
-        if not data:
-            return jsonify({'error': 'Invalid JSON data'}), 400
-        
-        email = data.get('email')
-        if not email:
-            return jsonify({'error': 'Email is required'}), 400
-        
-        # Get verification code
-        verif_code = VerificationCode.query.filter_by(email=email).first()
-        if not verif_code:
-            return jsonify({'error': 'No pending verification found for this email'}), 400
-        
-        # Generate new code
-        verification_code = generate_verification_code()
-        verif_code.code = verification_code
-        verif_code.expires_at = datetime.utcnow() + timedelta(minutes=10)
-        db.session.commit()
-        
-        if send_verification_email(email, verification_code):
-            return jsonify({'message': 'Verification code resent'}), 200
-        else:
-            return jsonify({'error': 'Failed to send verification email'}), 500
-            
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
-    except Exception as e:
-        db.session.rollback()
-        print(f"Error in resend_verification: {str(e)}")
-        return jsonify({'error': 'An error occurred while resending verification code'}), 500
-
-@app.route('/api/verify-device', methods=['POST', 'OPTIONS'])
-def verify_device():
-    if request.method == 'OPTIONS':
-        return jsonify({}), 200
-    
-    try:
-        data = request.get_json() or request.json
-        if not data:
-            return jsonify({'error': 'Invalid JSON data'}), 400
-        
-        email = data.get('email')
-        code = data.get('code')
-        
-        if not email or not code:
-            return jsonify({'error': 'Email and verification code are required'}), 400
-        
-        code_key = f"{email}_device"
-        
-        # Get verification code
-        verif_code = VerificationCode.query.filter_by(email=code_key).first()
-        if not verif_code:
-            return jsonify({'error': 'Invalid verification code'}), 400
-        
-        if datetime.utcnow() > verif_code.expires_at:
-            db.session.delete(verif_code)
-            db.session.commit()
-            return jsonify({'error': 'Verification code has expired'}), 400
-        
-        if verif_code.code != code:
-            return jsonify({'error': 'Invalid verification code'}), 400
-        
-        # Verify device
-        username = verif_code.username
-        device_id = verif_code.device_id or str(uuid.uuid4())
-        
-        # Get user
-        user = User.query.filter_by(username=username).first()
-        if not user:
-            return jsonify({'error': 'User not found'}), 404
-        
-        # Add device to verified devices
-        if device_id not in (user.verified_devices or []):
-            if user.verified_devices is None:
-                user.verified_devices = []
-            user.verified_devices.append(device_id)
-        
-        # Save device ID
-        existing_device = DeviceId.query.filter_by(
-            user_id=username,
-            device_id=device_id
-        ).first()
-        if not existing_device:
-            device_id_record = DeviceId(
-                user_id=username,
-                device_id=device_id
-            )
-            db.session.add(device_id_record)
-        
-        # Remove verification code
-        db.session.delete(verif_code)
-        db.session.commit()
-        
-        token = generate_token(username)
-        return jsonify({
-            'message': 'Device verified successfully',
-            'token': token,
-            'username': username,
-            'deviceId': device_id
-        }), 200
-        
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
-    except Exception as e:
-        db.session.rollback()
-        print(f"Error in verify_device: {str(e)}")
-        return jsonify({'error': 'An error occurred during device verification'}), 500
 
 # Set the port to the value of the PORT environment variable or default to 5000
 port = int(os.environ.get("PORT", 5000))

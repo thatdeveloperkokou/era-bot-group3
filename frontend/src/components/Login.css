@@ -281,77 +281,6 @@
   color: #667eea;
 }
 
-.verification-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  text-align: center;
-}
-
-.verification-form h2 {
-  color: #333;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
-
-.verification-form p {
-  color: #666;
-  margin-bottom: 20px;
-}
-
-.verification-input {
-  padding: 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 18px;
-  text-align: center;
-  letter-spacing: 5px;
-  font-weight: bold;
-  width: 100%;
-  box-sizing: border-box;
-  background: #f8f9fa;
-  transition: all 0.3s;
-}
-
-.verification-input:focus {
-  outline: none;
-  border-color: #667eea;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-}
-
-.resend-btn {
-  background: none;
-  border: none;
-  color: #667eea;
-  cursor: pointer;
-  text-decoration: underline;
-  padding: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: color 0.2s;
-}
-
-.resend-btn:hover {
-  color: #764ba2;
-}
-
-.back-btn {
-  background: #f0f0f0;
-  color: #666;
-  border: none;
-  padding: 12px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 14px;
-  transition: background 0.2s;
-}
-
-.back-btn:hover {
-  background: #e0e0e0;
-}
-
 .submit-btn {
   padding: 16px;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -428,6 +357,71 @@
 
 .toggle-link:hover {
   color: #764ba2;
+}
+
+.success-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: successModalFadeIn 0.2s ease-out forwards;
+}
+
+.success-modal-card {
+  background: #ffffff;
+  padding: 32px 28px;
+  border-radius: 16px;
+  box-shadow: 0 20px 45px rgba(102, 126, 234, 0.25);
+  text-align: center;
+  max-width: 340px;
+  width: 90%;
+  animation: successModalSlideUp 0.35s ease forwards;
+}
+
+.success-modal-icon {
+  font-size: 3rem;
+  color: #38a169;
+  margin-bottom: 16px;
+}
+
+.success-modal-card h2 {
+  margin: 0 0 10px;
+  color: #1a202c;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.success-modal-card p {
+  margin: 0;
+  color: #4a5568;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@keyframes successModalSlideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes successModalFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {

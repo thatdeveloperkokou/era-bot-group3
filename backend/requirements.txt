@@ -5,7 +5,7 @@ gunicorn==21.2.0
 flask-mail==0.9.1
 itsdangerous==2.1.2
 python-dotenv==1.0.0
-SQLAlchemy==2.0.23
-psycopg2-binary==2.9.9
+SQLAlchemy==2.0.36
+psycopg2-binary==2.9.11
 Flask-SQLAlchemy==3.1.1
 
