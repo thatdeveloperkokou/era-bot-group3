@@ -38,9 +38,13 @@ frontend_url = os.environ.get('FRONTEND_URL', '*')
 if frontend_url == '*':
     # Development: allow all origins
     CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+    print("🌐 CORS: Allowing all origins (development mode)")
 else:
-    # Production: allow specific frontend URL
-    CORS(app, resources={r"/api/*": {"origins": frontend_url}}, supports_credentials=True)
+    # Production: allow specific frontend URL(s)
+    # Support multiple URLs separated by comma
+    origins = [url.strip() for url in frontend_url.split(',')]
+    CORS(app, resources={r"/api/*": {"origins": origins}}, supports_credentials=True, allow_headers=['Content-Type', 'Authorization'])
+    print(f"🌐 CORS: Allowing origins: {origins}")
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
