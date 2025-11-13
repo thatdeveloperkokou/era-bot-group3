@@ -20,13 +20,17 @@ Railway provides a free PostgreSQL database that's easy to set up:
 3. **Get Connection URL:**
    - Click on your PostgreSQL service
    - Go to **"Variables"** tab
-   - Copy the `DATABASE_URL` value
-   - It will look like: `postgresql://user:password@host:port/database`
+   - Look for `DATABASE_URL` - Railway may provide multiple versions:
+     - **Use the PUBLIC URL** (hostname like `containers-us-west-xxx.railway.app`)
+     - **Avoid the internal URL** (hostname like `postgres.railway.internal` - may not resolve)
+   - Copy the `DATABASE_URL` value with the public hostname
+   - It will look like: `postgresql://user:password@containers-us-west-xxx.railway.app:5432/railway`
 
 4. **Add to Environment Variables:**
-   - In your backend service (or `.env` file)
-   - Add: `DATABASE_URL=your-connection-url-here`
-   - Railway will automatically use this URL
+   - Go to your **backend service** (not PostgreSQL)
+   - Go to **"Variables"** tab
+   - Add or update: `DATABASE_URL=your-public-connection-url-here`
+   - Make sure to use the public URL, not the internal one
 
 5. **Deploy:**
    - Push your code to GitHub
@@ -195,6 +199,16 @@ If you have existing data in JSON/CSV files, you can migrate it to PostgreSQL:
   3. Go to **"Variables"** tab
   4. Copy `DATABASE_URL`
   5. Add it to your backend service environment variables
+
+### Railway: "could not translate host name 'postgres.railway.internal'"
+- **Solution:** You're using Railway's internal hostname which may not resolve
+  1. Go to your PostgreSQL service in Railway
+  2. Go to **"Variables"** tab
+  3. Look for a `DATABASE_URL` with a **public hostname** (like `containers-us-west-xxx.railway.app`)
+  4. If you only see the internal URL, check the **"Connect"** or **"Connection"** tab for the public connection string
+  5. Copy the public DATABASE_URL
+  6. Update your backend service's `DATABASE_URL` variable with the public URL
+  7. Redeploy your backend service
 
 ---
 

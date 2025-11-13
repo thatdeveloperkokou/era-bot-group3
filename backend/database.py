@@ -121,6 +121,9 @@ def init_db(app):
         print(f"⚠️  DATABASE_URL not set, using local PostgreSQL: {db_host}:{db_port}/{db_name}")
     else:
         print(f"✅ Using DATABASE_URL from environment")
+        # Check if using Railway internal hostname and suggest using public URL
+        if 'railway.internal' in database_url:
+            print(f"⚠️  Warning: Using Railway internal hostname. If connection fails, use the public DATABASE_URL from PostgreSQL service Variables tab")
     
     # Handle Railway/Heroku DATABASE_URL format (may include postgres:// instead of postgresql://)
     if database_url.startswith('postgres://'):
