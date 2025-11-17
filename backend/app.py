@@ -90,13 +90,19 @@ def send_verification_email(email, code):
             return True
         
         # Check if email is configured
-        if not app.config['MAIL_USERNAME'] or not app.config['MAIL_PASSWORD']:
+        mail_username = app.config.get('MAIL_USERNAME', '')
+        mail_password = app.config.get('MAIL_PASSWORD', '')
+        mail_server = app.config.get('MAIL_SERVER', '')
+        
+        print(f"📧 Email config check: MAIL_SERVER={mail_server}, MAIL_USERNAME={'SET' if mail_username else 'NOT SET'}, MAIL_PASSWORD={'SET' if mail_password else 'NOT SET'}")
+        
+        if not mail_username or not mail_password:
             print(f"⚠️  Email not configured. Verification code for {email}: {code}")
             print(f"   To enable email, configure MAIL_USERNAME and MAIL_PASSWORD in Railway environment variables")
             print(f"   See EMAIL_SETUP.md for instructions")
-            print(f"   Current config: MAIL_SERVER={app.config['MAIL_SERVER']}, MAIL_USERNAME={'set' if app.config['MAIL_USERNAME'] else 'NOT SET'}, MAIL_PASSWORD={'set' if app.config['MAIL_PASSWORD'] else 'NOT SET'}")
             return True  # Return True for development (allow registration to continue)
         
+        print(f"📧 Creating email message for {email}")
         # Create email message
         msg = Message(
             subject='Verify Your Email - Electricity Supply Logger',
@@ -170,10 +176,15 @@ def send_verification_email(email, code):
             '''
         )
         
-        # Send email
-        mail.send(msg)
-        print(f"✅ Verification email sent successfully to {email}")
-        return True
+        print(f"📧 Attempting to send email via {mail_server}...")
+        # Send email with timeout handling
+        try:
+            mail.send(msg)
+            print(f"✅ Verification email sent successfully to {email}")
+            return True
+        except Exception as send_error:
+            print(f"❌ Error during mail.send(): {type(send_error).__name__}: {str(send_error)}")
+            raise
         
     except Exception as e:
         error_msg = str(e)
