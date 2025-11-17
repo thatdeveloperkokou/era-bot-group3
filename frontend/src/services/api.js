@@ -42,8 +42,14 @@ api.interceptors.response.use(
       // Request was made but no response received
       console.error('Network Error: No response from server. Is the backend running?');
       const apiUrl = getApiUrl();
+      const envVar = process.env.REACT_APP_API_URL;
       console.error('Attempted to connect to:', apiUrl);
-      console.error('REACT_APP_API_URL env var:', process.env.REACT_APP_API_URL || 'NOT SET');
+      console.error('REACT_APP_API_URL env var:', envVar || 'NOT SET - This is the problem!');
+      if (!envVar) {
+        console.error('⚠️ SOLUTION: Set REACT_APP_API_URL in Vercel Environment Variables');
+        console.error('   Go to: Vercel Dashboard → Settings → Environment Variables');
+        console.error('   Add: REACT_APP_API_URL = https://era-bot-group3-production.up.railway.app/api');
+      }
       error.message = `Cannot connect to backend server. Please check if the backend is running at ${apiUrl}.`;
     } else {
       // Something else happened
