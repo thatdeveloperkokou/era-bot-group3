@@ -38,13 +38,16 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
     return [];
   }
 
+  // Prioritize address types for street-level results in Nigeria
+  // Order matters: address first, then poi (points of interest), then places
   const searchParams = new URLSearchParams({
     access_token: token,
     autocomplete: 'true',
     country: options.countryCode || DEFAULT_COUNTRY,
     limit: limit.toString(),
     language: 'en',
-    types: options.types || 'address,place,locality,region,neighborhood',
+    // Prioritize address and poi for street-level results, then include other place types
+    types: options.types || 'address,poi,place,locality,neighborhood,district,postcode',
   });
 
   if (options.proximity?.lng && options.proximity?.lat) {
@@ -60,7 +63,28 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
     }
 
     const data = await response.json();
-    return (data.features || []).map(normalizeFeature);
+    const features = (data.features || []).map(normalizeFeature);
+    
+    // Sort results to prioritize street addresses and POIs over cities/towns
+    // Address types have higher priority for street-level results
+    const typePriority = {
+      'address': 1,
+      'poi': 2,
+      'neighborhood': 3,
+      'district': 4,
+      'postcode': 5,
+      'place': 6,
+      'locality': 7,
+      'region': 8
+    };
+    
+    return features.sort((a, b) => {
+      const aType = a.mapboxFeature?.place_type?.[0] || '';
+      const bType = b.mapboxFeature?.place_type?.[0] || '';
+      const aPriority = typePriority[aType] || 99;
+      const bPriority = typePriority[bType] || 99;
+      return aPriority - bPriority;
+    });
   } catch (error) {
     console.error('Error searching locations with Mapbox:', error);
     return [];

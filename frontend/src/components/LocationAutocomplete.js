@@ -33,7 +33,8 @@ const LocationAutocomplete = ({ value, onChange, onSelect, placeholder = 'Enter 
     setLoading(true);
     searchTimeoutRef.current = setTimeout(async () => {
       try {
-        const results = await searchLocations(searchQuery, 5);
+        // Increase limit for better street address results, especially for Nigeria
+        const results = await searchLocations(searchQuery, 8);
         setSuggestions(results);
         setShowSuggestions(results.length > 0);
         setActiveIndex(-1);
