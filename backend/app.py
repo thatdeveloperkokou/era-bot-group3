@@ -211,9 +211,9 @@ def send_verification_email(email, code):
             # Timeout - email sending is taking too long
             print(f"⚠️  Email sending timeout after 5 seconds. Email may still be sent, but continuing...")
             print(f"   Verification code for {email}: {code}")
-            # Return True to allow registration to continue
-            # The email might still be sent in the background
-            return True
+            # Return False to indicate email may not have been sent
+            # This will trigger the fallback to return code in response
+            return False
         
     except Exception as e:
         error_msg = str(e)
@@ -368,15 +368,25 @@ def register():
         
         # Send verification email
         print(f"📧 Attempting to send verification email to {email}")
-        if send_verification_email(email, verification_code):
+        email_sent = send_verification_email(email, verification_code)
+        
+        if email_sent:
             print(f"✅ Verification email sent successfully to {email}")
             return jsonify({
                 'message': 'Verification email sent',
-                'email': email
+                'email': email,
+                'emailSent': True
             }), 200
         else:
-            print(f"❌ Failed to send verification email to {email}")
-            return jsonify({'error': 'Failed to send verification email. Please check your email configuration.'}), 500
+            # Email sending failed - return code as fallback so user can still verify
+            print(f"⚠️  Email sending failed for {email}. Returning verification code as fallback.")
+            return jsonify({
+                'message': 'Registration successful. Email sending failed, but you can use the verification code below.',
+                'email': email,
+                'emailSent': False,
+                'verificationCode': verification_code,  # Fallback: return code if email fails
+                'note': 'Please check your email first. If you did not receive it, use the code shown above.'
+            }), 200
             
     except IntegrityError as e:
         db.session.rollback()

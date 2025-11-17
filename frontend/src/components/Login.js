@@ -19,6 +19,8 @@ const Login = () => {
   const [verificationCode, setVerificationCode] = useState('');
   const [showVerification, setShowVerification] = useState(false);
   const [verificationType, setVerificationType] = useState('email'); // 'email' or 'device'
+  const [fallbackCode, setFallbackCode] = useState(''); // Code shown if email fails
+  const [emailSent, setEmailSent] = useState(true); // Whether email was sent successfully
   const { login } = useAuth();
   const navigate = useNavigate();
   const cardRef = useRef(null);
@@ -82,9 +84,18 @@ const Login = () => {
             location 
           });
           
-          if (response.data.message === 'Verification email sent') {
+          if (response.data.message === 'Verification email sent' || response.data.message?.includes('Registration successful')) {
             setShowVerification(true);
             setVerificationType('email');
+            // Check if email was sent successfully
+            if (response.data.emailSent === false && response.data.verificationCode) {
+              // Email failed - show fallback code
+              setEmailSent(false);
+              setFallbackCode(response.data.verificationCode);
+            } else {
+              setEmailSent(true);
+              setFallbackCode('');
+            }
           }
         } else {
           // Step 2: Verify email with code
@@ -217,7 +228,41 @@ const Login = () => {
           {showVerification ? (
             <div className="verification-form">
               <h2>Verify Your Email</h2>
-              <p>We've sent a verification code to <strong>{email}</strong></p>
+              {emailSent ? (
+                <p>We've sent a verification code to <strong>{email}</strong></p>
+              ) : (
+                <div style={{ 
+                  background: '#fff3cd', 
+                  border: '2px solid #ffc107', 
+                  borderRadius: '10px', 
+                  padding: '15px', 
+                  marginBottom: '20px' 
+                }}>
+                  <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#856404' }}>
+                    ⚠️ Email could not be sent
+                  </p>
+                  <p style={{ margin: '0 0 10px 0', color: '#856404' }}>
+                    Please check your email first. If you didn't receive it, use this verification code:
+                  </p>
+                  <div style={{
+                    background: '#f8f9fa',
+                    border: '2px dashed #667eea',
+                    borderRadius: '8px',
+                    padding: '15px',
+                    textAlign: 'center',
+                    fontSize: '24px',
+                    fontWeight: 'bold',
+                    letterSpacing: '5px',
+                    color: '#667eea',
+                    margin: '10px 0'
+                  }}>
+                    {fallbackCode}
+                  </div>
+                  <p style={{ margin: '10px 0 0 0', fontSize: '12px', color: '#856404' }}>
+                    Enter this code below to verify your email
+                  </p>
+                </div>
+              )}
               <input
                 type="text"
                 placeholder="Enter verification code"
@@ -246,6 +291,8 @@ const Login = () => {
                   setShowVerification(false);
                   setVerificationCode('');
                   setError('');
+                  setFallbackCode('');
+                  setEmailSent(true);
                 }}
                 className="back-btn"
                 type="button"
@@ -315,6 +362,8 @@ const Login = () => {
                 setError('');
                 setShowVerification(false);
                 setVerificationCode('');
+                setFallbackCode('');
+                setEmailSent(true);
                 setEmail('');
                 setLocation('');
               }} className="toggle-link">
