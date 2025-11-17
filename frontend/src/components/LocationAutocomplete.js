@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { searchLocations } from '../utils/nominatim';
+import { searchLocations } from '../utils/mapboxGeocoding';
 import './LocationAutocomplete.css';
 
 const LocationAutocomplete = ({ value, onChange, onSelect, placeholder = 'Enter your location', required = false }) => {
