@@ -280,11 +280,15 @@ def api_info():
 @app.route('/api/register', methods=['POST', 'OPTIONS'])
 def register():
     if request.method == 'OPTIONS':
+        print("📨 Received OPTIONS request for /api/register")
         return jsonify({}), 200
     
+    print(f"📨 Received POST request to /api/register from origin: {request.headers.get('Origin', 'unknown')}")
     try:
         data = request.get_json() or request.json
+        print(f"📨 Request data received: username={data.get('username') if data else 'None'}, email={data.get('email') if data else 'None'}")
         if not data:
+            print("❌ No JSON data in request")
             return jsonify({'error': 'Invalid JSON data'}), 400
         
         username = data.get('username')
@@ -320,14 +324,18 @@ def register():
         )
         db.session.add(verif_code)
         db.session.commit()
+        print(f"✅ Verification code saved to database for {email}")
         
         # Send verification email
+        print(f"📧 Attempting to send verification email to {email}")
         if send_verification_email(email, verification_code):
+            print(f"✅ Verification email sent successfully to {email}")
             return jsonify({
                 'message': 'Verification email sent',
                 'email': email
             }), 200
         else:
+            print(f"❌ Failed to send verification email to {email}")
             return jsonify({'error': 'Failed to send verification email. Please check your email configuration.'}), 500
             
     except IntegrityError as e:
