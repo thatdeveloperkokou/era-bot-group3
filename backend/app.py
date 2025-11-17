@@ -28,6 +28,8 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', '')
 app.config['MAIL_SUPPRESS_SEND'] = os.environ.get('MAIL_SUPPRESS_SEND', 'false').lower() == 'true'
+# Add timeout settings for Railway deployment
+app.config['MAIL_TIMEOUT'] = 10  # 10 second timeout for SMTP operations
 
 try:
     mail = Mail(app)
@@ -176,15 +178,42 @@ def send_verification_email(email, code):
             '''
         )
         
-        print(f"📧 Attempting to send email via {mail_server}...")
-        # Send email with timeout handling
-        try:
-            mail.send(msg)
+        print(f"📧 Attempting to send email via {mail_server}:{app.config.get('MAIL_PORT', 587)}...")
+        # Send email with timeout handling - use threading to prevent blocking
+        import threading
+        import queue
+        
+        result_queue = queue.Queue()
+        error_queue = queue.Queue()
+        
+        def send_email_thread():
+            try:
+                mail.send(msg)
+                result_queue.put(True)
+            except Exception as e:
+                error_queue.put(e)
+        
+        # Start email sending in a separate thread
+        email_thread = threading.Thread(target=send_email_thread, daemon=True)
+        email_thread.start()
+        
+        # Wait for result with timeout (5 seconds)
+        email_thread.join(timeout=5.0)
+        
+        if not result_queue.empty():
             print(f"✅ Verification email sent successfully to {email}")
             return True
-        except Exception as send_error:
-            print(f"❌ Error during mail.send(): {type(send_error).__name__}: {str(send_error)}")
-            raise
+        elif not error_queue.empty():
+            error = error_queue.get()
+            print(f"❌ Error during mail.send(): {type(error).__name__}: {str(error)}")
+            raise error
+        else:
+            # Timeout - email sending is taking too long
+            print(f"⚠️  Email sending timeout after 5 seconds. Email may still be sent, but continuing...")
+            print(f"   Verification code for {email}: {code}")
+            # Return True to allow registration to continue
+            # The email might still be sent in the background
+            return True
         
     except Exception as e:
         error_msg = str(e)
