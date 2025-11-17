@@ -64,6 +64,9 @@ except Exception as e:
     traceback.print_exc()
     raise
 
+# Add a marker to confirm app module loaded completely
+print("✅ Flask app module loaded successfully - ready for gunicorn")
+
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
@@ -863,6 +866,9 @@ def verify_device():
 
 # Set the port to the value of the PORT environment variable or default to 5000
 port = int(os.environ.get("PORT", 5000))
+
+# Final check - confirm module loaded completely
+print("✅ All routes and functions defined - app module is ready")
 
 if __name__ == '__main__':
     debug = os.environ.get('FLASK_ENV') == 'development'
