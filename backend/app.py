@@ -29,23 +29,40 @@ app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', '')
 app.config['MAIL_SUPPRESS_SEND'] = os.environ.get('MAIL_SUPPRESS_SEND', 'false').lower() == 'true'
 
-mail = Mail(app)
+try:
+    mail = Mail(app)
+except Exception as e:
+    print(f"⚠️  Warning: Mail initialization error: {str(e)}")
+    print("   Email functionality may not work, but continuing...")
+    mail = None
 
 # Initialize database
-init_db(app)
+try:
+    init_db(app)
+except Exception as e:
+    print(f"❌ Fatal: Database initialization failed: {str(e)}")
+    print("   Application cannot start without database connection")
+    raise
 
 # CORS configuration - allow specific frontend URL in production, all origins in development
-frontend_url = os.environ.get('FRONTEND_URL', '*')
-if frontend_url == '*':
-    # Development: allow all origins
-    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
-    print("🌐 CORS: Allowing all origins (development mode)")
-else:
-    # Production: allow specific frontend URL(s)
-    # Support multiple URLs separated by comma
-    origins = [url.strip() for url in frontend_url.split(',')]
-    CORS(app, resources={r"/api/*": {"origins": origins}}, supports_credentials=True, allow_headers=['Content-Type', 'Authorization'])
-    print(f"🌐 CORS: Allowing origins: {origins}")
+try:
+    frontend_url = os.environ.get('FRONTEND_URL', '*')
+    if frontend_url == '*':
+        # Development: allow all origins
+        CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
+        print("🌐 CORS: Allowing all origins (development mode)")
+    else:
+        # Production: allow specific frontend URL(s)
+        # Support multiple URLs separated by comma
+        origins = [url.strip() for url in frontend_url.split(',')]
+        CORS(app, resources={r"/api/*": {"origins": origins}}, supports_credentials=True, allow_headers=['Content-Type', 'Authorization'])
+        print(f"🌐 CORS: Allowing origins: {origins}")
+    print("✅ Application initialized successfully")
+except Exception as e:
+    print(f"❌ Fatal: CORS initialization failed: {str(e)}")
+    import traceback
+    traceback.print_exc()
+    raise
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -60,6 +77,11 @@ def send_verification_email(email, code):
     Returns False if email sending failed.
     """
     try:
+        # Check if mail object is None (initialization failed)
+        if mail is None:
+            print(f"⚠️  Mail not initialized. Verification code for {email}: {code}")
+            return True
+        
         if app.config.get('MAIL_SUPPRESS_SEND'):
             print(f"📧 MAIL_SUPPRESS_SEND enabled. Skipping actual email send for {email}. Verification code: {code}")
             return True
