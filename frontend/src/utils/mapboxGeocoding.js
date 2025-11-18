@@ -38,16 +38,17 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
     return [];
   }
 
-  // Prioritize address types for street-level results in Nigeria
-  // Order matters: address first, then poi (points of interest), then places
+  // Improved search for street-level addresses in Nigeria
+  // Try multiple search strategies to get better street results
   const searchParams = new URLSearchParams({
     access_token: token,
     autocomplete: 'true',
     country: options.countryCode || DEFAULT_COUNTRY,
     limit: limit.toString(),
     language: 'en',
-    // Prioritize address and poi for street-level results, then include other place types
-    types: options.types || 'address,poi,place,locality,neighborhood,district,postcode',
+    // Focus on address types first, then POI, then neighborhoods for street-level results
+    // Remove 'place' and 'locality' to avoid showing only cities/towns
+    types: options.types || 'address,poi,neighborhood,street,district',
   });
 
   if (options.proximity?.lng && options.proximity?.lat) {
@@ -63,12 +64,53 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
     }
 
     const data = await response.json();
-    const features = (data.features || []).map(normalizeFeature);
+    let features = (data.features || []).map(normalizeFeature);
+    
+    // If we don't have enough address results, try a secondary search with broader types
+    const addressResults = features.filter(f => 
+      f.mapboxFeature?.place_type?.includes('address') || 
+      f.mapboxFeature?.place_type?.includes('street')
+    );
+    
+    // If query looks like a street name (contains common street indicators), do additional search
+    const queryLower = query.trim().toLowerCase();
+    const isStreetQuery = /street|st|road|rd|avenue|ave|drive|dr|close|cl|way|boulevard|blvd|lane|ln/i.test(queryLower) ||
+                         queryLower.split(' ').length >= 2; // Multi-word queries are more likely streets
+    
+    if (addressResults.length < 3 && isStreetQuery) {
+      // Try a more specific address search
+      try {
+        const addressParams = new URLSearchParams({
+          access_token: token,
+          autocomplete: 'true',
+          country: options.countryCode || DEFAULT_COUNTRY,
+          limit: '5',
+          language: 'en',
+          types: 'address,street', // Focus only on addresses and streets
+        });
+        
+        const addressResponse = await fetch(`${MAPBOX_BASE_URL}/${encodedQuery}.json?${addressParams.toString()}`);
+        if (addressResponse.ok) {
+          const addressData = await addressResponse.json();
+          const addressFeatures = (addressData.features || []).map(normalizeFeature);
+          // Merge and deduplicate
+          const existingIds = new Set(features.map(f => f.place_id));
+          addressFeatures.forEach(f => {
+            if (!existingIds.has(f.place_id)) {
+              features.push(f);
+              existingIds.add(f.place_id);
+            }
+          });
+        }
+      } catch (e) {
+        console.warn('Secondary address search failed:', e);
+      }
+    }
     
     // Sort results to prioritize street addresses and POIs over cities/towns
-    // Address types have higher priority for street-level results
     const typePriority = {
       'address': 1,
+      'street': 1,
       'poi': 2,
       'neighborhood': 3,
       'district': 4,
@@ -83,6 +125,17 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
       const bType = b.mapboxFeature?.place_type?.[0] || '';
       const aPriority = typePriority[aType] || 99;
       const bPriority = typePriority[bType] || 99;
+      
+      // If same priority, prefer results with "street" or "road" in the name
+      if (aPriority === bPriority) {
+        const aName = (a.description || '').toLowerCase();
+        const bName = (b.description || '').toLowerCase();
+        const aHasStreet = /street|road|avenue|drive|way|boulevard|lane/i.test(aName);
+        const bHasStreet = /street|road|avenue|drive|way|boulevard|lane/i.test(bName);
+        if (aHasStreet && !bHasStreet) return -1;
+        if (!aHasStreet && bHasStreet) return 1;
+      }
+      
       return aPriority - bPriority;
     });
   } catch (error) {

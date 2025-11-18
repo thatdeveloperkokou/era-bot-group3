@@ -49,7 +49,7 @@ const Login = () => {
 
     try {
       if (isLogin) {
-        // Login flow - check if device is new
+        // Login flow - device verification temporarily disabled
         const deviceId = localStorage.getItem('deviceId');
         // Send username field - backend will check both username and email
         const response = await api.post('/login', { 
@@ -58,60 +58,26 @@ const Login = () => {
           deviceId: deviceId || null
         });
         
-        // Check if email verification is required
-        if (response.data.requiresVerification) {
-          setShowVerification(true);
-          setVerificationType('device');
-          setEmail(response.data.email);
-          return;
-        }
-        
-        // Store device ID if first time
-        if (response.data.deviceId && !localStorage.getItem('deviceId')) {
-          localStorage.setItem('deviceId', response.data.deviceId);
-        }
-        
+        // Login directly - no device verification needed
         login(response.data.token, response.data.username);
         navigate('/dashboard');
       } else {
-        // Registration flow
-        if (!showVerification) {
-          // Step 1: Register and send verification email
-          const response = await api.post('/register', { 
-            username, 
-            email, 
-            password, 
-            location 
-          });
-          
-          if (response.data.message === 'Verification email sent' || response.data.message?.includes('Registration successful')) {
-            setShowVerification(true);
-            setVerificationType('email');
-            // Check if email was sent successfully
-            if (response.data.emailSent === false && response.data.verificationCode) {
-              // Email failed - show fallback code
-              setEmailSent(false);
-              setFallbackCode(response.data.verificationCode);
-            } else {
-              setEmailSent(true);
-              setFallbackCode('');
-            }
+        // Registration flow - email verification temporarily disabled
+        const response = await api.post('/register', { 
+          username, 
+          email, 
+          password, 
+          location 
+        });
+        
+        if (response.data.message === 'Registration successful' || response.data.token) {
+          // Store device ID if provided
+          if (response.data.deviceId) {
+            localStorage.setItem('deviceId', response.data.deviceId);
           }
-        } else {
-          // Step 2: Verify email with code
-          const response = await api.post('/verify-email', {
-            email,
-            code: verificationCode
-          });
-          
-          if (response.data.verified) {
-            // Store device ID
-            if (response.data.deviceId) {
-              localStorage.setItem('deviceId', response.data.deviceId);
-            }
-            login(response.data.token, response.data.username);
-            navigate('/dashboard');
-          }
+          // Login directly - no email verification needed
+          login(response.data.token, response.data.username);
+          navigate('/dashboard');
         }
       }
     } catch (err) {

@@ -349,44 +349,44 @@ def register():
         if existing_email:
             return jsonify({'error': 'Email already registered'}), 400
         
-        # Generate verification code
-        verification_code = generate_verification_code()
-        expires_at = datetime.utcnow() + timedelta(minutes=10)
-        
-        # Save verification code to database
-        verif_code = VerificationCode(
-            email=email,
-            code=verification_code,
-            expires_at=expires_at,
+        # TEMPORARILY DISABLED: Email verification removed for now
+        # Create user account directly without email verification
+        user = User(
             username=username,
             password=hash_password(password),
-            location=location
+            email=email,
+            location=location,
+            email_verified=True,  # Skip verification for now
+            created_at=datetime.utcnow()
         )
-        db.session.add(verif_code)
+        db.session.add(user)
+        
+        # Generate device ID
+        device_id = str(uuid.uuid4())
+        device_id_record = DeviceId(
+            user_id=username,
+            device_id=device_id
+        )
+        db.session.add(device_id_record)
         db.session.commit()
-        print(f"✅ Verification code saved to database for {email}")
         
-        # Send verification email
-        print(f"📧 Attempting to send verification email to {email}")
-        email_sent = send_verification_email(email, verification_code)
+        print(f"✅ User {username} registered successfully (email verification skipped)")
         
-        if email_sent:
-            print(f"✅ Verification email sent successfully to {email}")
-            return jsonify({
-                'message': 'Verification email sent',
-                'email': email,
-                'emailSent': True
-            }), 200
-        else:
-            # Email sending failed - return code as fallback so user can still verify
-            print(f"⚠️  Email sending failed for {email}. Returning verification code as fallback.")
-            return jsonify({
-                'message': 'Registration successful. Email sending failed, but you can use the verification code below.',
-                'email': email,
-                'emailSent': False,
-                'verificationCode': verification_code,  # Fallback: return code if email fails
-                'note': 'Please check your email first. If you did not receive it, use the code shown above.'
-            }), 200
+        # Generate token and return
+        token = generate_token(username)
+        return jsonify({
+            'message': 'Registration successful',
+            'token': token,
+            'username': username,
+            'deviceId': device_id
+        }), 200
+        
+        # TODO: Re-enable email verification later
+        # Old code for email verification (commented out for easy restoration):
+        # verification_code = generate_verification_code()
+        # expires_at = datetime.utcnow() + timedelta(minutes=10)
+        # verif_code = VerificationCode(...)
+        # send_verification_email(email, verification_code)
             
     except IntegrityError as e:
         db.session.rollback()
@@ -428,56 +428,40 @@ def login():
         if user.password != hash_password(password):
             return jsonify({'error': 'Invalid credentials'}), 401
         
-        # Check if device is verified
-        verified_devices = user.verified_devices or []
+        # TEMPORARILY DISABLED: Device verification removed for now
+        # Allow login directly without device verification
+        token = generate_token(user.username)
         
-        # For backward compatibility: if user has no email, allow login without verification
-        if not user.email:
-            # Old user without email - allow login
-            token = generate_token(user.username)
-            return jsonify({
-                'message': 'Login successful',
-                'token': token,
-                'username': user.username
-            }), 200
-        
-        if device_id and device_id in verified_devices:
-            # Device is verified, allow login
-            token = generate_token(user.username)
-            return jsonify({
-                'message': 'Login successful',
-                'token': token,
-                'username': user.username
-            }), 200
-        else:
-            # New device or no device ID, require email verification
-            # Generate verification code for device
-            verification_code = generate_verification_code()
-            expires_at = datetime.utcnow() + timedelta(minutes=10)
-            
-            # Delete old device verification code if exists
-            VerificationCode.query.filter_by(email=f"{user.email}_device").delete()
-            
-            # Save new verification code
-            verif_code = VerificationCode(
-                email=f"{user.email}_device",
-                code=verification_code,
-                expires_at=expires_at,
-                username=user.username,
+        # Store device ID if provided
+        if device_id:
+            # Check if device ID already exists
+            existing_device = DeviceId.query.filter_by(
+                user_id=user.username,
                 device_id=device_id
-            )
-            db.session.add(verif_code)
-            db.session.commit()
+            ).first()
             
-            # Send verification email
-            if send_verification_email(user.email, verification_code):
-                return jsonify({
-                    'requiresVerification': True,
-                    'email': user.email,
-                    'message': 'Device verification required. Check your email.'
-                }), 200
-            else:
-                return jsonify({'error': 'Failed to send verification email'}), 500
+            if not existing_device:
+                device_id_record = DeviceId(
+                    user_id=user.username,
+                    device_id=device_id
+                )
+                db.session.add(device_id_record)
+                db.session.commit()
+        
+        return jsonify({
+            'message': 'Login successful',
+            'token': token,
+            'username': user.username
+        }), 200
+        
+        # TODO: Re-enable device verification later
+        # Old code for device verification (commented out for easy restoration):
+        # verified_devices = user.verified_devices or []
+        # if device_id and device_id in verified_devices:
+        #     # Device verified, allow login
+        # else:
+        #     # Require email verification for new device
+        #     send_verification_email(user.email, verification_code)
                 
     except SQLAlchemyError as e:
         db.session.rollback()
