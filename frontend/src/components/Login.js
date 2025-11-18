@@ -16,11 +16,12 @@ const Login = () => {
   const [location, setLocation] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [verificationCode, setVerificationCode] = useState('');
-  const [showVerification, setShowVerification] = useState(false);
-  const [verificationType, setVerificationType] = useState('email'); // 'email' or 'device'
-  const [fallbackCode, setFallbackCode] = useState(''); // Code shown if email fails
-  const [emailSent, setEmailSent] = useState(true); // Whether email was sent successfully
+  // Email verification temporarily disabled - kept for easy restoration
+  // const [verificationCode, setVerificationCode] = useState('');
+  // const [showVerification, setShowVerification] = useState(false);
+  // const [verificationType, setVerificationType] = useState('email');
+  // const [fallbackCode, setFallbackCode] = useState('');
+  // const [emailSent, setEmailSent] = useState(true);
   const { login } = useAuth();
   const navigate = useNavigate();
   const cardRef = useRef(null);
@@ -111,46 +112,9 @@ const Login = () => {
     }
   };
 
-  const handleDeviceVerification = async () => {
-    setError('');
-    setLoading(true);
-
-    try {
-      const response = await api.post('/verify-device', {
-        email,
-        code: verificationCode
-      });
-
-      if (response.data.deviceId) {
-        localStorage.setItem('deviceId', response.data.deviceId);
-      }
-      login(response.data.token, response.data.username);
-      navigate('/dashboard');
-    } catch (err) {
-      if (err.response?.data?.error) {
-        setError(err.response.data.error);
-      } else {
-        setError('An error occurred. Please try again.');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleResendCode = async () => {
-    try {
-      if (verificationType === 'email') {
-        await api.post('/resend-verification', { email });
-      } else {
-        // For device verification, we need to resend via login endpoint
-        await api.post('/login', { username, password });
-      }
-      setError('');
-      alert('Verification code resent to your email');
-    } catch (err) {
-      setError('Failed to resend code. Please try again.');
-    }
-  };
+  // Email verification handlers temporarily disabled - kept for easy restoration
+  // const handleDeviceVerification = async () => { ... }
+  // const handleResendCode = async () => { ... }
 
   return (
     <div className="login-container">
@@ -191,82 +155,10 @@ const Login = () => {
             <p>{isLogin ? 'Welcome back! Sign in to continue tracking your electricity supply.' : 'Create your account to start monitoring your electricity data'}</p>
           </div>
           
-          {showVerification ? (
-            <div className="verification-form">
-              <h2>Verify Your Email</h2>
-              {emailSent ? (
-                <p>We've sent a verification code to <strong>{email}</strong></p>
-              ) : (
-                <div style={{ 
-                  background: '#fff3cd', 
-                  border: '2px solid #ffc107', 
-                  borderRadius: '10px', 
-                  padding: '15px', 
-                  marginBottom: '20px' 
-                }}>
-                  <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#856404' }}>
-                    ⚠️ Email could not be sent
-                  </p>
-                  <p style={{ margin: '0 0 10px 0', color: '#856404' }}>
-                    Please check your email first. If you didn't receive it, use this verification code:
-                  </p>
-                  <div style={{
-                    background: '#f8f9fa',
-                    border: '2px dashed #667eea',
-                    borderRadius: '8px',
-                    padding: '15px',
-                    textAlign: 'center',
-                    fontSize: '24px',
-                    fontWeight: 'bold',
-                    letterSpacing: '5px',
-                    color: '#667eea',
-                    margin: '10px 0'
-                  }}>
-                    {fallbackCode}
-                  </div>
-                  <p style={{ margin: '10px 0 0 0', fontSize: '12px', color: '#856404' }}>
-                    Enter this code below to verify your email
-                  </p>
-                </div>
-              )}
-              <input
-                type="text"
-                placeholder="Enter verification code"
-                value={verificationCode}
-                onChange={(e) => setVerificationCode(e.target.value)}
-                className="verification-input"
-                maxLength="6"
-              />
-              <button 
-                onClick={handleResendCode}
-                className="resend-btn"
-                type="button"
-              >
-                Resend Code
-              </button>
-              <button 
-                onClick={verificationType === 'email' ? handleSubmit : handleDeviceVerification}
-                disabled={loading || !verificationCode}
-                className="submit-btn"
-                type="button"
-              >
-                {loading ? 'Verifying...' : 'Verify'}
-              </button>
-              <button 
-                onClick={() => {
-                  setShowVerification(false);
-                  setVerificationCode('');
-                  setError('');
-                  setFallbackCode('');
-                  setEmailSent(true);
-                }}
-                className="back-btn"
-                type="button"
-              >
-                Back
-              </button>
-            </div>
-          ) : (
+          {/* Email verification UI temporarily disabled - kept for easy restoration */}
+          {/* {showVerification ? (
+            <div className="verification-form">...</div>
+          ) : ( */}
             <form onSubmit={handleSubmit} className="login-form">
               <div className="form-group">
                 <input
