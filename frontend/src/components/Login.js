@@ -218,10 +218,10 @@ const Login = () => {
               <span onClick={() => {
                 setIsLogin(!isLogin);
                 setError('');
-                setShowVerification(false);
-                setVerificationCode('');
-                setFallbackCode('');
-                setEmailSent(true);
+                // setShowVerification(false);
+                // setVerificationCode('');
+                // setFallbackCode('');
+                // setEmailSent(true);
                 setEmail('');
                 setLocation('');
               }} className="toggle-link">
