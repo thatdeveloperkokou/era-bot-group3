@@ -2,6 +2,12 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_mail import Mail, Message
 from datetime import datetime, timedelta
+try:
+    from flask_migrate import Migrate
+    FLASK_MIGRATE_AVAILABLE = True
+except ImportError:
+    FLASK_MIGRATE_AVAILABLE = False
+    Migrate = None
 import os
 import hashlib
 import jwt
@@ -42,6 +48,9 @@ except Exception as e:
 # Initialize database
 try:
     init_db(app)
+    # Initialize Flask-Migrate if available
+    if FLASK_MIGRATE_AVAILABLE and Migrate:
+        migrate = Migrate(app, db)
 except Exception as e:
     print(f"❌ Fatal: Database initialization failed: {str(e)}")
     print("   Application cannot start without database connection")
@@ -790,6 +799,7 @@ def verify_email():
             password=verif_code.password,
             email=email,
             location=verif_code.location,
+            region_id=verif_code.region_id,
             email_verified=True,
             created_at=datetime.utcnow()
         )
@@ -976,4 +986,13 @@ if __name__ == '__main__':
     print("  - GET  /api/stats             - Get statistics")
     print("  - GET  /api/recent-events     - Get recent events")
     print("  - GET  /api/report            - Get brief report summary")
+    
+    # Make migrate available as Flask CLI command
+    @app.cli.command()
+    def migrate():
+        """Run database migrations"""
+        from flask_migrate import upgrade
+        upgrade()
+        print("✅ Database migrations applied")
+    
     app.run(debug=debug, port=port, host='0.0.0.0')

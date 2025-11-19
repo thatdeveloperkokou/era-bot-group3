@@ -115,6 +115,7 @@ class VerificationCode(db.Model):
     username = db.Column(db.String(100), nullable=True)
     password = db.Column(db.String(255), nullable=True)
     location = db.Column(db.String(500), nullable=True)
+    region_id = db.Column(db.String(50), db.ForeignKey('region_profiles.id'), nullable=True)
     device_id = db.Column(db.String(255), nullable=True)
     
     def is_expired(self):
