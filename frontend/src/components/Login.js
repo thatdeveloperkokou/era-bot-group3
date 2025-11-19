@@ -156,9 +156,6 @@ const Login = () => {
           </div>
           
           {/* Email verification UI temporarily disabled - kept for easy restoration */}
-          {/* {showVerification ? (
-            <div className="verification-form">...</div>
-          ) : ( */}
             <form onSubmit={handleSubmit} className="login-form">
               <div className="form-group">
                 <input
@@ -210,7 +207,6 @@ const Login = () => {
                 {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
               </button>
             </form>
-          )}
           
           <div className="toggle-auth">
             <p>
