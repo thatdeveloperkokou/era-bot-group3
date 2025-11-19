@@ -16,12 +16,13 @@ const Login = () => {
   const [location, setLocation] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  // Email verification temporarily disabled - kept for easy restoration
-  // const [verificationCode, setVerificationCode] = useState('');
-  // const [showVerification, setShowVerification] = useState(false);
-  // const [verificationType, setVerificationType] = useState('email');
-  // const [fallbackCode, setFallbackCode] = useState('');
-  // const [emailSent, setEmailSent] = useState(true);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [showVerification, setShowVerification] = useState(false);
+  const [verificationEmail, setVerificationEmail] = useState('');
+  const [fallbackCode, setFallbackCode] = useState('');
+  const [emailSent, setEmailSent] = useState(true);
+  const [verifying, setVerifying] = useState(false);
+  const [resending, setResending] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const cardRef = useRef(null);
@@ -63,7 +64,7 @@ const Login = () => {
         login(response.data.token, response.data.username);
         navigate('/dashboard');
       } else {
-        // Registration flow - email verification temporarily disabled
+        // Registration flow with email verification
         const response = await api.post('/register', { 
           username, 
           email, 
@@ -71,12 +72,19 @@ const Login = () => {
           location 
         });
         
-        if (response.data.message === 'Registration successful' || response.data.token) {
-          // Store device ID if provided
+        if (response.data.requires_verification) {
+          // Show verification form
+          setVerificationEmail(email);
+          setShowVerification(true);
+          setEmailSent(response.data.fallback_code ? false : true);
+          setFallbackCode(response.data.fallback_code || '');
+          setError('');
+          setLoading(false);
+        } else if (response.data.token) {
+          // Direct registration (fallback if verification disabled)
           if (response.data.deviceId) {
             localStorage.setItem('deviceId', response.data.deviceId);
           }
-          // Login directly - no email verification needed
           login(response.data.token, response.data.username);
           navigate('/dashboard');
         }
@@ -112,9 +120,69 @@ const Login = () => {
     }
   };
 
-  // Email verification handlers temporarily disabled - kept for easy restoration
-  // const handleDeviceVerification = async () => { ... }
-  // const handleResendCode = async () => { ... }
+  const handleVerification = async (e) => {
+    e.preventDefault();
+    setError('');
+    setVerifying(true);
+
+    try {
+      const response = await api.post('/verify-email', {
+        email: verificationEmail,
+        code: verificationCode.trim()
+      });
+
+      if (response.data.verified && response.data.token) {
+        // Store device ID if provided
+        if (response.data.deviceId) {
+          localStorage.setItem('deviceId', response.data.deviceId);
+        }
+        // Login user
+        login(response.data.token, response.data.username);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else if (err.message) {
+        setError(err.message);
+      } else {
+        setError('Verification failed. Please try again.');
+      }
+    } finally {
+      setVerifying(false);
+    }
+  };
+
+  const handleResendCode = async () => {
+    setError('');
+    setResending(true);
+
+    try {
+      const response = await api.post('/resend-verification', {
+        email: verificationEmail
+      });
+      setError('');
+      
+      // Check if email was sent or fallback code provided
+      if (response.data.fallback_code) {
+        setEmailSent(false);
+        setFallbackCode(response.data.fallback_code);
+        setError('Email sending failed. Use the code shown below.');
+      } else {
+        setEmailSent(true);
+        setFallbackCode('');
+        alert('Verification code resent! Please check your email.');
+      }
+    } catch (err) {
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else {
+        setError('Failed to resend code. Please try again.');
+      }
+    } finally {
+      setResending(false);
+    }
+  };
 
   return (
     <div className="login-container">
@@ -155,7 +223,68 @@ const Login = () => {
             <p>{isLogin ? 'Welcome back! Sign in to continue tracking your electricity supply.' : 'Create your account to start monitoring your electricity data'}</p>
           </div>
           
-          {/* Email verification UI temporarily disabled - kept for easy restoration */}
+          {showVerification ? (
+            <div className="verification-form">
+              <div className="verification-header">
+                <FaEnvelope className="verification-icon" />
+                <h2>Verify Your Email</h2>
+                <p>We've sent a verification code to <strong>{verificationEmail}</strong></p>
+              </div>
+
+              {!emailSent && fallbackCode && (
+                <div className="fallback-code-box">
+                  <p><strong>Email sending failed.</strong> Use this code to verify:</p>
+                  <div className="fallback-code">{fallbackCode}</div>
+                  <p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
+                    Check your email configuration in Railway settings.
+                  </p>
+                </div>
+              )}
+
+              <form onSubmit={handleVerification} className="login-form">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder="Enter 6-digit code"
+                    value={verificationCode}
+                    onChange={(e) => setVerificationCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    maxLength={6}
+                    required
+                    autoFocus
+                    style={{ textAlign: 'center', fontSize: '24px', letterSpacing: '8px', fontWeight: 'bold' }}
+                  />
+                </div>
+
+                {error && <div className="error-message">{error}</div>}
+
+                <button type="submit" disabled={verifying || verificationCode.length !== 6} className="submit-btn">
+                  {verifying ? 'Verifying...' : 'Verify Email'}
+                </button>
+
+                <div className="verification-actions">
+                  <button
+                    type="button"
+                    onClick={handleResendCode}
+                    disabled={resending}
+                    className="resend-btn"
+                  >
+                    {resending ? 'Sending...' : 'Resend Code'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowVerification(false);
+                      setVerificationCode('');
+                      setError('');
+                    }}
+                    className="back-btn"
+                  >
+                    Back to Registration
+                  </button>
+                </div>
+              </form>
+            </div>
+          ) : (
             <form onSubmit={handleSubmit} className="login-form">
               <div className="form-group">
                 <input
@@ -207,6 +336,7 @@ const Login = () => {
                 {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
               </button>
             </form>
+          )}
           
           <div className="toggle-auth">
             <p>
@@ -214,12 +344,14 @@ const Login = () => {
               <span onClick={() => {
                 setIsLogin(!isLogin);
                 setError('');
-                // setShowVerification(false);
-                // setVerificationCode('');
-                // setFallbackCode('');
-                // setEmailSent(true);
+                setShowVerification(false);
+                setVerificationCode('');
+                setFallbackCode('');
+                setEmailSent(true);
                 setEmail('');
                 setLocation('');
+                setUsername('');
+                setPassword('');
               }} className="toggle-link">
                 {isLogin ? 'Register' : 'Login'}
               </span>

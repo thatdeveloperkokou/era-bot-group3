@@ -372,45 +372,40 @@ def register():
         if existing_email:
             return jsonify({'error': 'Email already registered'}), 400
         
-        # TEMPORARILY DISABLED: Email verification removed for now
-        # Create user account directly without email verification
-        user = User(
+        # Email verification flow
+        verification_code = generate_verification_code()
+        expires_at = datetime.utcnow() + timedelta(minutes=10)
+        
+        # Store verification code (this will be used to create user after email verification)
+        verif_code = VerificationCode(
+            email=email,
+            code=verification_code,
             username=username,
             password=hash_password(password),
-            email=email,
             location=location,
-            email_verified=True,  # Skip verification for now
             region_id=region_id,
-            created_at=datetime.utcnow()
+            expires_at=expires_at
         )
-        db.session.add(user)
-        
-        # Generate device ID
-        device_id = str(uuid.uuid4())
-        device_id_record = DeviceId(
-            user_id=username,
-            device_id=device_id
-        )
-        db.session.add(device_id_record)
+        db.session.add(verif_code)
         db.session.commit()
         
-        print(f"✅ User {username} registered successfully (email verification skipped)")
+        # Attempt to send email (non-blocking - don't wait for it)
+        email_sent = send_verification_email(email, verification_code)
         
-        # Generate token and return
-        token = generate_token(username)
-        return jsonify({
-            'message': 'Registration successful',
-            'token': token,
-            'username': username,
-            'deviceId': device_id
-        }), 200
+        # Return response immediately (don't wait for email)
+        response_data = {
+            'message': 'Verification code sent to your email',
+            'requires_verification': True,
+            'email': email
+        }
         
-        # TODO: Re-enable email verification later
-        # Old code for email verification (commented out for easy restoration):
-        # verification_code = generate_verification_code()
-        # expires_at = datetime.utcnow() + timedelta(minutes=10)
-        # verif_code = VerificationCode(...)
-        # send_verification_email(email, verification_code)
+        # If email sending failed, include code in response (for development/fallback)
+        if not email_sent:
+            response_data['fallback_code'] = verification_code
+            response_data['message'] = 'Email sending failed. Please check your email configuration or use the code below.'
+            print(f"⚠️  Email sending failed - returning code in response for {email}")
+        
+        return jsonify(response_data), 200
             
     except IntegrityError as e:
         db.session.rollback()
@@ -858,10 +853,17 @@ def resend_verification():
         verif_code.expires_at = datetime.utcnow() + timedelta(minutes=10)
         db.session.commit()
         
-        if send_verification_email(email, verification_code):
-            return jsonify({'message': 'Verification code resent'}), 200
+        # Attempt to send email (non-blocking)
+        email_sent = send_verification_email(email, verification_code)
+        
+        if email_sent:
+            return jsonify({'message': 'Verification code resent to your email'}), 200
         else:
-            return jsonify({'error': 'Failed to send verification email'}), 500
+            # Email sending failed - return code in response as fallback
+            return jsonify({
+                'message': 'Email sending failed. Please check your email configuration.',
+                'fallback_code': verification_code
+            }), 200
             
     except SQLAlchemyError as e:
         db.session.rollback()
