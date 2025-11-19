@@ -49,6 +49,10 @@ except Exception as e:
 # CORS configuration - allow specific frontend URL in production, all origins in development
 try:
     frontend_url = os.environ.get('FRONTEND_URL', '*')
+    dev_origins_raw = os.environ.get('DEV_FRONTEND_URLS', 'http://localhost:3000,http://127.0.0.1:3000')
+    dev_origins = [url.strip() for url in dev_origins_raw.split(',') if url.strip()]
+    allow_dev_origins = os.environ.get('ALLOW_DEV_ORIGINS', 'true').lower() == 'true'
+
     if frontend_url == '*':
         # Development: allow all origins
         CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
@@ -56,8 +60,19 @@ try:
     else:
         # Production: allow specific frontend URL(s)
         # Support multiple URLs separated by comma
-        origins = [url.strip() for url in frontend_url.split(',')]
-        CORS(app, resources={r"/api/*": {"origins": origins}}, supports_credentials=True, allow_headers=['Content-Type', 'Authorization'])
+        origins = [url.strip() for url in frontend_url.split(',') if url.strip()]
+
+        if allow_dev_origins:
+            for dev_origin in dev_origins:
+                if dev_origin not in origins:
+                    origins.append(dev_origin)
+
+        CORS(
+            app,
+            resources={r"/api/*": {"origins": origins}},
+            supports_credentials=True,
+            allow_headers=['Content-Type', 'Authorization']
+        )
         print(f"🌐 CORS: Allowing origins: {origins}")
     print("✅ Application initialized successfully")
 except Exception as e:
