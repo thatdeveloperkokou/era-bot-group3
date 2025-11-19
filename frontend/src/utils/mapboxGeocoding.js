@@ -46,9 +46,8 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
     country: options.countryCode || DEFAULT_COUNTRY,
     limit: limit.toString(),
     language: 'en',
-    // Focus on address types first, then POI, then neighborhoods for street-level results
-    // Remove 'place' and 'locality' to avoid showing only cities/towns
-    types: options.types || 'address,poi,neighborhood,street,district',
+    // Focus on street-level types first; Mapbox only accepts specific type keywords
+    types: options.types || 'address,poi,neighborhood,district,place,locality',
   });
 
   if (options.proximity?.lng && options.proximity?.lat) {
@@ -86,7 +85,7 @@ export const searchLocations = async (query, limit = 5, options = {}) => {
           country: options.countryCode || DEFAULT_COUNTRY,
           limit: '5',
           language: 'en',
-          types: 'address,street', // Focus only on addresses and streets
+          types: 'address,poi', // Restrict to valid Mapbox types
         });
         
         const addressResponse = await fetch(`${MAPBOX_BASE_URL}/${encodedQuery}.json?${addressParams.toString()}`);
