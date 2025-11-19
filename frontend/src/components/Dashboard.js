@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import ChatInterface from './ChatInterface';
 import StatsChart from './StatsChart';
-import { FaBolt, FaChartBar, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaBolt, FaChartBar, FaMapMarkerAlt, FaSync, FaToggleOn, FaToggleOff, FaCheckCircle, FaClock } from 'react-icons/fa';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -15,12 +15,24 @@ const Dashboard = () => {
   const [regionProfiles, setRegionProfiles] = useState(null);
   const [loadingRegions, setLoadingRegions] = useState(false);
   const [showRegions, setShowRegions] = useState(false);
+  const [autoMode, setAutoMode] = useState(true); // Default to automatic mode
+  const [autoLogStats, setAutoLogStats] = useState({ total: 0, lastUpdate: null });
 
   const fetchStats = useCallback(async () => {
     try {
       setLoading(true);
       const response = await api.get(`/stats?period=${period}`);
       setStats(response.data);
+      
+      // Calculate auto-generated log stats
+      if (response.data && response.data.events) {
+        const autoLogs = response.data.events.filter(event => event.auto_generated === true);
+        const lastAutoLog = autoLogs.length > 0 ? autoLogs[autoLogs.length - 1] : null;
+        setAutoLogStats({
+          total: autoLogs.length,
+          lastUpdate: lastAutoLog ? new Date(lastAutoLog.timestamp) : null
+        });
+      }
     } catch (error) {
       console.error('Error fetching stats:', error);
     } finally {
@@ -88,6 +100,50 @@ const Dashboard = () => {
 
       <div className="dashboard-content">
         <div className="stats-panel">
+          {/* Auto-Logging Status Banner */}
+          <div className={`auto-logging-banner ${autoMode ? 'active' : 'inactive'}`}>
+            <div className="auto-logging-content">
+              <div className="auto-logging-status">
+                <FaSync className={`auto-sync-icon ${autoMode ? 'spinning' : ''}`} />
+                <div className="auto-logging-text">
+                  <strong>Automatic Logging: {autoMode ? 'ACTIVE' : 'INACTIVE'}</strong>
+                  {autoMode && (
+                    <span className="auto-logging-details">
+                      {autoLogStats.total > 0 ? (
+                        <>
+                          {autoLogStats.total} auto-logged events
+                          {autoLogStats.lastUpdate && (
+                            <> • Last update: {autoLogStats.lastUpdate.toLocaleTimeString()}</>
+                          )}
+                        </>
+                      ) : (
+                        <>Waiting for first automatic log...</>
+                      )}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="mode-toggle-container">
+                <label className="mode-toggle-label">
+                  <span className="mode-label-text">{autoMode ? 'Automatic' : 'Manual'}</span>
+                  <button
+                    className={`mode-toggle ${autoMode ? 'auto-active' : 'manual-active'}`}
+                    onClick={() => setAutoMode(!autoMode)}
+                    aria-label={autoMode ? 'Switch to manual mode' : 'Switch to automatic mode'}
+                  >
+                    {autoMode ? <FaToggleOn /> : <FaToggleOff />}
+                  </button>
+                </label>
+              </div>
+            </div>
+            {autoMode && (
+              <div className="auto-logging-info">
+                <FaCheckCircle className="info-icon" />
+                <span>Power events are automatically logged based on your region's schedule. You can still log manually anytime.</span>
+              </div>
+            )}
+          </div>
+
           <div className="stats-header">
             <h2>Statistics</h2>
             <div className="period-selector">
@@ -135,26 +191,55 @@ const Dashboard = () => {
             <div className="no-data">No data available</div>
           )}
 
-          {/* Region Profiles Section */}
+          {/* Power Schedule Information Section */}
           <div className="region-profiles-section" style={{ marginTop: '20px', paddingTop: '20px', borderTop: '1px solid #e0e0e0' }}>
             <div className="stats-header">
               <h2>
                 <FaMapMarkerAlt style={{ marginRight: '8px' }} />
-                Region Profiles
+                Your Power Schedule Information
               </h2>
               <button
-                className="toggle-charts-btn"
+                className={`toggle-charts-btn ${showRegions ? 'active' : ''}`}
                 onClick={() => {
                   setShowRegions(!showRegions);
                   if (!showRegions && !regionProfiles) {
                     fetchRegionProfiles();
                   }
                 }}
-                aria-label="Toggle region profiles"
+                aria-label="Toggle power schedule information"
               >
-                {showRegions ? 'Hide' : 'Show'} Regions
+                {showRegions ? (
+                  <>
+                    <FaClock style={{ marginRight: '5px' }} />
+                    Hide Schedule
+                  </>
+                ) : (
+                  <>
+                    <FaClock style={{ marginRight: '5px' }} />
+                    View Schedule
+                  </>
+                )}
               </button>
             </div>
+            
+            {!showRegions && (
+              <div className="schedule-preview" style={{ 
+                marginTop: '15px', 
+                padding: '15px', 
+                backgroundColor: '#f8f9fa', 
+                borderRadius: '8px',
+                border: '2px solid #e0e0e0',
+                transition: 'all 0.3s ease'
+              }}>
+                <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
+                  <FaMapMarkerAlt style={{ marginRight: '8px', color: '#667eea' }} />
+                  <strong>Your power schedule</strong> is automatically determined based on your location and regional power distribution data from NERC Q2 2025.
+                  {autoMode && (
+                    <> Power events are logged automatically according to this schedule.</>
+                  )}
+                </p>
+              </div>
+            )}
             
             {showRegions && (
               <div className="region-profiles-content">
@@ -162,33 +247,88 @@ const Dashboard = () => {
                   <div className="loading">Loading region profiles...</div>
                 ) : regionProfiles && regionProfiles.length > 0 ? (
                   <div className="regions-list">
-                    <div className="regions-summary" style={{ marginBottom: '15px', padding: '10px', backgroundColor: '#f5f5f5', borderRadius: '4px' }}>
-                      <strong>Total Regions: {regionProfiles.length}</strong>
+                    <div className="regions-summary" style={{ 
+                      marginBottom: '15px', 
+                      padding: '15px', 
+                      backgroundColor: '#e8f4f8', 
+                      borderRadius: '8px',
+                      border: '2px solid #667eea',
+                      animation: showRegions ? 'pulse 2s ease-in-out infinite' : 'none'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <FaCheckCircle style={{ color: '#28a745', fontSize: '18px' }} />
+                        <div>
+                          <strong style={{ color: '#333', fontSize: '16px' }}>Power Schedule Active</strong>
+                          <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '14px' }}>
+                            {regionProfiles.length} distribution companies monitored • Based on NERC Q2 2025 data
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="regions-grid" style={{ display: 'grid', gap: '10px', maxHeight: '400px', overflowY: 'auto' }}>
+                    <div className="regions-grid" style={{ 
+                      display: 'grid', 
+                      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                      gap: '15px', 
+                      maxHeight: '500px', 
+                      overflowY: 'auto',
+                      padding: '10px 0'
+                    }}>
                       {regionProfiles.map((region) => (
                         <div key={region.id} className="region-card" style={{ 
-                          padding: '12px', 
-                          border: '1px solid #ddd', 
-                          borderRadius: '4px',
-                          backgroundColor: '#fff'
-                        }}>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: 'bold' }}>
+                          padding: '15px', 
+                          border: '2px solid #e0e0e0', 
+                          borderRadius: '8px',
+                          backgroundColor: '#fff',
+                          transition: 'all 0.3s ease',
+                          position: 'relative',
+                          overflow: 'hidden'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.borderColor = '#667eea';
+                          e.currentTarget.style.boxShadow = '0 4px 12px rgba(102, 126, 234, 0.2)';
+                          e.currentTarget.style.transform = 'translateY(-2px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.borderColor = '#e0e0e0';
+                          e.currentTarget.style.boxShadow = 'none';
+                          e.currentTarget.style.transform = 'translateY(0)';
+                        }}
+                        >
+                          <div style={{ 
+                            position: 'absolute', 
+                            top: '10px', 
+                            right: '10px',
+                            width: '8px',
+                            height: '8px',
+                            borderRadius: '50%',
+                            backgroundColor: '#28a745',
+                            animation: 'pulse 2s ease-in-out infinite'
+                          }}></div>
+                          <h4 style={{ margin: '0 0 12px 0', fontSize: '15px', fontWeight: 'bold', color: '#333' }}>
                             {region.disco_name}
                           </h4>
-                          <div style={{ fontSize: '12px', color: '#666' }}>
-                            <div><strong>ID:</strong> {region.id}</div>
-                            <div><strong>States:</strong> {Array.isArray(region.states) ? region.states.join(', ') : 'N/A'}</div>
-                            <div><strong>Avg Offtake:</strong> {region.avg_offtake_mwh_per_hour?.toFixed(2) || 'N/A'} MWh/h</div>
-                            <div><strong>Avg Available PCC:</strong> {region.avg_available_pcc_mwh_per_hour?.toFixed(2) || 'N/A'} MWh/h</div>
-                            <div><strong>Utilization:</strong> {region.utilisation_percent?.toFixed(2) || 'N/A'}%</div>
-                            <div><strong>Estimated Daily:</strong> {region.estimated_daily_mwh?.toFixed(2) || 'N/A'} MWh</div>
-                            <div><strong>Full Load Hours:</strong> {region.estimated_full_load_hours?.toFixed(2) || 'N/A'} hours</div>
+                          <div style={{ fontSize: '13px', color: '#666', lineHeight: '1.6' }}>
+                            <div style={{ marginBottom: '6px' }}>
+                              <strong style={{ color: '#667eea' }}>Coverage:</strong> {Array.isArray(region.states) ? region.states.join(', ') : 'N/A'}
+                            </div>
                             {region.schedule_template && Array.isArray(region.schedule_template) && region.schedule_template.length > 0 && (
-                              <div style={{ marginTop: '4px' }}>
-                                <strong>Schedule Blocks:</strong> {region.schedule_template.length}
+                              <div style={{ 
+                                marginTop: '10px', 
+                                padding: '8px',
+                                backgroundColor: '#f8f9fa',
+                                borderRadius: '4px',
+                                border: '1px solid #e0e0e0'
+                              }}>
+                                <strong style={{ color: '#667eea' }}>Schedule Blocks:</strong> {region.schedule_template.length}
+                                <div style={{ fontSize: '11px', color: '#888', marginTop: '4px' }}>
+                                  Power availability times configured
+                                </div>
                               </div>
                             )}
+                            <div style={{ marginTop: '8px', fontSize: '11px', color: '#888' }}>
+                              Utilization: {region.utilisation_percent?.toFixed(1) || 'N/A'}% • 
+                              Daily: {region.estimated_daily_mwh?.toFixed(0) || 'N/A'} MWh
+                            </div>
                           </div>
                         </div>
                       ))}
@@ -203,7 +343,7 @@ const Dashboard = () => {
         </div>
 
         <div className="chat-panel">
-          <ChatInterface onLogEvent={fetchStats} />
+          <ChatInterface onLogEvent={fetchStats} autoMode={autoMode} />
         </div>
       </div>
     </div>

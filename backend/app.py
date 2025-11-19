@@ -629,7 +629,7 @@ def get_stats(current_user):
             'period': period,
             'total_hours': round(total_hours, 2),
             'daily_stats': chart_data,
-            'events': [log.to_dict() for log in logs[-10:]]  # Last 10 events
+            'events': [log.to_dict() for log in logs[-20:]]  # Last 20 events (to include more auto-generated logs)
         }), 200
         
     except SQLAlchemyError as e:
