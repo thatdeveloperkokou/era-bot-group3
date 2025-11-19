@@ -1,0 +1,3640 @@
+ 
+ 
+
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+i   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+ 
+NERC©2025  
+ 
+ 
+The Nigerian Electricity Regulatory Commission (NERC) quarterly report is prepared 
+in compliance with Section 56(3) of the Electricity Act 2023, which mandates the 
+Commission to submit quarterly reports of its activities to the President and the 
+National A ssembly. The report analyses the state of the Nigerian Electricity Supply 
+Industry (NESI) , covering the operational and commercial performance, regulatory 
+functions, as well as consumer affairs. The report is directed at a wide spectrum of 
+readers , including energy economists, engineers, financial and market analysts, 
+potential investors, government officials and institutions, the private sector , as well 
+as general readers. NERC quarterly report is freely available to stakeholders of the 
+NESI, government agencies and corporations. Individuals can also access any issue 
+freely from the Commission’s Website: www.nerc.gov.ng   
+ 
+ 
+Please direct all inquiries, comments, and suggestions on the report to:  
+ 
+The Commissioner  
+Research & Data Analytics  Division  
+Nigerian Electricity Regulatory Commission  
+Plot 1387, Cadastral Zone A00  
+Central Business District  
+P.M.B 136, Garki, Abuja  
+Nigeria  
+NERC website: www.nerc.gov.ng    
+ 
+Contact Centre:  
+Tel: +234 (0 209) 462 1400, +234 (0 209) 462 1410  
+Email:  info@nerc.gov.ng    
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+ii   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Table of Contents  
+List of Abbreviations  ................................ ................................ ................................ ....... v 
+1.0   SUMMARY  ................................ ................................ ................................ ........  2 
+2.0  STATE OF THE INDUSTRY  ................................ ................................ .................  15 
+2.1  Operational Performance  ................................ ................................ ..................  15 
+2.1.1  Available generation capacity  ................................ ................................ ...............  15 
+2.1.2  Plant availability factor  ................................ ................................ .........................  16 
+2.1.3  Quarterly generation  ................................ ................................ ............................  18 
+2.1.4  Generation load factor  ................................ ................................ .........................  21 
+2.1.5  Generation mix  ................................ ................................ ................................ .... 22 
+2.2  Grid Performance  ................................ ................................ .............................  23 
+2.2.1  Transmission loss factor  ................................ ................................ .........................  24 
+2.2.2  Grid frequency  ................................ ................................ ................................ ..... 25 
+2.2.3  Voltage fluctuation  ................................ ................................ ................................  27 
+2.2.4  System collapse  ................................ ................................ ................................ .... 28 
+2.3   Commercial Performance  ................................ ................................ ...................  29 
+2.3.1  Energy offtake performance  ................................ ................................ ..................  29 
+2.3.2  Energy Accounting Efficiency  ................................ ................................ .................  31 
+2.3.3  Billing Efficiency ................................ ................................ ................................ .... 33 
+2.3.4  Revenue and collection efficiency  ................................ ................................ ..........  35 
+2.3.5  Aggregate Technical, Commercial and Collection (ATC&C) Loss  ..............................  37 
+2.3.6  Market Remittance  ................................ ................................ ................................  40 
+3.0  REGULATORY FUNCTIONS  ................................ ................................ ...............  47 
+3.1   Regulations, Orders and Directives  ................................ ................................ ..... 48 
+3.1.1  Regulations  ................................ ................................ ................................ ..........  48 
+3.1.2  Orders  ................................ ................................ ................................ .................  48 
+3.1.3  Directives  ................................ ................................ ................................ .............  51 
+3.1.4  Guidelines  ................................ ................................ ................................ ............  51 
+3.1.5  Codes  ................................ ................................ ................................ ..................  52 
+3.2  Licences Issued or Renewed  ................................ ................................ ...............  52 
+3.3   Captive Power Generation Permits  ................................ ................................ ...... 53 
+3.4   Mini-grid Permits and Registration Certificates  ................................ ......................  53 
+3.5   Meter Service Providers/Meter Asset Providers  ................................ ....................  54 
+3.6   Hearings and Public Consultations  ................................ ................................ ...... 54 
+3.7   Compliance and Enforcement  ................................ ................................ .............  55 
+3.8   Alternative Dispute Resolution  ................................ ................................ ............  56 
+4.0   CONSUMER AFFAIRS  ................................ ................................ .......................  60 
+4.1   Consumer Enlightenment and Stakeholder Engagements  ................................ ....... 60 
+4.2   Metering End -Use Customers  ................................ ................................ ..............  61 
+4.3   Customer Complaints  ................................ ................................ ........................  63 
+4.3.1  NERC -CCU ................................ ................................ ................................ ...........  65 
+4.3.2  DisCo -CCUs ................................ ................................ ................................ ..........  66 
+4.3.3  Forum Offices  ................................ ................................ ................................ ....... 67 
+4.4   Health and Safety  ................................ ................................ .............................  69 
+5.0  APPENDIX  ................................ ................................ ................................ ....... 73 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+iii   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ List of Tables  
+Table 1: Plant Availability Factor (%) in 2025/Q1 vs. 2025/Q2  ................................ .. 17 
+Table 2: Average Hourly Generation (MWh/h) in 2025/Q1 vs. 2025/Q2  ...................  19 
+Table 3: DisCo Energy Offtake Performance in 2025/Q1 vs. 2025/Q2  ........................  31 
+Table 4: Energy accounting efficiency by DisCos in 2025/Q1 vs. 2025/Q2 ..................  33 
+Table 5: Billing efficiency by DisCos in 2025/Q2  ................................ .........................  34 
+Table 6: A comparison of DisCos’ BE and  EAE in 2025/Q2  ................................ ........  35 
+Table 7: Revenue Collection Performance (%) of DisCos in 2025/Q1 vs. 2025/Q2  ...... 36 
+Table 8: ATC&C Loss Performance (%) and Revenue Loss by DisCos in 2025/Q2  .........  39 
+Table 9: Total GenCo Invoice and Final Obligation (DRO) of DisCos for 2025/Q2  ....... 41 
+Table 10: DisCos Remittance Performances to NBET and MO in 2025/Q2  ...................  44 
+Table 11: Invoices and Remittances of Other Customers in 2025/Q2  ............................  45 
+Table 12 : Licences issued by the Commission in 2025/Q2  ................................ ............  52 
+Table 13: Mini -grid Permits issued in 2025/Q2  ................................ ............................  53 
+Table 14 : Meter Service Providers certified in 2025/Q2  ................................ ..............  54 
+Table 15 : Hearings conducted by the Commission in 2025/Q2  ................................ .... 55 
+Table 16 : Compliance and Enforcement Actions of the Commission in 2025/Q2  ...........  56 
+Table 17 : Metering Progress as of 30 June 2025  ................................ .........................  61 
+Table 18:  Meter Deployment by DisCos in 2025/Q2 vs. 2025/Q1  ..............................  62 
+Table 19 : Complaints Received by DisCos in 2025/Q1 vs. 2025/Q2  ...........................  66 
+Table 20:  Appeals handled by Forum Offices in 2025/Q2  ................................ ...........  68 
+Table 21 : Health and Safety (H&S) Reports in 2025/Q1 vs. 2025/Q2  .........................  70 
+Table 22 : Causes of casualties recorded in 2025/Q2  ................................ ..................  71 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+iv   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ List of Figures  
+Figure 1: Average Available Capacity (MW) in 2025/Q1 vs. 2025/Q2  ......................  16 
+Figure 2: Average Hourly Generation (MWh/h) in 2025/Q1 vs. 2025/Q2  ..................  20 
+Figure 3: Generation Load Factor 2025/Q1 vs. 2025/Q2  ................................ ...........  22 
+Figure 4: Electricity Generated by Energy Sources in 2025/Q1 vs. 2025/Q2  ...............  23 
+Figure 5: Actual T LF (%) vs. MYTO TLF Target (%) January - June 2025  ........................  25 
+Figure 6: System Frequency from January - June 2025  ................................ .................  26 
+Figure 7: System Voltage (kV) from January - June 2025  ................................ .............  28 
+Figure 8: DisCos Remittance Performances to NBET in 2025/Q2  ................................ .. 42 
+Figure 9: DisCos Remittance Performances to MO in 2025/Q2  ................................ .... 43 
+Figure 10 : Category  of complaints received at the Commission’s CCU in 2025/Q2  ....... 65 
+Figure 11 : Category  of complaints received by DisCos in 2025/Q2  .............................  67 
+Figure 12:  Category  of Complaints Received by Forum Offices in 2025/Q2  .................  69 
+Figure 13 : Accident Report for 2025/Q2  ................................ ................................ .... 71 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+v   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ List of Abbrev iations  
+ADR Alternative Dispute Resolution  
+AEDC  Abuja Electricity Distribution Plc  
+ATC&C  Aggregate Technical, Commercial & Collection Loss  
+BEDC  Benin Electricity Distribution Plc  
+CAPEX  Capital Expenditure  
+CCU Customer  Complaint Unit  
+CEET Compagnie Energie Electrique du Togo  
+CTC Competition Transition Charge  
+DisCos  Distribution Companies  
+EA Electricity Act  
+ECR Eligible Customer Regulations  
+EEDC  Enugu Electricity Distribution Plc  
+EKEDP  Eko Electricity Distribution Plc  
+EPSRA  Electric Power Sector Reform Act  
+GenCos  Generation Companies  
+GWh  Gigawatt hour  
+IBEDC  Ibadan Electricity Distribution Plc  
+IEDN  Independent Electricity Distribution Network  
+IE Ikeja Electric Plc  
+JED Jos Electricity Distribution Plc  
+KAEDC  Kaduna Electricity Distribution Plc  
+KEDCO  Kano Electricity Distribution Plc  
+kWh Kilowatt hour  
+MAP Meter Assets Provider  
+MDA  Ministries, Departments and Agencies  
+MO Market Operator  
+MTS MYTO Target Sales  
+MW Megawatts  
+MWh  Megawatt hour  
+MYTO  Multi-Year Tariff Order  
+NBET  Nigerian Bulk Electricity Trading plc  
+NERC  Nigerian Electricity Regulatory Commission  
+NESI Nigerian Electricity Supply Industry  
+NICE  Notice of Intention to Commence Enforcement  
+NIGELEC  Société Nigerienne d’electricite; Nigerien Electricity Society  
+NIPP National Integrated Power Project  
+NISO  Nigerian Independent  System Operator  
+NMMP  National Mass Metering Program  
+PAC Partial Activation of Contract  
+PCC Partial Contracted Capacity  
+PHED  Port Harcourt Electricity Distribution Plc  
+PP Percentage points  
+SBEE Société Béninoise d'Energie Electrique  
+TCN Transmission Company of Nigeria Plc  
+TLF Transmission Loss Factor  
+YEDC  Yola Electricity Distribution Plc  
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+1   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+ 
+
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+2   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 1.0 SUMMARY  
+Pursuant to Section 34(1)(e) of the Electricity Act 2023 which states 
+that "the Commission shall ensure the safety, security, reliability, and 
+quality of service in the production and delivery of electricity to 
+consumers”,  the Nigerian Electricity Regulatory Commission (NERC or 
+the Commission) continues to monitor the technical, operational, and 
+commercial performance of the Nigerian Electricity Supply Industry 
+(NESI). The Commission publishes quarterly reports to apprise t he 
+public of the overall performan ce of the NESI.   
+Operational Performance  
+The operational performance parameters reported in 2025/Q2 
+include the available generation capacity, plant availability factor, 
+quarterly generation, load factor, and generation mix of the twenty -
+eight (28)1 grid-connected power plants. Other parameters reported 
+include the frequency, voltage, and overall stability performance of the 
+National Grid during the quarter.  
+a. Available Generation Capacity:  In 2025/Q2, there were twenty -
+eight (28) grid -connected power plants consisting of five (5) hydro, two 
+(2) steam, nineteen (19)  Open C ycle Gas Turbine (OCGT ), and two 
+(2) Combined  Cycle Gas Turbine (CCGT)  plants.  For this quarter, the 
+average available generation capacity of the grid -connected power 
+plants was 5,395.72MW.  This represents a  28.84MW  (+0.54% ) 
+increase compared to the 5, 366.88 MW recorded in 2025/Q 1 (Figure 
+A). Twelve (12) power plants attained  increases in available 
+generation capacities for 2025/Q2 relative  to 2025/Q1.  
+ 
+ 
+1 AES and Gbarain power plants are not included in the report because they are currently not operational. The 
+Maiduguri Emergency Power Plant (MEPP) is currently not  operating in grid -connected mode.   The average 
+available 
+generation 
+capacity in 
+2025/Q 2 was 
+5,395.72MW 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+3   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+Figure A: Available Generation Capacity (January - June 2025)  
+b. Quarterly Generation:  The average hourly generation on the grid 
+in 2025/Q2 was 4,501.06MWh/h, which translates to a total 
+generation of 9,830.31GWh. The average hourly generation of the 
+grid-connected power plants decreased by 269.53MWh/h ( -5.65%) 
+from 4,770.59MWh/h in 2025/Q1. The total electricity generated in 
+the quarter also decreased by 474.15GWh ( -4.60%)2 from 
+10,304.47GWh in 2025/Q1 (Figure B). The decrease in energy 
+generation during the quarter can be attributed to the decrease in 
+energy offtake by the grid -connected customers (including DisCos) 
+compared to 2025/Q1.      
+c. Grid Performance:  In 2025/Q2, the average lower daily (49.33Hz) 
+and average upper daily (50.78Hz) system frequencies were outside 
+the normal operating limits (49.75Hz - 50.25Hz) but remained within 
+the lower and higher bound stress limits (48.75Hz - 51.25Hz). The 
+average lo wer daily system voltage (300.05kV) was outside the lower 
+limit (313.50kV) while the average upper daily system voltage 
+(345.31kV) was within the limit (346.50kV) specified in the grid code.  
+ 
+2 The percentage change in total generation and average hourly generation is different across 202 5/Q1 and 
+2025/Q 2 because the number of days in each of the quarters is not the same (9 0/91 days). When the number 
+of days in the quarters being compared is the same, the percentage change in total generation will be the same 
+as the percentage change in average hourly generation . 
+5,3365,432
+5,329
+5,2575,639
+5,292
+5,0005,1005,2005,3005,4005,5005,6005,700
+Jan-25 Feb-25 Mar-25 Apr-25 May-25 Jun-25Average Available Capacity (MW)
+MonthsAverage Available Capacity (2025 /Q1)
+5,366.88MWAverage Available Capacity (2025 /Q2)
+5,395.72MWThe average 
+hourly generation 
+in 2025/Q 2 was 
+4,501.06MWh/h  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+4   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ There was no incidence of system disturbance on the National Grid in 
+2025/Q2.  
+ 
+Figure B: Average Hourly Generation (January - June 2025)  
+Commercial Performance  
+The review of commercial performance for 202 5/Q2 covers energy 
+offtake performance, energy accounting efficiency, billing efficiency, 
+collection efficiency, aggregate technical, commercial, and collection 
+loss, and the market remittance of relevant market participants.  
+a. Energy Offtake Performance : In 202 5/Q2, the average energy 
+offtake by DisCos at their trading points was 3, 582.62 MWh/h  which 
+represents a  decrease of 199.3 2MWh/h ( -5.27%) compared to the  
+average offtake  recorded in 202 5/Q1 (3,781.94 MWh/h ). 
+Cumulatively, DisCos recorded an overall offtake performance of 
+91.78%; the available  Partially Contracted Capacity  (PCC) during the 
+quarter was 3,903.44 MWh/h.  
+b. Energy Accounting  Efficiency:  Energy accounting efficiency (EAE) 
+measures how effectively DisCos account for the energy they offtake at 
+their trading points. Although the total energy received by all DisCos 
+in 2025/Q2 was 7,824.43GWh, the energy billed to end -use 
+customers was only 6,449.82GWh, translating into an overall energy 
+accounting efficiency of 82.43%.  
+4,6824,7894,842
+4,5684,608
+4,328
+4,0004,1004,2004,3004,4004,5004,6004,7004,8004,900
+Jan-25 Feb-25 Mar-25 Apr-25 May-25 Jun-25Average Hourly Generation (MWh /h)
+MonthsAverage Hourly Generation (2025 /Q1)
+4,770.59MWh /hAverage Hourly Generation (2025 /Q2)
+4,501.06MWh /h
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+5   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ c. Billing Efficiency:  The naira value of the total energy offtake by all 
+DisCos in 2025/Q2 was ₦909.59 billion, and the total energy billed 
+was ₦742.34 billion, which translates to a billing efficiency of 81.61%. 
+This means that at an aggregate level, DisCos were unable to account 
+for ₦167.2 5 billion worth of energy received at their trading points in 
+2025/Q2.  
+c. Collection Efficiency:  The total revenue collected by all DisCos in 
+2025/Q2 was ₦564.71  billion out of ₦742.34  billion billed to 
+customers. This translates to a collection efficiency of 7 6.07%, 
+representing a n increase of 1.68pp compared to 202 5/Q1 (74.39%).  
+d. Aggregate Technical, Commercial and Collection (ATC&C) Loss : The 
+Aggregate Technical, Commercial and Collection (ATC&C) loss is a 
+summation of – i) billing losses incurred by a DisCo due to its inability 
+to bill 100% of energy delivered to customers (technical and 
+commercial losses); ii) collection losses arising fr om the DisCo’s 
+inability to collect 100% of the bills issued to customers.  
+The weighted average ATC&C loss across all DisCo in 202 5/Q2 was 
+37.92 %, comprising technical and commercial loss (1 8.39%) and 
+collection loss (2 3.93%). The ATC&C loss of 37.92 % is 17.38pp higher 
+than the 2025 MYTO target (2 0.54%) and translates to a cumulative 
+revenue loss of ₦158.053 billion across all DisCos.  The ATC&C loss 
+decreased by 1.69pp (better performance) compared to 202 5/Q1 
+(39.61%). All the DisCos except Eko  failed to achieve their target 
+ATC&C  during the quarter , with Kaduna DisCo recording the worst 
+underperformance relative to the target ATC&C (Actual – 70.98 % vs. 
+target – 21.32%) (Figure C).  
+e. Market remittance : In 202 5/Q2, the cumulative upstream invoice 
+payable by DisCos was ₦417.35 billion, consisting of ₦348.66  billion 
+for DRO -adjusted generation costs from NBET4 and ₦68.68  billion for 
+transmission and administrative services by the Market Operator 
+ 
+3 This represents 22% of the gross allowable revenues for all DisCos over the period (2025/Q2)  
+4 The NBET invoice payable by the DisCos for 202 5/Q2 was only ₦348.66 billion  because the FGN has taken 
+responsibility for ~ 60% (₦514.35 billion) of the total generation costs in the form of subsidies arising from the 
+freezing of end -use customer tariffs at the r ates payable in  July 2024 . 
+A total of 
+₦564.71  
+billion was 
+collected by all 
+DisCos in 
+2025/Q 2 out 
+of the ₦742.34 
+billion billed to 
+customers .  
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+6   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ (MO). Out of this amount, the DisCos collectively remitted a total sum 
+of ₦399.20  billion (₦333.90  billion for NBET and ₦65.30  billion for 
+MO) with an outstanding balance of ₦18.15  billion. This translates to 
+a remittance performance of 95.65 % in 202 5/Q2 compared to the 
+95.86 % recorded in 202 5/Q1. The disaggregated DisCo remittance 
+performance to the market for 202 5/Q2 is presented in Figure D.  
+ 
+Figure C: Target and Actual ATC&C losses for DisCos in 2025/Q 2      
+f. Remittance by Special and Bilateral Customers : In 202 5/Q2, the six 
+(6) international bilateral customers purchasing power from the grid -
+connected GenCos made  a cumulative payment of $9.015 million 
+against the $17.54 million invoice issued to them by the MO for 
+services rendered in 2025/Q2 (remittance rate – 51.33 %). Similarly, 
+the domestic bilateral customers made a cumulative payment of 
+₦1,401.00  million against the ₦2,796.29 million invoice issued to them 
+by the MO for services rendered in 2025/Q26 (remittance rate – 
+50.10%).              
+ 
+5 These remittances are based on reconciled market settlement submitted to the Commission as at 30 September 
+2025  
+6 A domestic bilateral customer made payments during 2025/Q2 for outstanding MO invoices from previous 
+quarters. The details of these payments are contained in Appendix V III. 
+20.60
+20.76
+16.88
+21.26
+20.92
+15.93
+26.09
+21.32
+20.88
+20.42
+44.0036.80
+40.41
+15.12
+41.13
+42.64
+26.16
+61.76
+70.98
+43.78
+40.56
+66.30
+01020304050607080
+Abuja Benin Eko Enugu Ibadan Ikeja Jos Kaduna Kano Port Harcourt YolaATC&C (%)Target ATC &C Actual ATC &C
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+7   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+               Figure D: DRO -adjusted invoices and remittances in 2025/Q 2 
+Regulatory Functions  
+The EA 2023, section 34(2)(d), empowers the Commission to licence 
+and regulate persons engaged in the generation, transmission, system 
+operation, distribution, supply and trading of electricity in the NESI . 
+Additionally, the Commission regulates market entry or exit by sector 
+players and issues Regulations, Guidelines and Orders that guide the 
+operations of licensees, permit holders and registered operators.  
+a. Orders:  The Commission issued thirty -seven (37) Orders in  
+2025/Q2. They include:  
+• NERC/2025/031,033 -NERC/2025/042 — April 2025 
+Supplementary Order to the Multi -Year Tariff Order for the 
+DisCos.  
+• NERC/2025/043 – Order on Performance Improvement 
+Plan (PIP) for the Transmission Company of Nigeria Plc 
+(TCN)  
+• NERC/2025/045 -NERC/2025/055 — May 2025 
+Supplementary Order to the Multi -Year Tariff Order for the 
+DisCos.  
+• NERC/2025/056 – Order on Third -Party Investments in the 
+Construction of the Switchyard Bay Extension at Kainji 
+100% 100% 100% 100% 62% 44% 100% 100% 100% Performance 100% 100%70.89
+38.08
+62.30
+33.78
+46.15
+71.92
+20.01
+18.70
+23.50
+26.10
+5.9370.89
+38.08
+62.30
+33.78
+46.15
+71.92
+12.33
+8.24
+23.50
+26.10
+5.93
+01020304050607080
+Abuja Benin Eko Enugu Ibadan Ikeja Jos Kaduna Kano Port Harcourt YolaRemittances (₦ Billion )Invoice (NBET + MO) Remittance (NBET + MO)The Commission 
+issued thirty-seven  
+(37) new Orders 
+in 2025/Q 2. 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+8   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Hydropower Plant and Securitisation of Funds for the 
+SCADA Additional Scope.  
+• NERC/2025/057 — Order on the Mandatory Integration of 
+Grid-connected Generating units into the SCADA/EMS for 
+Nigerian Electricity Supply Industry (NESI).  
+• NERC/2025/058 (EEDC) — Transfer of Regulatory 
+Oversight of the Electricity Market in Abia State from the 
+Nigerian Electricity Regulatory Commission to the Abia State 
+Electricity Regulatory Commission (ASERC) . 
+• NERC/2025/059 -NERC/2025/069 — June 2025 
+Supplementary Order to the Multi -Year Tariff Order for the 
+DisCos.  
+b. Licences and Permits:  The Commission issued twenty -nine (29) 
+licences, permits and certifications in 2025/Q2. The breakdown of the 
+licences, permits and certifications issued is as follows:  
+• One (1) off -grid generation licence with a nameplate 
+capacity of 12.8MW.  
+• Two (2) on -grid generation licences with a total capacity of 
+480MW  
+• Three (3) new electricity trading licences  
+• One (1) Independent Electricity Distribution Network (IEDN) 
+licence  
+• One (1) licence for embedded generation  
+• One (1) captive generation permit with a gross capacity of 
+20.8MW.  
+• Six (6) permits for mini grids.  
+• Seven (7) certifications for Meter Service Providers and 
+seven (7) permits for Meter Asset Providers.  
+c. Hearings and Public Consultation: Hearings are proceedings 
+pursuant to the provisions of the Act through which the Commission 
+seeks additional information on petitions or any matter filed before it 
+by market participants or consumers in order to make a final decision. 
+During the quarter (2025/Q2), the Commission conducted two (2) 
+hearings in respect of the following:  Twenty -nine 
+(29) licences, 
+permits and 
+certifications 
+were issued by 
+the Commission 
+in 2025/Q 2. 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+9   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ • Petition filed by Prism Steel Mills Limited challenging the 
+award of the competition transition charge in favour of 
+Ibadan Electricity Distribution Plc.  
+• Green Power Distribution Nigeria Limited in respect of 
+their application for an independent electricity 
+distribution licence.  
+Furthermore, the Business Rules of the Commission - NERC -R-0306 
+allow the Commission to undertake public consultations through which 
+the Commission aggregates input/opinions on licensee applications 
+and regulatory instruments being drafted or reviewed.  
+d. Compliance and Enforcement:  The Commission issued thirteen (13) 
+Rectification Directives (RD) and twenty -six (26) Notices of Intention to 
+Commence Enforcement (NICE)  to licensees for different 
+breaches/defaults during the quarter.  
+Consumer Affairs   
+a. Consumer Enlightenment and Stakeholder Engagements:  The 
+Commission’s main consumer education and enlightenment 
+mechanisms are town hall meetings and customer complaints resolution 
+meetings. In 2025/Q2, the Commission convened one (1) town hall 
+meeting in Bauchi between 26 - 28 June 2025, where  issues around 
+service -based tariffs, capping of estimated bills of unmetered 
+customers, metering, and customer redress mechanisms were 
+discussed.  
+As part of its routine activities, the Commission also engages relevant 
+stakeholders and the wider public to apprise them of the Commission’s 
+activities. The details of these engagements and other educative 
+content on pertinent industry issues are shared w ith the public via the 
+Commission’s social media accounts ( LinkedIn , X and Instagram ).  
+b. Metering : A total of 225,631 meters were installed in 2025/Q2, 
+representing an increase of 20.55% compared to the 187,161 meters 
+installed in 2025/Q1. During the quarter, 147,823 meters (65.52% of 
+the total installations) were installed under the MAP framework, A total of 
+225,631 me ters 
+were installed in 
+2025/Q 2. 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+10   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 65,315 meters were installed under the Meter Acquisition Fund (MAF), 
+12,259 meters were installed under the Vendor Financed framework, 
+and 234 meters were installed under the DisCo Financed framework. 
+As at the end of June 2025, only 6, 422,933  out of the total 
+11,821,194  active registered customers in the NESI were metered,  
+translating to a metering rate of 54.33%  (Figure E) .    
+ 
+Figure E: Status of Customer metering as of 30 June 2025  
+As a safeguard for customers against exploitation due to the lack of 
+meters, the Commission has continued to issue monthly energy caps for 
+all feeders in each DisCo. This sets the maximum amount of energy that 
+may be billed to an unmetered customer for the  respective month 
+based on gross energy received by the DisCo and consumption by 
+metered customers on their respective feeders.  
+c. Customer Complaints : Across the quarter, DisCos only successfully 
+resolved 1,129 out of the 2,474 complaints that were filed at the 
+NERC -CCU; this translates to a resolution rate of 45.63%. The number 
+of complaints received across all DisCo -CCUs was 227,267, which 
+represents a 10.67% decrease compared to the 254,404 received in 
+2025/Q1.  As in previous quarters, metering, billing and service 
+interruption were the prevalent issues of customer complaints during 
+the quarter.   
+164
+1,292
+994
+606
+1,437
+2,370
+1,270
+812
+535
+793
+1,036
+50774
+944
+500
+505
+675
+1,173
+1,075
+239
+179
+272
+637
+14405001,0001,5002,0002,500
+Aba Abuja Benin Eko Enugu Ibadan Ikeja Jos Kaduna Kano PH YolaNumber of Customers ( 000)Customer Number as at June ,2025 Meterd Customers as at June , 2025
+Average Metering rate as at
+June 2025 -54.33%
+Performance 45% 73% 50% 62% 29% 85% 34% 33% 30% 83% 50% 47%
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+11   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ d. Forum Offices:  Two (2) Forum Offices were closed  during the 
+quarter , bringing the number of active Forum Offices as of 30 June 
+2025  to twenty -four ( 24) compared to twenty -six (26) report ed as of 
+the end of 2025/Q1.  The total number of active appeals across the 
+Forum Offices in 2025/Q2 was 1,418 made up of 1,040 new appeals 
+in 2025/Q2 and 378 pending appeals from 2025/Q1. During the 
+period, the forum panels held forty -one (41) sittings and resolved 958 
+of the appeals file d at Forum Offices nationwide (67.56% resolution 
+rate); the resolution rate was 6.54pp lower than the 74.10% achieved 
+in 2025/Q1.    
+e. Health & Safety :  The total number of accidents in 2025/Q2 was 
+sixty (60), which resulted in nineteen (19) injuries and thirty -eight (38) 
+fatalities. The Commission has launched investigations into all the 
+accidents and will continue to work with all sector stakeholders t o 
+improve the overall health and safety of the NESI.   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ In 2025/Q 2, the 
+Forum Offices 
+resolved 67.56% of 
+the active appeals in 
+forty-one (41) 
+sittings.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+12   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Key Facts on NESI Performance in Q 2 of 2025  
+3,582.62MWh/h   Total energy received by the DisCos; 199.33MWh/h ( -
+5.27%) decrease compared to 2025/Q1 
+[3,781.94MWh/h]   
+6,449.82GWh   Energy billed to customers; 182.10GWh ( -2.75%) decrease 
+compared to 2025/Q1 [6,631.92GWh]   
+₦564.71 billion   Total Revenue collected by the DisCos; ₦11.08 billion 
+(+2.00%) increase compared to 2025/Q1 [ ₦553.63 
+billion]    
+81.61%  Cumulative billing efficiency across all DisCos   
+76.07%  Cumulative collection efficiency across all DisCos; 1. 68pp 
+increase compared to 2025/Q1 [74.39%]   
+37.92%  Aggregate Technical, Commercial and Collection Loss; 
+1.69pp better ATC&C performance compared to 2025/Q1 
+[39.61%]    
+₦417.35 billion   Combined invoice from NBET (DRO -adjusted) and MO to 
+DisCos; ₦14.78 billion ( -3.42%) decrease compared to 
+2025/Q1 [ ₦432.13 billion]   
+₦399.20 billion   Total amount remitted by DisCos to NBET and TCN/MO; 
+₦15.05 billion ( -3.63%) decrease compared to 2025/Q1 
+[₦414.26 billion]   5,395.72MW  Average Available Generation Capacity; 28.84 MW 
+(+0.54%) increase compared to  2025/Q1  [5,366.88 MW] 
+9,830.31GWh  Total Quarterly Generation; 474.15 GWh ( -4.60%) de crease 
+compared to 2025/Q1 [10 ,304.47GWh ] 
+4,501.06MWh/h  Average Hourly Generation; 269.53 MWh/h ( -5.65%) 
+decrease compared to 2025/Q1 [ 4,770.59MWh/h ] 
+83.42% Load Factor; 5.47pp decrease compared to 2025/Q1 
+[88.89%] 
+30.19% 
+ Share of total quarterly generation from Hydropower Plants; 
+0.28pp increase compared to 202 5/Q1 [29.91%] 
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+13   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 95.65%  DisCos’ overall remittance performance; 0.21pp decrease 
+compared to 2025/Q1 [95.86%]   
+225,631  Number of new meters Installed; 38,470 more installations 
+(+20.55%) compared to the 187,161 meters installed in 
+2025/Q1  
+227,267  Total complaints received at the DisCo -CCU; 10.67% 
+decrease compared to 254,404 complaints received in 
+2025/Q1  
+67.56%  Forum Office complaint resolution rate; 6.54pp decrease 
+compared to 2025/Q1 [74.10%]  
+60 Number of accidents; 29 more accidents compared to 
+2025/Q1 [31]  
+57 Number of casualties (injuries and fatalities); 31 more 
+casualties compared to 2025/Q1 [26]  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+14   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+ 
+
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+15   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 2.0 STATE OF THE INDUSTRY  
+Pursuant to Section 34(1)(e) of the Electricity Act (EA) 2023 which states that "the 
+Commission shall ensure the safety, security, reliability, and quality of service in the 
+production and delivery of electricity to consumers” , the Nigerian Electricity 
+Regulatory Commission (NERC) continues to monitor the overall state of the 
+Nigerian Electricity Supply Industry (NESI)  primarily across the three (3) underlisted 
+areas – 
+• Operational performance: a measure of how effectively available resources 
+are utilised to generate electricity  
+• Grid performance:  a measure of the technical performance of the national 
+grid relative to the standards set out in the extant codes  
+• Commercial performance:  a measure of the flow of funds from customers to 
+upstream electricity industry players  
+2.1 Operational Performance  
+In evaluating the operational performance of the NESI, the following Key 
+Performance Indicators (KPIs) are considered:   
+• Available generation capacity  
+• Plant availability factor   
+• Quarterly generation   
+• Generation load factor   
+• Generation mix   
+2.1.1 Available generation capacity  
+In 2025/Q 2, there were twenty -eight (28) grid -connected power plants consisting 
+of five (5) hydro, two (2) steam, nineteen (19) Open C ycle Gas Turbines (OCGT) 
+and two (2) C ombined  Cycle Gas Turbine (CCGT) plants. During the quarter,  the 
+average available generation capacity of the grid -connected power plants 
+increased by 28.84 MW (+ 0.54%) from the 5, 366.88MW recorded in 202 5/Q1 to 
+5,395.72MW. Across the quarters, twelve  (12) out of the twenty -eight (28) grid-
+connected power plants  recorded increases in available capacity, while the 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+16   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ remaining fifteen (15) recorded decreases. The Alaoji power plant was unavailable 
+throughout the quarter.  
+The most significant increase in average available generation capacity in 2025/Q2 
+compared to 2025/Q1 was recorded in Geregu_1 (+109.13%). Notable increases 
+in available capacity across the quarters were also recorded in Zungeru_1 
+(+31.09%), Ihovbor_1 (+30 .86%), Olorunsogo_2 (+25.43%), Trans Amadi_1 
+(+24.77%), Ibom power_1 (+23.05%), and Egbin_1 (+16.69%) power plants.  
+Conversely, there were significant decreases in the average available capacities of 
+Rivers_1 ( -49.72%), Omoku_1 ( -44.72%), Odukpani_1 ( -35.65%), and Sapele 
+Steam_1 ( -21.09%) power plants in 2025/Q2  compared to 2025/Q1 . Figure 1  
+shows the plants with the highest average available capacities across the two 
+quarters.  
+ 
+Figure 1: Average Available Capacity (MW) in 2025/Q1 vs. 2025/Q2  
+2.1.2   Plant availability factor  
+The availability factor of a plant is measured as a ratio of the maximum rated output 
+of the plant declared by the operator (available capacity) to the maximum rated 
+output specified by the manufacturer (installed capacity). The available capacity of 
+a plant may change from time to time due to several factors , including i) atmospheric 
+conditions at the plant; ii) mechanical availability of the plant  (planned and 
++16.69% Variance -5.57% +31.09% +0.57% -10.00% -3.12% +3.98% -4.78%608
+502
+346
+446
+490
+447
+333
+2,196709
+474
+453
+449
+441
+433
+346
+2,091
+05001,0001,5002,0002,500
+Egbin _1 Kainji _1 Zungeru _1 Ihovbor _2 Delta _1 Jebba _1 Shiroro _1 OthersAverage Available Capacity (MW)
+Generation Plants2025 /Q1 2025 /Q2
++2.54 -48.98 +101.43Change
+(MW)-27.93 +107.49 -13.96 +13.25 -105.01
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+17   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ unplanned outages); iii) feedstock availability, etc. The formula for the plant 
+availability factor (PAF) is represented by equation 1:  
+The plant availability factor (PAF) is a critical parameter for evaluating the overall 
+health of the upstream segment of the NESI. In 202 5/Q2, the average plant 
+availability factor for all grid -connected plants was 3 9.60%, i.e. at any point in time 
+during the quarter, 60.40% of the installed capacity across the twenty -eight (28) 
+grid-connected power plants was not available for dispatch onto the grid. Overall, 
+ten (10) power plants had availability factors above 50% , with Ikeja_1 power plant 
+recording the highest availability factor at 99. 34%. On the other end of the 
+spectrum, Alaoji_1 recorded a PAF of 0% in 202 5/Q2, i.e. the plant was not 
+available to dispatch any energy onto the grid throughout the quarter .  
+The PAF of all the grid -connected plants is contained in Table 1. The gross PAF of 
+39.60% recorded in 202 5/Q2 represents a 0.21pp increase  relative to the 3 9.39% 
+PAF that was recorded in 202 5/Q1. Significant increases in PAF were recorded in 
+Geregu_1 (+34.63pp), Zungeru_1 (+15.36pp), and Egbin_1 (+7.68pp) power 
+plants across the two quarters.   
+Conversely, the PAF of Odukpani_1 decreased significantly by 19.78pp during the 
+quarter (35.72% in 2025/Q2 compared to 55.50% in 2025/Q1). Reductions in 
+PAF were also recorded in Rivers_1 ( -14.60pp), Omoku_1 ( -11.58pp), and 
+Olorunsogo ( -7.13pp) power plants . 
+Table 1: Plant Availability Factor (%) in 2025/Q1 vs. 2025/Q2  
+Plant Installed 
+capacity 
+(MW)  Average Available 
+Capacity (MW)  Plant Availability Factor 
+(%) 
+2025/Q1  2025/Q2  2025/Q1  2025/Q2  
+Ikeja_1  110 109.10  109.28  99.18  99.34  
+Ihovbor_2  461 446.36  448.90  96.82  97.38  
+Jebba_1  578 447.15  433.18  77.36  74.95  
+Geregu_1  435 138.03  288.66  31.73  66.36  
+Zungeru_1  700 345.70  453.19  49.39  64.74  
+Kainji_1  760 501.58  473.65  66.00  62.32  
+Shiroro_1  600 332.86  346.11  55.48  57.69  
+Egbin_1  1320  607.83  709.26  46.05  53.73  
+Okpai_1  480 282.72  250.42  58.90  52.17  
+Geregu_2  435 227.29  220.77  52.25  50.75  Plant availability factor=average available capacity (MW)
+installed capacity (MW) × 100              (1) 
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+18   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Plant Installed 
+capacity 
+(MW)  Average Available 
+Capacity (MW)  Plant Availability Factor 
+(%) 
+2025/Q1  2025/Q2  2025/Q1  2025/Q2  
+Delta_1  900 489.80  440.83  54.42  48.98  
+Igbafo_1  45 20.23  20.22  44.95  44.92  
+Dadin -Kowa_1  40 16.36  17.49  40.90  43.73  
+Omotosho_1  335 166.05  145.33  49.57  43.38  
+Olorunsogo_1  335 161.81  137.93  48.30  41.17  
+Odukpani_1  625 346.87  223.22  55.50  35.72  
+Afam_2  650 246.63  223.79  37.94  34.43  
+Sapele_2  500 97.91  105.46  19.58  21.09  
+Ibom power_1  190 23.46  28.87  12.35  15.19  
+Rivers_1  180 52.86  26.58  29.37  14.76  
+Omoku_1  150 38.85  21.48  25.90  14.32  
+Ihovbor_1  500 51.32  67.16  10.26  13.43  
+Omotosho_2  500 60.85  59.89  12.17  11.98  
+Afam_1  726 73.48  59.92  10.12  8.25 
+Olorunsogo_2  750 37.43  46.95  4.99 6.26 
+Trans Amadi_1  100 4.75 5.93 4.75 5.93 
+Sapele Steam_1  720 39.61  31.26  5.50 4.34 
+Alaoji_1  500 0.00 0.00 0.00 0.00 
+Total 13,625  5,366.88   5,395.72  39.39  39.60  
+*Red PAF <50 , Amber PAF 51≤80 , Green PAF >80  
+2.1.3 Quarterly generation  
+The hourly output produced by all the units in a power plant fluctuates based on 
+grid demand, mechanical operability of the unit(s) , and the availability of feedstock. 
+Plants are only dispatched when the load on the grid is sufficient to offtake the 
+energy while  operating the grid within acceptable technical limits. The factors that 
+determine the dispatch of a plant at any point in time include :   
+• Plant availability (mechanical and feedstock)  
+• Load offtake on the grid  
+• Financial competitiveness of the plant in the economic merit order dispatch  
+The average hourly generation on the grid in 202 5/Q2 was 4,501.06 MWh/h, 
+which translates to a total generation of 9,830.31 GWh  (equation 2).  
+Total generation = Ave. hourly generation  (MWh/h )×24hrs×  number of days in the quarter         (2)  
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+19   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The average hourly generation and the total generation decreased by 5.65% and 
+4.60%7 respectively in 2025/Q 2 compared to 202 5/Q1; the hourly generation 
+decreased from 4, 770.59MWh/h generated in 202 5/Q1 to 4,501.06MWh/h ( -
+269.53MWh/h), while the total generation decreased from 10,304.47GWh 
+generated in 202 5/Q1 to 9,830.31GWh ( -474.15 GWh) in 2025/Q 2. The 
+decrease in quarterly generation can be  attributed to a decrease in load offtake by 
+the grid-connected  customers.   
+In total, eighteen (18) plants recorded decreases in their average hourly generation 
+across the quarters. Significant decreases in average hourly generation were 
+recorded in Odukpani_1 ( -100.40MWh/h), Geregu_2 ( -81.47MWh/h), Delta_1 ( -
+68.47MWh/h), Shiroro_ 1 (-46.07MWh/h), Afam_2 ( -34.77MWh/h) and Rivers_1 
+(-31.40MWh/h) power plants.  
+Conversely, increases in average hourly generation were recorded in Geregu_1 
+(+97.29MWh/h) Egbin_1 (+87.30MWh/h), Ihovbor_1 (+15.11MWh/h), and 
+Olorunsogo_2 (+12.58MWh/h) power plants across the quarters (Table 2 ).  
+Table 2: Average Hourly Generation (MWh/h) in 2025/Q1 vs. 2025/Q2  
+Plant 
+  
+ Average Hourly Generation 
+(MWh/h)  Change 
+(%) 
+  Change 
+(MWh/h)  
+2025/Q1  2025/Q2  
+Geregu_1  126.11  223.40  77.14  97.29  
+Egbin_1  572.87  660.17  15.24  87.30  
+Ihovbor_1  21.21  36.32  71.23  15.11  
+Olorunsogo_2  14.18  26.77  88.74  12.58  
+Zungeru_1  312.13  319.39  2.32 7.26 
+Ikeja_1  102.13  105.77  3.57 3.64 
+Dadin -Kowa_1  16.61  17.32  4.29 0.71 
+Igbafo_1  22.07  22.73  3.01 0.67 
+Trans Amadi_1  8.00 8.07 0.86 0.07 
+Alaoji_1  0.00 0.00 0.00 0.00 
+Ihovbor_2  401.47  400.94  -0.13 -0.54 
+Omotosho_2  41.53  40.14  -3.35 -1.39 
+Sapele Steam_1  23.93  21.32  -10.92  -2.61 
+Sapele_2  70.13  67.05  -4.40 -3.08 
+Ibom power_1  24.17  18.30  -24.30  -5.87 
+ 
+7 The percentage change in total generation and average hourly generation is different across 2025/Q1 vs 
+2025/Q2 because the number of days in each of the quarters is not the same (90/91 days). When the number of 
+days in the quarters being compared is the same, the percentage change in total generation will be the same as 
+the percentage change in average hourly generation.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+20   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Plant 
+  
+ Average Hourly Generation 
+(MWh/h)  Change 
+(%) 
+  Change 
+(MWh/h)  
+2025/Q1  2025/Q2  
+Omotosho_1  148.60  136.88  -7.89 -11.72  
+Jebba_1  334.70  322.38  -3.68 -12.33  
+Omoku_1  38.98  22.24  -42.94  -16.74  
+Okpai_1  239.73  222.68  -7.11 -17.05  
+Kainji_1  458.42  440.70  -3.87 -17.72  
+Afam_1  71.42  50.29  -29.59  -21.13  
+Olorunsogo_1  154.39  133.01  -13.85  -21.38  
+Rivers_1  53.21  21.81  -59.01  -31.40  
+Afam_2  253.15  218.37  -13.74  -34.77  
+Shiroro_1  304.93  258.86  -15.11  -46.07  
+Delta_1  461.42  392.95  -14.84  -68.47  
+Geregu_2  190.59  109.12  -42.75  -81.47  
+Odukpani_1  304.49  204.09  -32.97  -100.40  
+Total 4,770.59  4,501.06  -5.65 -269.53  
+Cumulatively, the average hourly generation of the five grid -connected hydro power 
+plants decreased by 68.15MWh/h ( -4.78%) in 2025/Q2 compared to 2025/Q1. 
+This is due to the decrease in the generation of three (3) out of the five hydropower 
+plants. The average hourly generation of Shiroro_1  (-15.11%), Kainji _1 (-3.87%), 
+and Jebba_1 ( -3.68%) de creased in 202 5/Q2 compared to 202 5/Q1. Conversely, 
+the average hourly generation of Dadin Kowa_1 (+4.29%) and Zungeru_1 
+(+2.32%) hydropower plants increased in 2025/Q2 compared to 2025/Q1 ( Figure 
+2).  
+ 
+Figure 2: Average Hourly Generation (MWh/h) in 2025/Q1 vs. 2025/Q2  
++15.24% Variance -3.87% -0.13% -14.84% -3.68% +2.32% -15.11% -11.38%573
+458
+401
+461
+335
+312
+305
+1,925660
+441
+401
+393
+322
+319
+259
+1,706
+02004006008001,0001,2001,4001,6001,8002,000
+Egbin _1 Kainji _1 Ihovbor _2 Delta _1 Jebba _1 Zungeru _1 Shiroro _1 OthersAverage Hourly Generation (MWh /h)
+Generation Companies2025 /Q12025 /Q2
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+21   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The cumulative average hourly generation from  the grid -connected  thermal plants 
+during the quarter also decreased by 201.38MWh/h ( -6.02%) in 2025/Q2, with 
+fifteen  (15) out of the twenty -three (23) thermal plants recording decreases in their 
+average hourly generation .  
+2.1.4   Generation load factor  
+The load factor is a measure of the utilisation of a power plant’s available capacity, 
+calculated as the ratio of the average electricity generated over a period to the 
+maximum possible generation (assuming all the available capacity is utilised all the 
+time over the period). A higher load factor means better capacity utilisation thereby 
+reducing the cost per unit of energy and increasing profitability, as fixed costs are 
+spread over a larger amount of dispatched energy. The load factor (also known as 
+the dispatch rate) reflects both the demand for energy and a plant’s ability to supply 
+it. The formula for load factor is represented by equation 3:  
+The overall load factor for all grid -connected power plants in 202 5/Q2 was 
+83.42% ; meaning that on average, at any point during the quarter, 16.58% of 
+available capacity was not dispatched. The load factor in 202 5/Q2 (83.42%) 
+represents  a 5.47pp decrease compared to the 88.89 % load factor recorded in 
+2025/Q1.  
+The load factors of the seven (7) power plants with the highest dispatch rates in 
+2025/Q2 are presented in Figure 3. T hree (3) power plants (Trans Amadi_1, 
+Igbafo_1, and Omoku_1 ) recorded dispatch rates of 100%. Kainji_1 and Dadin 
+Kowa_1 hydropower plants recorded load factors >90% (93.04% and 99.01% 
+respectively), while the remaining three hydropower plants (Shiroro_1, Jebba_1, 
+and Zungeru_1) recorded dispatch rates < 90% (74.79%, 74.42%, and 70.47%, 
+respectively). The <90% dispatch rate recorded by Shiroro_1, Jebba_1, and 
+Zungeru_1 during the quarter  is inconsistent with the Commission’s Order on the 
+Mandatory dispatch of Hydropower Plants in the NESI (Order No: 
+NERC/18 2/20198).  
+ 
+8 The Order stipulates that hydropower plants which are the cheapest energy generation source, should be 
+dispatched with priority to reduce wholesale energy costs for consumers  Load Factor=  Total Energy Generated (MWh)
+Ave. Available Capacity  (MW )×24hrs×period (in days) × 100                (3)  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+22   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+Figure 3: Generation Load Factor 2025/Q1 vs. 2025/Q2  
+2.1.5 Generation mix  
+The electricity generation mix refers to the combination of fuels used to generate 
+electricity over a period. The electricity generation mix varies across countries and  
+is influenced by factors such as natural resource availability, government policies, 
+environmental considerations, type of power plants, energy demand,  and seasonal 
+fluctuations. An ideal energy mix must balance the three key elements of the energy 
+trilemma: i) Energy Security9 ii) Energy Sustainability10; and iii) Energy 
+Affordability/Equity11. The formula for the share of electricity generated by fuel 
+source is given by equation 4:  
+The share of electricity generated from different fuel sources in 202 5/Q1 and 
+2025/Q 2 is presented in Figure 4 . The total generation from hydropower plants 
+(2,967.28 GWh) decreased by 114.59GWh ( -3.72%) in 2025/Q 2 compared to 
+2025/Q1 (3,081.88 GWh). The contribution of hydropower plants to the energy 
+ 
+9 This reflects a nation’s capacity to meet current and future energy demands reliably, withstand and bounce 
+back from system shocks with minimum disruption to supplies.  
+10 This represents the transition of a nation’s energy system towards mitigating and avoiding potential 
+environmental harm and climate change impacts.  
+11 This reflects a nation’s ability to provide universal access to affordable, fairly priced and abundant energy 
+for domestic and commercial use  
+Variance0100
+100
+100
+100
+100
+94
+95
+88100
+100
+100
+99
+98
+97
+96
+82
+0102030405060708090100
+Trans Amadi _1 Igbafo _1 Omoku _1 Dadin -Kowa _1 Afam _2 Ikeja_1 Olorunsogo _1 OthersLoad Factor (%)
+Generation CompaniesLoad Factor 2025 /Q1 Load Factor 2025 /Q2-6pp +1 pp +3 pp -2 pp -1 pp 0 0Share of fuel i= Total electricty generated from fuel i (GWh)
+Total electricity generated from all fuel sources  (GWh ) × 100   (4) 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+23   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ mix in 2025/Q 2 was 30.19% (2,967.28 GWh out of 9,830.31GWh),  which 
+represents a +0.28 pp change compared to its contribution in 202 5/Q1 (29.91%). 
+The increase in the contribution of hydropower plants to the energy mix during 
+2025/Q2 despite a decrease in total generation from the plants, is due to the 
+significant decrease in the overall energy generated in the quarter (section 2.1.3)  
+and the decrease in the total energy generated by thermal power plants in 
+2025/Q2 compared to 2025/Q1 .  
+Figure 4: Electricity Generated by Energy Sources in 2025/Q1 vs. 2025/Q2  
+2.2 Grid Performance  
+The Transmission Company of Nigeria (TCN), which has the responsibility of 
+transporting energy from power plants to DisCos, has been operating with two (2) 
+licences: Transmission Service Provider (TSP) and System Operator (SO). However, 
+the EA 2023 provide s for the incorporation of an entity to be licenced as an 
+Independent System Operator (ISO) to perform the market and system operator 
+functions of the Transmission Company of Nigeria (TCN).  
+The Commission, through the Order on the establishment of the Independent System 
+Operator (NERC/2024/45) unbundled the TCN into two (2) entities: the Nigerian 
+Independent System Operator (NISO) and the Transmission Service Provider (TSP).  
+70.09 69.81
+29.91 30.19
+0.0010.0020.0030.0040.0050.0060.0070.0080.0090.00100.00
+2025 /Q1 2025 /Q2Generation Share (%)Hydro Thermal
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+24   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The NISO was inaugurated on 08 April 2025 and has fully commenced market and 
+system operations, while the Transmission Service Provider (TSP) responsibility 
+remains with TCN.  The key functions of the NISO include:  
+• System Operations: these include maintaining system stability, generation 
+scheduling, transmission scheduling, load balance and load dispatch.  
+• System Planning: Entails the procurement and scheduling of ancillary services 
+and system planning for long -term captivity . 
+• Market Operations: Administration of the wholesale electricity market in 
+accordance with the Market Rules, and such other activities as may be 
+required for reliable and efficient system operation  
+To assess the performance of the grid, the Commission focuses on the following four 
+(4) Key Performance Indicators (KPIs) that relate to power transmission:  
+• Transmission loss factor  
+• Stability of grid frequency  
+• Voltage fluctuation  
+• Incidence (s) of system collapse  
+2.2.1 Transmission loss factor  
+Transmission Loss Factor (TLF) refers to the proportion of the total energy sent out 
+by the power plants that was either lost in transmission or utilised in the transmission 
+station , i.e., neither delivered to the DisCos nor exported to international customers. 
+There is an inverse relationship between the TLF and the efficiency of the transmission 
+system; i.e. a decline in the TLF indicates an improvement in transmission efficiency 
+over a given period. The formula for TLF is represented by equation 5:  
+ 
+The average TLF in 2025/Q2  was 8.58% (Figure 5). A TLF of 8.58% indicates that 
+for every 100MWh of energy injected into the grid, 8.58MWh of energy is 
+undelivered to DisCos and international customers due to losses in the transmission 
+network or consumption at the transmission substations. The TLF recorded in 
+2025/Q2  represents a 0. 42pp decrease  (performance improvement ) relative to the 
+9.00% recorded in 202 5/Q1. TLF  =  (1- Energy delivered to all DisCos+Energy Exported
+Energy Sent out by all GenCos)  ×100                 (5)  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+25   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+Figure 5: Actual Transmission Loss Factor (%) vs. MYTO TLF Target (%) January - 
+June 2025  
+The 8.58% TLF recorded in 2025/Q2  represents an underperformance of 1.58pp 
+relative to the MYTO target for 2025 – 7.00%. The TLF target represents the efficient 
+loss in transmission  that is recoverable from customers based on the approved 
+revenue requirements of the Transmission Service Provider  (TSP).  Exceeding the TLF 
+target means that the TSP will not be able to earn its full revenue requirement 
+because there is no provision to recover the revenues needed to cover the excess 
+(inefficient) losses  from cus tomers.  The cost of the 1.58pp TLF underperformance  
+during the quarter  to the TSP/TCN is ₦17.97 billion12 .  
+2.2.2 Grid frequency  
+Frequency is a crucial power quality parameter that industrial customers are 
+particularly concerned about due to the sensitivity of their heavy -duty machinery. In 
+industrial production assembly lines, the machines are designed to operate only 
+within pre -set frequency limits and therefore often have a low tolerance for 
+frequency fluctuations.  
+As specified in section 10.1.2 of the Grid Code, the standard frequency for 
+operation on the Grid is 50Hz. The code provides that under normal circumstances, 
+ 
+12 This amount  (₦17.97 billion)  comprises ₦807.60 million for TLF losses as well as ₦17.17 billion GenCo 
+penalty  but does not include SLA penalties  that TCN may have accrued due to under -delivery to the DisCos .  
+04812
+Jan-25 Feb-25 Mar-25 Apr-25 May-25 Jun-25Transmission Loss Factor (%)
+MonthsActual TLF MYTO Target
+2025 MYTO Target = 7.00%Actual TLF 2025 /Q1 = 9.00% Actual TLF 2025 /Q2 = 8.58%
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+26   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ the grid can operate within a deviation of ±0.5% , i.e. between a lower limit of 
+49.75Hz and an upper limit of 50.25Hz. Section 10.1.2 of the Grid Code further 
+provides that in extreme circumstances, the grid may operate within a tolerance  of 
+±2.5% , i.e. system frequency may reach a lower bound stress limit of 48.75Hz and 
+an upper bound stress limit of 51.25Hz.  
+A system’s stability over a given period is measured by its ability to operate as close 
+as possible to the 50Hz benchmark set in the Grid Code; this means that the lower 
+the range between the average upper daily system frequency  and the average 
+lower daily system frequency, the more stable the system has been.  
+During 202 5/Q2, the average lower daily system frequency was 49. 33Hz, while 
+the average upper daily system frequency was  50.78Hz, which translates to a range 
+of 1.46Hz (Figure 6 ). Comparatively, in 202 5/Q1, the average lower daily system 
+frequency was 49. 28Hz, while the average upper daily system frequency was 
+50.77Hz, which translated to a range of 1. 49Hz. The 0. 03Hz ( -2.29% ) decrease in 
+the average quarterly frequency range recorded in 202 5/Q2 relative to 202 5/Q1 
+indicates a better operational performance  of the National Grid during 2025/Q2 . 
+ 
+Figure 6: System Frequency from January - June 2025  
+49.42
+49.29
+49.1349.249.39 49.3950.7150.81 50.7950.89
+50.74 50.72
+47.0047.5048.0048.5049.0049.5050.0050.5051.0051.50
+Jan-25 Feb-25 Mar-25 Apr-25 May-25 Jun-25System Frequency (Hz)
+MonthsUpper Frequency Range = 50.25Hz
+Lower Frequency Range = 49.75HzUpper FrequencyUpper Stress Limit = 51.25Hz
+Lower Stress Limit = 48.75HzLower Frequency
+2025 /Q1
+Average upper daily system frequency = 50.77Hz
+Average lower daily system frequency =49.28Hz2025 /Q2
+Average upper daily system frequency = 50.78Hz
+Average lower daily system frequency = 49.33HzStatutory Frequency = 50.00Hz
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+27   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 2.2.3 Voltage fluctuation  
+To guarantee the quality of electricity delivered to end users, the Grid Code specifies 
+a nominal system voltage of 330kV with a tolerance range of ±5% (313.50kV to 
+346.50kV in the lower and upper bounds , respectively). Fluctuations in grid voltage, 
+including spikes, dips, flickers, and brownouts, can cause significant harm to 
+consumers and result in substantial commercial losses. Extreme cases of voltage 
+fluctuations, particularly at the distribution netw ork level , can cause severe damage 
+to industrial machines , thereby compelling industrial customers to seek alternative 
+sources of power outside of the National Grid.  
+The system voltage pattern from January to  June 2025 is illustrated in  Figure 7 . The 
+average lower and upper  operating voltage for the transmission network in 
+2025/Q2 were 300.05kV and 345.31 kV, respectively . The average upper 
+operating voltage recorded during the quarter (345.13kV) was below the upper 
+limit (346.50kV) specified in the grid code. As explained for frequency in section 
+2.2.2,  the measure of the health of a system over a given period can also be 
+evaluated based on the range between the average upper daily system voltage and 
+the average lower daily system voltage. The lower the range,  the more stable the 
+system is.  
+By way of comparison, the range between the Grid’s average lower and upper 
+operating voltage for 2025/Q 2 was 45.26kV which is lower than the 5 0.26kV 
+(average lower and upper voltages of 296.56kV and 346.82 kV respectively) that 
+was recorded in 202 5/Q1, further reinforcing the observation  reported in section 
+2.2.2 that the quality of energy transported along the National grid was higher in 
+2025/Q2.  
+The Commission continues to engage with TCN and other stakeholders to ensure 
+sustained efforts at keeping the system voltage within the limits  contained in the grid 
+code and consequently providing a safe and reliable electricity supply to end users.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+28   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+Figure 7: System Voltage (kV) from January - June 2025  
+2.2.4 System collapse  
+The national power grid is a vast network of electrical transmission lines that link 
+power stations to end -use customers across the nation and is designed to function 
+within specific stability boundaries, including voltage (330kV ± 5.0%) and frequency 
+(50H z ± 0.5%). Any deviation from these stability ranges can result in decreased 
+power quality and , in severe cases, cause widespread power outages ranging from 
+a partial collapse of a section of the grid to a full system -wide blackout.  
+While the NISO is responsible for ensuring that various parameters are maintained 
+within their respective tolerance limits, the primary parameter that the NISO tracks 
+to avoid system disturbances is frequency. When electricity demand exceeds supply, 
+the grid frequency decreases . Conversely, if supply surpasses demand, the 
+frequency increases. In reaction to the grid operating at a frequency outside of the 
+normal operation range (especially when the frequency is too low), safety settings 
+on generation units can cause the units to  shut down. This response can exacerbate 
+the frequency imbalance, potentially triggering a cascade of further shutdowns 
+across generation units and leading to  a full or partial system collapse. There was 
+no incidence of system disturbance on the National G rid in 2025/Q2.  
+296.03295.18298.48 299.30 299.77301.07348.10346.11 346.26
+337.70349.35 348.87
+260.00270.00280.00290.00300.00310.00320.00330.00340.00350.00360.00
+Jan-25 Feb-25 Mar-25 Apr-25 May-25 Jun-25System Voltage (kV)
+MonthsLower Limit = 313.50kVNominal Voltage = 330kVUpper Limit = 346.50kVUpper Voltage (kV)
+2025 /Q1
+Average upper operating voltage = 346.82kV
+Average lower operating voltage = 296.56kV2025 /Q2
+Average upper operating voltage = 345.31kV
+Average lower operating voltage = 300.05kVLower Voltage (kV)
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+29   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 2.3 Commercial Performance  
+The commercial performance of the NESI is a measure of the flow of funds from 
+customers to upstream electricity industry players. In evaluating the commercial 
+performance of the NESI for 202 5/Q2, the following parameters are considered:  
+• Energy offtake performance  
+• Energy Accounting Efficiency  
+• Energy billed and billing efficiency  
+• Revenue and collection efficiency  
+• Aggregate Technical, Commercial and Collection (ATC&C) loss  
+• Remittances to the Market Operator (MO) and the Nigerian Bulk 
+Electricity Trading Company (NBET).  
+2.3.1 Energy offtake performance  
+The Partial Activation of Contract (PAC) regime, which took effect in July 2022, 
+defines the target volume of energy to be off taken by DisCos at any time as their 
+Partially Contracted Capacity (PCC). As explained in prior reports, under the PAC 
+regime, Di sCos have “take-or-pay” obligations on their PCC , which means that they 
+must pay for available capacity irrespective of their offtake. This structure is 
+consistent with international best practices for long -term contract -based power 
+procurement and ensures  that GenCos earn capacity payments ( adequate to cover 
+fixed costs) to compensate them for making their generation units available.  
+The PAC regime also mandates GenCos or TCN to compensate DisCos through 
+Liquidated Damages (LDs) in the event of capacity shortfalls. Under the single -buyer 
+model being operated in the NESI, when there is a shortfall in generation, LDs from 
+GenCos are trea ted as net -offs in the invoices issued to NBET , thereby reducing the 
+net payables due from DisCos.  
+When there is sufficient generation capacity  and the transmission network is able to 
+deliver the required energy to each DisCo’s trading points , every DisCo will be 
+directed by the NISO to offtake its entire PCC13. When generation falls below the 
+required target, the NISO prorates the available capacity among all DisCos or 
+ 
+13 DisCos may get less than their PCC in instances where there are transmission network limitations  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+30   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ allocates energy to the DisCos based on any extant regulatory directive issued by 
+the Commission14; this determines the “Available PCC”  for each DisCo .  
+The ratio between a DisCo’s energy offtake and the available PCC is known as the 
+“energy offtake performance”. The formula for determining a DisCo’s energy 
+offtake performance is represented by equation 6:  
+ 
+Considering the large disparity between the energy on the national grid and 
+customer demand, it is expected that DisCos will always offtake 100% of their 
+available PCC. It is noteworthy that when DisCos have offtake ratios below 100%, 
+they incur increased wholesale energy costs as they still must pay NBET/GenCos for 
+unutilised capacity. The tariff methodology utilised by the Commission does not allow 
+DisCos to recover the resultant additional wholesale energy costs (relative to the 
+volume of energy off -taken) from customers.  
+In 2025/Q2, the average energy offtake by DisCos at their trading points was 
+3,582.62MWh/h, which represents a decrease of 199.33MWh/h ( -5.27%) when 
+compared to the average offtake  in 2025/Q1 ( 3,781.94MWh /h). This reduction in 
+energy off -take was despite an overall increase in available energy across the 
+quarters (Available PCC: 2025/Q2 - 3,903.44MWh/h vs. 2025/Q1 - 
+3,861.53MWh/h ). All DisCos except Benin recorded a decline in their offtake 
+performance between 2025/Q1 and 2025/Q2  (Table 3 ). 
+On an aggregate level, the available PCC increased marginally by 1.09% while the 
+gross energy offtake decreased by 5.27% between 2025/Q1 and 2025/Q2. The 
+cumulative energy offtake performance of DisCos during the quarter was 9 1.78%; 
+this translates to a 6.1 6pp decline in the energy offtake performance of the DisCos 
+relative to 202 5/Q1 (97.94%). The resultant differential between the regulatory set 
+wholesale generation cost and the actual cost incurred by the DisCos arising from 
+poor energy offtake is borne entirely by the DisCo; deemed capacity expenses are 
+not passed onto customers.   
+ 
+14 The Commission issued a guideline to the NISO in May 2025,  which specifies the allocation to be implemented 
+by the NISO in cases of available generation shortfall. The guideline allows the NISO to deviate from the pro -
+rated allocation of available generation to all DisCos.  Energy Offtake performance (%)    =     ( Energy Offtake
+Available PCC)  ×  100                  (6)  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+31   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The Orders on Performance Monitoring Framework for DisCos ( NERC/2024/086 – 
+096) issued on 05 July 2024 mandate DisCos to off-take at least 95% of their 
+available PCC or face sanctions by the Commission. In 2025/Q2, only Benin 
+(100%), Enugu (97.84%), Ikeja (96.02%), Port Harcourt (95.85%) and Yola 
+(95.20%) DisCos met the threshold set in the Orders.  The remaining six (6) DisCos 
+(Abuja, Eko, Ibadan, Jos, Kaduna and Kano) took less than 95% of available PCC, 
+with Kaduna recording the lowest uptake performance of 75.37%. The Commission 
+has commenced the implementation of appropriate sanctions against defaulting 
+DisCos.  
+Table 3: DisCo Energy Offtake Performance in 2025/Q1 vs. 2025/Q2  
+ 
+ 
+DisCos  2025/Q1 2025/Q 2 
+Energy 
+Offtake 
+(MWh/h)  Available 
+PCC 
+(MWh/h)  Offtake 
+Performance  
+(%) Energy 
+Offtake  
+(MWh/h)  Available 
+PCC 
+(MWh/h)  Offtake 
+Performance 
+(%) 
+Abuja   568.93   591.13  96.24   547.84   611.00  89.66  
+Benin   373.30   373.30  100.00   338.35   338.35  100.00  
+Eko  529.47   532.38  99.45   481.59   508.87  94.64  
+Enugu   328.81   328.81  100.00   307.03   313.81  97.84  
+Ibadan   431.10   457.22  94.29   418.76   461.37  90.76  
+Ikeja  587.33   591.02  99.37   567.76   591.29  96.02  
+Jos  180.26   187.32  96.23   168.07   208.69  80.54  
+Kaduna   198.26   206.37  96.07   176.81   234.58  75.37  
+Kano   198.58   201.91  98.35   204.11   246.34  82.86  
+PH  290.72   292.49  99.40   266.78    278.32   95.85 
+Yola  95.18   99.58  95.59   105.51   110.82  95.20  
+All DisCos   3,781.94   3,861.53  97.94   3,582.62   3,903.44   91.78 
+2.3.2   Energy Accounting Efficiency  
+Energy accounting efficiency (EAE) measures how effectively DisCos account for the 
+energy they offtake at their trading points. It is measured as the proportion of  energy 
+billed (GWh) to customers (including metered and unmetered customers) relative to 
+the total energy supplied (GWh) to a given area over a period.  It is the measure 
+of billing efficiency (details in section 2.3.3) using energy rather than commercial 
+parameters.  
+All things being equal, it is expected that there will be a high correlation (similarity) 
+between the EAE and commercial billing efficiency  (BE). However, due to the SBT 
+regime that is in place in the NESI and the large differential between the rates 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+32   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ charged across the various bands, the expected direct correlation between the EAE 
+and the commercial billing efficiency is not guaranteed.  
+Accordingly, the EAE helps to evaluate how well a DisCo is performing when it 
+comes to its ability to – i) manage technical losses incurred along its network; ii) 
+track the flow and delivery of electricity across its network. The formula for energy 
+accounting  efficiency is represented by equation 7 . An energy accounting  efficiency 
+of 70% means that  if a DisCo offtakes/distributes 100GWh  worth of electricity , it is 
+only able to bill its customers for  70GWh.  
+ 
+The total energy offtake by all DisCos in 202 5/Q2 was 7,824.43 GWh, and the 
+total energy billed was 6 ,449.82 GWh, which translates to a n energy accounting  
+efficiency of 8 2.43%. Comparatively, the total energy received and billed in 
+2025/Q1 were 8,169.00 GWh and 6, 631.92 GWh, respectively, which translated 
+to an efficiency of 8 1.18%. This means that at an aggregate level, DisCos recorded 
+a 1.25 pp increase in energy accounting  efficiency15 between 202 5/Q1 and 
+2025/Q2. 
+The disaggregated performance of the DisCos shows that Benin DisCo recorded the 
+highest energy accounting  efficiency of 91.17 %, while Yola DisCo recorded the 
+lowest efficiency of 67.96 %. A quarter -on-quarter comparison of energy accounting  
+efficiency shows that six (6) DisCos recorded improvements in their energy 
+accounting  efficiencies in 202 5/Q2 relative to 202 5/Q1, with Kaduna (+14.82pp) 
+recording the greatest improvement.  Conversely, Ibadan, Enugu, Eko, Port Harcourt 
+and Yola recorded decreases in energ y accounting  efficiency , with Yola recording 
+the most significant decrease of 9.62pp (Table 4 ). 
+DisCos have the responsibility of developing strategies to improve their energy 
+accounting  efficiencies. These can include reinforcing DisCos’ infrastructure to 
+reduce technical losses, improving consumer enumeration and customer service, 
+improving the metering rate and rolling out initiatives to curb energy theft.  
+ 
+15 The methodology for determining Energy accounting efficiency is the same as what was used to determine 
+Billing efficiency in prior reports. Commencing 2025/Q2 (this report), the Commission will determine the Billing 
+Efficiency of DisCos using commercial p arameters (Section 2.3.3).  Energy Accounting Efficiency  =( Total energy billed to customers (GWh)
+Total energy received by the network (GWh)) × 100             (7)  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+33   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Table 4: Energy accounting efficiency by DisCos in 2025/Q1 vs. 2025/Q2  
+DisCos  2025/Q1 2025/Q 2 
+Energy 
+Offtake  
+(GWh)  Energy 
+Billed  
+(GWh)  Energy 
+Accounting 
+Efficiency (%)  Energy 
+Offtake  
+(GWh)  Energy 
+Billed  
+(GWh)  Energy 
+Accounting 
+Efficiency (%)  
+Abuja   1,228.89  875.00  71.20   1,196.49  913.00  76.31  
+Benin   806.33  710.47  88.11   738.95  673.74  91.17  
+Eko  1,143.66  1,016.35  88.87   1,051.80  919.78  87.45  
+Enugu   710.23  511.70  72.05   670.56  481.00  71.73  
+Ibadan   931.18  823.30  88.41   914.58  807.71  88.31  
+Ikeja  1,268.63  1,047.41  82.56   1,239.98  1,032.75  83.29  
+Jos  389.35  312.45  80.25   367.06  301.73  82.20  
+Kaduna   428.23  278.07  64.93   386.16  307.97  79.75  
+Kano   428.93  344.71  80.36   445.78  364.96  81.87  
+Port Harcourt   627.96  552.97  88.06   582.64   490.59  84.20 
+Yola  205.60  159.50  77.58   230.43  156.60  67.96  
+All DisCos   8,169.00   6,631.92  81.18   7,824.43    6,449.82  82.43 
+2.3.3 Billing Efficiency  
+Billing efficiency (BE) of a DisCo is a measure of the ratio of the naira value of 
+energy billed by the DisCo to customers relative to the naira value of  the total energy 
+supplied to a given area over a period. The key drivers of billing losses are i) 
+technical - energy loss along the distribution network , and ii) commercial - DisCo's 
+inability to account for 100% of the energy supplied. Commercial losses could either 
+be a result of theft on the part of the customer, i.e., a meter bypass, or other factors 
+under the DisCo’s control, such as poor customer enumeration and the proliferation 
+of inaccurate meters. A billing efficiency of 70% means that  if a DisCo delivers 
+₦100.00 worth of electricity  to customers, it is only able to issue bills worth ₦70.00 
+due to commercial losses . The formula for billing efficiency is represented by 
+equation 8:  
+ 
+The naira value of the  total energy off tak en by all DisCos in 202 5/Q2 was ₦909.59  
+billion , and the naira value of the total energy billed was ₦742.34 billion , which 
+translates to a billing efficiency of 8 1.61%. This means that at an aggregate level, 
+DisCos’ energy accounting inefficiencies, as well as the allocation of energy to the 
+different customer classes/bands, resulted in a billing shortfall of ₦167.2 5 billion .  Billing Efficiency = ( Total energy billed to customers ( ₦)
+Total energy received by the network (kWh) x Average Allowed Tariff ( ₦/kWh)) × 100    (8)  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+34   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The disaggregated performance of the DisCos shows that Eko DisCo recorded the 
+highest billing efficiency of 96.67 %, while Yola DisCo recorded the lowest billing 
+efficiency of 58.38%  (Table 5 ).  
+Table 5: Billing efficiency by DisCos in 2025/Q2  
+DisCos  2025/Q2 
+Energy 
+Received  
+(₦’ Billion) Energy 
+Billed  
+(₦’ Billion) Billing 
+Efficiency  
+(%) 
+Abuja   140.38   116.19  82.76  
+Benin   86.63   60.34  69.66  
+Eko  124.46   120.32  96.67  
+Enugu   77.38   58.19  75.19  
+Ibadan   106.48   77.63  72.91  
+Ikeja  142.23   126.83  89.18  
+Jos  42.47   37.07  87.28  
+Kaduna   43.65   26.18  59.98  
+Kano   51.67   46.98  90.94  
+Port Harcourt   67.02   56.53  84.34  
+Yola  27.56   16.09  58.38  
+All DisCos   909.59   742.34  81.61  
+It is expected that if DisCos allocate energy across bands (Bands A -E) as stipulated 
+in the MYTO framework issued by the Commission , while also maintain ing a 
+consistent EAE across the bands, the differential (variance) between  BE and EAE 
+should be minimal ( i.e. BE – EAE variance is within a  ±2pp  limit16). Consequently, if 
+a DisCo records  a “BE – EAE”  variance  greater than +2pp, it indicates that 
+allocation of energy was skewed to the more commercially viable feeders  with high 
+energy accounting efficiency. Conversely, if a DisCo records  a “BE – EAE” variance 
+less than -2pp, it indicates that energy allocation was skewed to less commercially 
+viable feeders  with poor energy accounting  efficiency .  
+The d isaggregated “BE – EAE”  variance performance of the DisCos show ed that 
+only Port Harcourt DisCo recorded a va riance within  ±2pp limit between B E and 
+EAE ( +0.14pp) , i.e. PHED was the only DisCo that largely delivered energy across 
+its bands based on the MYTO while also recording a consistent level of EAE across 
+the feeders.   
+ 
+16 The Commission has adopted ±2pp as a limit because it gives ˜5% allowance for the average performance 
+of DisCos.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+35   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Eko (+9.22pp) and Kano (+9.07pp) DisCos recorded significant positive “BE – 
+EAE” variances , indicating that they skewed their energy delivery to more 
+commercially viable feeders while also potentially recording higher EAE on those 
+feeders. Conversely, Benin ( -21.51pp), Kaduna ( -19.77pp) , and Ibadan ( -15.40pp) 
+DisCos recorded significant negative “BE – EAE” variances, indicating that their 
+energy delivery skewed towards less commercially viable feeders,  while also 
+recording lower EAE on the more commercially viable feeders  (Table 6) . 
+Table 6: A comparison of DisCos’ Billing Efficiency (BE) and Energy Accounting 
+Efficiency (EAE) in 2025/Q2  
+DisCos  2025/Q2 
+Billing 
+Efficiency  
+(%) Energy 
+Accounting 
+Efficiency 
+(%)  Variance  
+(BE – EAE) 
+(pp) 
+Abuja  82.76  76.31  6.45 
+Benin  69.66  91.17  -21.51  
+Eko 96.67  87.45  9.22 
+Enugu  75.19  71.73  3.46 
+Ibadan  72.91  88.31  -15.40 
+Ikeja 89.18  83.29  5.89 
+Jos 87.28  82.20  5.08 
+Kaduna  59.98  79.75  -19.77  
+Kano  90.94  81.87  9.07 
+Port Harcourt  84.34  84.20  0.14 
+Yola 58.38  67.96  -9.58 
+All DisCos  81.61  82.43  -0.82 
+2.3.4 Revenue and collection efficiency  
+Collection efficiency is the ratio of the amount that has been collected from customers 
+relative to the amount billed to them by the DisCos. The significant under -recovery 
+of the invoices issued to customers by DisCos is driven by a lack of willingness of 
+customers to pay bills when due, customer dissatisfaction with DisCos’ services and 
+inadequate customer metering, among other challenges. A collection efficiency of 
+70% implies that for every ₦100.00 worth  of energy billed to customers by DisCos,  
+only ₦70.00  was recovered from the billed customers. The formula for collection 
+efficiency is represented by equation 9: 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+36   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+The total revenue collected by all DisCos in 2025/Q2 was ₦564.71 billion out of 
+the ₦742.34 billion that was billed to customers. This translates to a collection 
+efficiency of 7 6.07%. In comparison, the total revenue collected by all DisCos in 
+2025/Q1 was ₦553.63 billion out of the ₦744.26 billion billed to customers, which 
+translated to a 74.39% collection efficiency. This means that at an aggregate level, 
+DisCos recorded a 1.68 pp increase in collection  efficiency between 202 5/Q1 and 
+2025/Q2. 
+The summary of the revenue collection performance of all DisCos is contained in 
+Table 7. In 2025/Q2, three (3) DisCos recorded collection efficiencies greater than 
+80% with Eko (87.80%) recording the highest collection efficiency.  Conversely, Jos 
+DisCo recorded the lowest collection efficiency at 4 3.82%. A comparison of DisCos'  
+performance shows that  Port Harcourt (+9.79pp), Benin (+5.04pp), Ikeja 
+(+4.89pp), Ibadan (+4.20pp), Eko (+3.01pp) and Yola (+0.88pp) DisCos recorded 
+improvements in collection effici ency between 202 5/Q1 and 202 5/Q2. 
+Conversely, the remaining five (5) DisCos recorded declines in collection efficiency , 
+with Abuja ( -3.93pp) and Jos ( -3.37pp)  DisCos having the most significant declines 
+across  the quarters .  
+Table 7: Revenue Collection Performance (%) of DisCos in 2025/Q1 vs. 2025/Q2  
+DisCos  2025/Q1 2025/Q 2 
+Total 
+Billings  
+(₦’ Billion)  Revenue 
+Collected  
+(₦’ Billion)  Collection 
+Efficiency  
+(%) Total 
+Billings  
+(₦’ Billion)  Revenue 
+Collected  
+(₦’ Billion)  Collection 
+Efficiency  
+(%) 
+Abuja  109.73  88.10  80.29  116.19  88.72  76.36  
+Benin  64.97  52.31  80.51  60.34  51.62  85.55  
+Eko 123.77  104.95  84.79  120.32  105.64  87.80  
+Enugu  55.56  44.96  80.92  58.19  45.56  78.29  
+Ibadan  82.88  61.73  74.48  77.63  61.08  78.68  
+Ikeja 129.88  101.20  77.91  126.83  105.02  82.80  
+Jos 36.32  17.14  47.19  37.07  16.24  43.82  
+Kaduna  24.22  11.72  48.41  26.18  12.66  48.38  
+Kano  40.51  25.71  63.46  46.98  29.05  61.82  
+Port Harcourt  62.01  37.63  60.68  56.53  39.83 70.47  
+Yola 14.42  8.20 56.85  16.09  9.29 57.73  
+All DisCos  744.27  553.63  74.39  742.3 4 564.71 76.07 Collection Efficiency  =    ( Total Revenue Collected ( ₦)
+Total Billed Amount ( ₦)) × 100                               (9)  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+37   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ In 2025/Q2, energy accounting17 and collection efficiencies increased by 1.25pp 
+and 1.68pp, respectively, compared  to 2025/Q1. Based on historical trends, this 
+increase in efficiencies across the two quarters can be attributed to the decreased 
+energy offtake ( -4.22%) during the quarter compared to 2025/Q1. It has been 
+observed that there is an inverse relationship bet ween DisCos’ energy offtake and 
+their energy accounting /collection efficiencies. Typically, when DisCos offtake less 
+energy, they often prioritise  areas where they record historically lower energy 
+accounting  and collection inefficiencies.  
+The most proven methods to improve energy accounting and revenue recovery are 
+accurate customer enumeration and the installation of end -use customer meters.  The 
+Commission issued the Order on the operationalisation of Tranche A of the Meter 
+Acquisition Fund (MAF)  in 2024/Q2. The Order, which became effective on 24 June 
+2024, directed DisCos to utilise the first tranche of disbursement from the MAF 
+scheme to procure and install meters for unmetered Band A customers within their 
+franchise areas.  
+As of June 2025, DisCos have metered more than 107,000 Band A customers 
+through the MAF scheme. In addition to the MAF, DisCos are expected to continue 
+to utilise any of the metering frameworks provided for in the NERC MAP and NMMP  
+metering regulation (2021) to improve end -use customer metering in their franchise 
+areas. This will reduce commercial and collection losses, thereby improving the flow 
+of funds to upstream market participants in the NESI.  
+2.3.5 Aggregate Technical, Commercial and Collection (ATC&C) Loss  
+The Aggregate Technical, Commercial and Collection (ATC&C) loss is a summation 
+of – i) billing losses incurred by a DisCo due to its inability to  account for and  bill 
+100% of energy delivered to customers (technical and commercial losses); and ii) 
+collection losses arising from the DisCo’s inability to collect 100% of the bills issued 
+to customers. The ATC&C loss is a critical performance -setting parameter for tar iff 
+computation , as the MYTO makes allowance for target ATC&C loss levels for each 
+DisCo.  
+The target ATC&C reflects the efficient operational losses which the DisCo is 
+expected to incur in its operations , and this is recoverable from its allowed tariffs. 
+The target ATC&C usually reduces over time as DisCos make investments that are 
+ 
+17 2025/Q1 value for Energy Accounting is Billing Efficiency in the 2025/Q1 report.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+38   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ geared towards improving operational efficiency. ATC&C loss is made up of the 
+following components:  
+1. Technical Loss: heat loss due to load flow in electrical lines and transformation 
+loss in transformers.  
+2. Commercial Loss: due to discrepancies in meter reading, erroneous billing, 
+unmetered consumption, or energy theft . 
+3. Collection Loss: unpaid bills.  
+The formula for ATC&C loss is represented by equation 10:  
+ 
+Any DisCo that can outperform its allowed ATC&C (i.e. has a lower actual ATC&C 
+than the target used to compute its cost -reflective tariff) will earn more returns on its 
+set tariffs. Conversely, any DisCo that fails to meet its allowed ATC&C (i.e. has a 
+higher actual ATC&C than the target) will not be able to earn the total revenue 
+requirement upon which its tariffs have been determined; this could pose risks to its 
+long-term financial position.  
+The aggregate ATC&C loss recorded across all DisCos in 202 5/Q2 was 37.92 %, 
+which comprised 1 8.39% in technical and commercial losses and 2 3.93% in 
+collection loss ( Table 8). The aggregate ATC&C loss of 37.92 % recorded in 
+2025/Q2 is 17.38pp higher than the allowed aggregate efficient loss target 
+(20.54%) applied in the computation of the tariffs in the MYTO for the year 202 5 
+and translates to a cumulative revenue loss of ₦158.05  billion18 for the DisCos.  The 
+revenue loss in 2025/Q2 was lower than in 2025/Q1 ( ₦200.49  billion ) because 
+DisCos were able to reduce the variance between the target and actual ATC&C loss 
+from 19.07pp in 2025/Q1 to 17.38pp in 2025/Q2.  
+Disaggregated performance of the DisCos showed that Eko DisCo surpassed its 
+ATC&C loss target by 1.76pp (Actual – 15.12% vs. target – 16.88%) and earned 
+₦2.19 billion  more on its set tariffs (gross allowable revenue). Conversely, the 
+remaining ten (10) DisCos failed to achieve their ATC&C loss targets in 2025/Q2. 
+Kaduna DisCo recorded the widest ATC&C variance (target – actual) of -49.66pp, 
+translating to a revenue los s of ₦21.68  billion . Abuja ( ₦22.75  billion ) and Ibadan 
+(₦23.12  billion ) DisCos also record ed revenue losses greater than ₦20.00  billion  
+ 
+ 18 This represents 22% of the  gross  recoverable  revenues for all DisCos over the period (2025/Q2)       ATC&C Loss =  [1 - (Billing Efficiency  × Collection Efficiency )] × 100           (10)   
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+39   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ due to their inability to achieve the target ATC&C losses specified in the MYTO 
+(Table 8). The excess ATC&C losses (inefficiencies) incurred by the DisCos are not 
+recoverable from customers and may compromise the long -term financial positions 
+of the affected DisCos.  
+As stated above, t he average ATC&C loss recorded in 202 5/Q2 (37.92 %) was 
+1.69pp lower  (better  performance) than what was recorded in 202 5/Q1 (39.61%). 
+Seven (7) DisCos recorded improvements in their ATC&C loss performance in 
+2025/Q2 compared to 202 5/Q1, with Eko  (-9.52pp) and Ikeja (-9.51pp) DisCos 
+record ing the greatest  improvements . Conversely,  Benin (+11.35pp),  Yola 
+(+10.40pp), Ibadan (+8.49pp) and Kaduna (+2.42pp) DisCos recorded declines 
+in their ATC&C loss performance  between the two quarters  (Table 8). 
+Table 8: ATC&C Loss Performance (%) and corresponding Revenue Loss by DisCos 
+in 2025/Q2  
+ 
+ 
+DisCo  2025 MYTO  
+Target  ATC&C  
+(%) ATC&C Loss Variance  
+(pp) Revenue 
+Loss 
+2025/Q2  
+(₦’Billion)  (% of gross 
+recoverable 
+revenue ) (%) 2025/Q1 2025/Q 2 2025/Q1 2025/Q 2 
+Abuja  20.60  42.83  36.80  -22.23  -16.20   -22.75  -20.41  
+Benin  20.76  29.06  40.41  -8.30 -19.65   -17.01  -24.78 
+Eko 16.88  27.11  15.12  -7.77 1.76 2.19  2.11 
+Enugu  21.26  41.70  41.13  -20.44  -19.87   -15.37  -25.23  
+Ibadan  20.92  34.14  42.64  -13.22  -21.72   -23.12  -27.46  
+Ikeja 15.93  35.67  26.16  -19.74  -10.23   -14.55  -12.17  
+Jos 26.09  62.13  61.76  -36.04  -35.67   -15.15  -48.26  
+Kaduna  21.32  68.57  70.98  -47.25  -49.66   -21.68  -63.12  
+Kano  20.88  49.40  43.78  -28.12  -22.90   -11.83  -28.95  
+Port Harcourt  20.42  46.56  40.56  -26.14  -20.14   -13.50  -25.31  
+Yola 44.00  55.90  66.30  -11.90  -22.30  - 6.15  -39.82  
+All DisCos         
+MYTO Level  20.54        
+Total Technical, 
+Commercial & 
+Collection losses  - 39.61  37.92    -158.05  -21.87  
+Technical & 
+Commercial 
+losses  - 18.82  18.39     
+Collection losses  - 25.61  23.93     
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+40   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 2.3.6 Market Remittance   
+Under the account administration mechanism set up by the CBN in 2014 as part of 
+the Nigerian Electricity Market Stabilisation Facility (NEMSF) intervention, all the 
+collections of the DisCos are escrowed. The DisCos only have access to their 
+revenues after  relevant deductions towards their loan obligations have been made. 
+This escrow mechanism also provides visibility into the financial performance of the 
+DisCos with respect to collections.  
+In June 2020, the remit of the fund manager responsible for the escrow was 
+expanded to include the implementation of the payment waterfall framework which 
+was designed by the Commission to increase upstream market remittance to NBET 
+and NISO . This was to cover the cost of energy taken from GenCos, transmission 
+charges (payable to the TSP) and the MO’s administrative charges.  
+Prompt payment of upstream invoices is critical for securing the availability of 
+generation and transmission capacities. The waterfall regime pushes DisCos to boost 
+their collections because most of their allowed revenues rank below the payment of 
+market o bligations in the waterfall.  
+2.3.6.1 Market Remittance to NBET  
+In the absence of cost -reflective tariffs, the Government undertakes to cover the 
+resultant gap (between the cost -reflective and allowed tariff) in the form of tariff 
+subsidies. For ease of administration, the subsidy is only applied to the generation 
+cost payable by DisCos to NBET at source in the form of a DisCo’s Remittance 
+Obligation (DRO). The DRO represents the total GenCo invoice that is billed to the 
+DisCos by NBET based on what the allowed DisCo tariffs can cover19. Furthermore, 
+DisCos are expected to remit 100% of the invoices received from the MO for 
+transmission and administrative service costs.  
+As explained in prior reports, the DRO regime replaced the Minimum Remittance 
+Obligation20 (MRO) framework in January 2024, and DisCos are expected to pay 
+100% of their DROs. The transition to the DRO regime was necessitated by the risk 
+ 
+19 The outstanding portion of the GenCo invoice not covered by allowed tariffs and thus not billed to the DisCos 
+is to be covered by the FGN in the form of tariff subsidies.  
+20 Under the MRO regime , DisCos were invoiced 100% of the energy cost but were only expected to pay the 
+MRO share of the invoice . The outstanding balance is only cleared from the DisCo’s record when the FGN 
+subsidy is paid to NBET.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+41   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ of unpaid tariff subsidy debts encumbering the balance sheets of the DisCos, thereby 
+preventing them from raising finance to undertake critical investments in their 
+distribution network. Under the DRO framework , NBET directly invoices  the portion 
+of GenCo costs not covered by DRO (tariff subsidy) to the Federal Ministry of 
+Finance  for immediate settlement .  
+The total amount invoiced by the GenCos for energy delivered to each DisCo and 
+the DRO -adjusted NBET invoice  to the respective DisCos during 202 5/Q2 are 
+summarised in Table 9. It is important to note that due to the absence of cost -
+reflective tariffs across all DisCos, the Government incurred a subsidy obligation of 
+₦514.35  billion21; this represents a ₦22.04  billion  (-4.11%) reduction in FGN 
+subsidy compared to 2025/Q1 ( ₦536.40 billion )22.  
+Although the subsidy obligation of the government decreased in naira terms ( - 
+₦22.04 billion), it accounted for 59.60% of the total GenCo invoice, which is a 
+0.44pp increase compared to 2025/Q1 when subsidy accounted for 59.16% of the 
+total GenCo invoice23. This is because the actual generation cost ( ₦/kWh) increased 
+by 0.59%, while the allowed end -user tariffs remained  unchanged across the 
+quarters.  
+Table 9: Total GenCo Invoice and Final Obligation (DRO) of DisCos for 2025/Q2  
+DisCos  Total GenCo Invoice 
+(₦’ Billion)  Final DRO -adjusted 
+NBET  Invoice  
+(₦’ Billion)  
+Abuja  133.75  59.17  
+Benin  79.27  32.76  
+Eko 114.30  53.19  
+Enugu  72.04  27.99  
+Ibadan  101.66  38.23  
+Ikeja  134.23  61.28  
+Jos 43.16  16.01  
+Kaduna  46.91  14.60  
+Kano  51.71  19.00  
+Port Harcourt  60.39  22.38  
+ 
+21 Monthly subsidy obligation during the quarter; April - ₦175.35  billion, May - ₦176.87  billion and June - 
+₦162.12 billion.  
+22 4.22% reduction in energy offtake by DisCos between 2025/Q2 and 2025/Q1  was the key driver for the 
+reduction in the total GenCo invoice ( ₦863.02 billion vs. ₦906.77 billion) and subsidy ( ₦514.35 billion vs. 
+₦536.40 billion) across the period.  
+23 The current open -ended subsidy regime leaves the FGN exposed to indeterminate subsidy obligation because 
+of i) volumetric risk; ii) generation cost variation arising from changes in supply mix (more thermal = higher 
+generation cost).  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+42   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ DisCos  Total GenCo Invoice 
+(₦’ Billion)  Final DRO -adjusted 
+NBET  Invoice  
+(₦’ Billion)  
+Yola  25.59  4.05 
+All DisCos  863.02  348.66  
+In 2025/Q 2, the DRO -adjusted invoice from NBET to the DisCos was ₦348.66 
+billion24 while the total remittance made was ₦333.90  billion, which translates to 
+95.77% remittance performance. Comparatively, in 202 5/Q1, the DRO -adjusted 
+invoice from NBET to DisCos was ₦370.71  billion, and the total remittance was 
+₦354.77  billion, which translated to 95.79 % remittance performance.  
+Disaggregated remittance performance of the DisCos to NBET in 202 5/Q2 shows 
+that all DisCos except Jos (60.85%) and Kaduna (41.84%) achieved 100% 
+remittance performance (Figure 8 ). A quarter -on-quarter analysis showed that 
+Kaduna (+4.08pp), Abuja (+1.57pp) and Enugu (+0.73pp) DisCos recorded 
+improvements in remittance performance to NBET in 202 5/Q2 compared to 
+2025/Q1, while Jos DisCo recorded a decrease ( -9.38pp) in remittance 
+performance. All other DisCos (Benin, Eko, Ibadan, Ikeja, Kano, Port Harcourt, a nd 
+Yola) maintained 100% remittance to NBET across the quarters.  
+ 
+Figure 8: DisCos Remittance Performances to NBET in 2025/Q2  
+ 
+24 Total NBET invoice for 202 5/Q2 without adjustment for DRO (total bill issued by GenCos) is ₦863.02 billion  
+100% 100% 100% 100% 61% 42% 100% 100% 100% Performance 100% 100%59.17
+32.76
+53.19
+27.99
+38.23
+61.28
+16.01
+14.60
+19.00
+22.38
+4.0559.17
+32.76
+53.19
+27.99
+38.23
+61.28
+9.74
+6.11
+19.00
+22.38
+4.05
+010203040506070
+Abuja Benin Eko Enugu Ibadan Ikeja Jos Kaduna Kano Port Harcourt YolaRemittances (₦ Billion )NBET Invoice NBET Remittance
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+43   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 2.3.6.2 Market Remittance to MO  
+The Market Operator issues invoices to DisCos for energy transmission and 
+administrative services. In 2025/Q2, DisCos made a total remittance of ₦65.30  
+billion against the cumulative invoice of ₦68.68  billion issued by the MO. This 
+payment translates to 95.07 % remittance performance and is a 1.25pp decrease 
+when compared to 96.32% remittance performance recorded in 2025/Q1 when 
+DisCos remitted ₦59.49 billion out of ₦61.76 billion invoice issued by the MO . 
+The disaggregated remittance performance of the DisCos  to the MO shows that, 
+similar to 2025/Q1, all the DisCos except Jos (64.67%) and Kaduna (51.92%) 
+recorded 100% remittance performance to the MO in 2025/Q2 (Figure 9). 
+Between 202 5/Q1 and 2025/Q 2, Jos (-7.40pp) and Kaduna ( -0.28pp) DisCos 
+recorded declines  in their remittance performance to MO .  
+ 
+Figure 9: DisCos Remittance Performances to MO in 2025/Q2  
+2.3.6.3 Market Remittance to NBET and MO  
+The cumulative DisCos’ remittance to NBET and MO in 202 5/Q2 is presented  in 
+Table 10. 
+ 
+ 
+100% 100% 100% 100% 65% 52% 100% 100% 100% Performance 100% 100%11.72
+5.32
+9.10
+5.79
+7.92
+10.64
+4.00
+4.10
+4.50
+3.72
+1.8811.72
+5.32
+9.10
+5.79
+7.92
+10.64
+2.58
+2.13
+4.50
+3.72
+1.88
+024681012
+Abuja Benin Eko Enugu Ibadan Ikeja Jos Kaduna Kano Port Harcourt YolaRemittances (₦ Billion )MO Invoice MO Remittance
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+44   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Table 10: DisCos Remittance Performances to NBET and MO in 2025/Q2  
+DisCos  DRO Adjusted Invoice  
+(₦’ Billion)  Actual Remittance  
+(₦’ Billion)  Remittance  
+Performance (%)  
+NBET  MO NBET + MO  NBET  MO NBET + MO  2025/Q1 2025/Q 2 
+Abuja  59.17  11.72  70.89  59.17  11.72  70.89  98.65  100.00  
+Benin  32.76  5.32 38.08  32.76  5.32 38.08  100.00  100.00  
+Eko 53.19  9.10 62.30  53.19  9.10 62.30  100.00  100.00  
+Enugu  27.99  5.79 33.78  27.99  5.79 33.78  99.38  100.00  
+Ibadan  38.23  7.92 46.15  38.23  7.92 46.15  100.00  100.00  
+Ikeja  61.28  10.64  71.92  61.28  10.64  71.92  100.00  100.00  
+Jos 16.01  4.00 20.01  9.74 2.58 12.33  70.53  61.61  
+Kaduna  14.60  4.10 18.70  6.11 2.13 8.24 40.28  44.05  
+Kano  19.00  4.50 23.50  19.00  4.50 23.50  100.00  100.00  
+P/Harcourt  22.38  3.72 26.10  22.38  3.72 26.10  100.00  100.00  
+Yola  4.05 1.88 5.93 4.05 1.88 5.93 100.00  100.00  
+All DisCos  348.66  68.68  417.35  333.90  65.30  399.2 0 95.86  95.65  
+2.3.6.4 Market Remittance by Other Customers  
+The remittances made by bilateral customers (domestic and international) and 
+special customers for invoices issued in 202 5/Q2 by the MO are detailed in  Table 
+11. The six (6) international bilateral customers being supplied by GenCos in the 
+NESI made a payment of $9.01 million against the cumulative invoice of $1 7.54 
+million issued by the MO for services rendered in 202 5/Q2, translating to a 
+remittance performance of 51.33 %. The domestic bilateral customers made a 
+cumulative payment of ₦1,401.00 million against the invoice of ₦2,796.29  million 
+issued to them by the MO for services rendered in 202 5/Q2, translating to 50.10 % 
+remittance performance.  
+It is noteworthy that one (1)  domestic bilateral customer made payments during 
+2025/Q2 for outstanding MO invoices from previous quarters. The MO received 
+₦10.53  million from Trans -Amadi (OAU/FMPI)  towards outstanding invoices from 
+previous quarters. The details of the  payment are contained in Appendix V III. 
+The special customer (Ajaokuta Steel Co. Ltd and the host community) did not make 
+any payment towards the ₦1.27 billion (NBET) and ₦0.12 billion (MO) invoices 
+received in 2025/Q2. This continues a longstanding trend of non -payment by this 
+customer, and the Commission has communicated the need for intervention on this 
+issue to the relevant FGN authorities.  
+ 
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+45   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Table 11: Invoices and Remittances of Other Customers in 2025/Q2  
+  
+  
+   NBET  MO 
+Invoice  
+(Million)  
+2025  
+/Q2 Remittance  
+(Million)  
+2025  
+/Q2 Performance  
+(%) 
+2025  
+/Q2 Invoice  
+(Million)  
+2025  
+/Q2 Remittance25 
+(Million)  
+2025  
+/Q2  Performance  
+(%) 
+2025  
+/Q2 
+International Bilateral Customers     
+    
+PARAS -SBEE ($)  - - -  2.77   -    0.00 
+PARAS -CEET ($)      2.02   -    0.00 
+TRANSCORP -SBEE (UGHELLI) ($)  - - -  5.47  5.47-    100.00  
+TRANSCORP -SBEE (AFAM 3) ($)      1.28  0.95    74.04  
+MAINSTREAM -NIGELEC ($)  - - -  3.71  2.59  69.81 
+ODUKPANI -CEET ($)  - - -  2.29   -    0.00 
+Total - - -  17.54  9.01  51.33  
+Local Bilateral Customers          
+MSTM/INNER GALAXY ( ₦) 
+- - - 1,779.23  1,110.94  62.44  MSTM/KAM IND. ( ₦) 
+MSTM/KAM INT. ( ₦) 
+MAINSTREAM/PRISM ( ₦) 
+MSTM ZEBERCED ( ₦) 
+MSTM/ADFV ( ₦) 
+NDPHC/WEEWOOD ( ₦) - - -  139.14   - 0.00 
+NORTH SOUTH/STAR P ( ₦) - - - 35.25 10.58  30.02  
+TRANS AMADI (OAU) ( ₦) - - - 45.39  29.32  64.61  TRANS AMADI (FMPI) ( ₦) 
+NDPHC/SUNFLAG ( ₦) -  -  -  51.11  51.11       100.00  OMOTOSHO II/PULKIT ( ₦) 
+ALAOJI GENCO/APLE ( ₦) - - - 233.34  150.00 64.28  
+TAOPEX/KAM INT ( ₦)  
+-  
+-  
+- 269.87  - 0.00 TAOPEX/KAM STEEL ( ₦) 
+SAPELE/PHOENIX ( ₦)    49.04  49.04  100.00  
+ZUNGERU/YOUNGXING  (₦)    193.93  - 0.00 
+Total - - - 2,796.29  1,401.00 50.10  
+Special Customer           
+AJAOKUTA STEEL ( ₦) 1,275.58  0 0 122.08  0 0 
+1. NBET, MO, SBEE, CEET and NIGELEC are Nigeria Bulk Electricity Trader, Market Operator, Société Beninoise d’Energie 
+Electrique, Compagnie Energie Electrique du Togo and Société Nigerienne d’electricite  
+ 
+ 
+ 
+ 
+ 
+25 These remittances are based on reconciled market settlement submitted to the Commission as at 30 
+September 2025  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+46   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+47   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 3.0 REGULATORY FUNCTIONS   
+Section 34 (2)(d) of the EA 2023 provides that the Commission is empowered to 
+“licence and regulate persons engaged in the generation, transmission, system 
+operation, distribution, supply and trading of electricity”  in the NESI. In exercising 
+the powers conferred on it by the EA 2023, the Commission primarily engages with 
+participants in the NESI through selected regulatory instruments as prescribed by 
+the Act. Some of the regulatory instruments utilised by the Commi ssion include – 
+• Regulations:  Regulations are detailed legal rules, and bylaws  formulated by 
+the Commission pursuant to sections 46(2), 64, 215 and 226 of the Electricity 
+Act, to govern and conduct operations within the electricity sector, ensure 
+adherence to statutory requirements, and give effect to the implementation of 
+the Act.  
+• Orders:  Orders are authoritative commands, legally binding instructions, and 
+directions issued by the Commission pursuant to sections 47, 64 and 215 of 
+the Electricity Act, requiring licensees to perform certain actions, cease, desist 
+from specific activities, or  act in a particular way.  
+• Directives:  Directives are enforceable instructions issued by the Commission 
+pursuant to sections 64 and 215 of the Electricity Act to address specific 
+issues, implement policies, or ensure compliance with regulatory objectives.  
+• Licences:  Licences are authorisations granted by the Commission pursuant to 
+sections 34(2)(d), 63(1), 64, and 215 of the Electricity Act, that allow entities 
+to operate in activities such as the generation, transmission, trading and 
+distribution of electricity unde r specified terms and conditions.  
+• Permits:  Permits are authorisations issued by the Commission pursuant to 
+sections 63(2), 64 and 215 of the Electricity Act, for specific activities, such 
+as the generation of electricity for own use or authorisation to participate as 
+a meter service provider.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+48   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 3.1 Regulations, Orders and Directives   
+3.1.1  Regulations  
+The Commission did not issue any new Regulations in 2025/Q2.  
+3.1.2 Orders  
+During the quarter, the Commission issued thirty -seven  (37) Orders to guide the 
+activities of licensees. The details of the Orders are outlined below:   
+A. Order Nos: NERC/2025/031,033 -NERC/2025/ 042 (11 Orders issued to 11 
+DisCos) — April 2025 Supplementary Order to the Multi -Year Tariff Order for the 
+DisCos. Pursuant to Section 7 of the April 2024 supplementary Orders , which 
+provide for monthly tariff reviews, the April 2025 supplementary Orders 
+(effective date - 01 April 2025) sought to reflect the changes in the pass -through 
+indices outside the control of licensees , including inflation rates, ₦/US$ exchange 
+rate, available generation capacity and gas price for the determination of cost -
+reflective tariff.  
+Pursuant to the policy directive of the FGN on electricity subsidy, end -user tariffs 
+for April 2025 were frozen at rates payable in July 2024 .    
+B. Order No: NERC/2025/043 — Performance Improvement Plan (PIP) for the 
+Transmission Company of Nigeria Plc (TCN) and the Nigerian Independent 
+System Operator (NISO). The Order (NERC/2025/043), which became 
+effective on 15 May 2025 , repeals the Order on Performance Improvement Plan 
+(PIP) for the Transmission Company of Nigeria Plc (Order/NERC/2023/035) 
+issued in 2023.  
+The key highlights of the Order include:  
+i. Establishes the Transmission Infrastructure Fund (TIF) to support the 
+funding of critical transmission infrastructure projects and novel NESI 
+initiatives that are necessary to facilitate improved delivery of 
+transmission services in Nigeria.  
+ii. Aligns PIP with evolving industry needs  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+49   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ iii. In mapping the funding sources for the various projects contained in 
+the PIP, the Order reflects the most up -to-date donor support to both 
+the TCN and NISO  
+iv. Provides guidelines on PIP implementation framework, including the 
+adoption of competitive procurement processes to deliver value for 
+money to the users of the transmission network.  
+C. Order Nos:  NERC/2025/045 - NERC/ 2025 /055  (11 Orders issued to 11 
+DisCos) — May 2025 Supplementary Order to the Multi -Year Tariff Order for the 
+DisCos. Pursuant to Section 7 of the April 2024 supplementary Orders, which 
+provide for monthly tariff reviews, the May 2025 supplementary Orders 
+(effecti ve date - 01 May 2025) sought to reflect the changes in the pass -through 
+indices outside the control of licensees, including inflation rates, ₦/US$ 
+exchange rate, available generation capacity and gas price for the 
+determination of cost -reflective tariff.  
+Pursuant to the policy directive of the FGN on electricity subsidy, end -user tariffs 
+for May 2025 were frozen at rates payable in July 2024   
+D. Order No: NERC/2025/056 - Order on the Third -Party Investments in the 
+Construction of the Switchyard Bay Extension at Kainji Hydropower Plant and 
+Securitisation of Funds for the SCADA26 Additional Scope. This Order became 
+effective on 14 May 2025 and has the following objectives:  
+i. Facilitate the Completion of the evacuation bays and mitigate the risk 
+of delayed evacuation and integration of the recovered capacity into 
+the grid.  
+ii. Establish the framework and guidance for MESL27 to execute the 
+project on behalf of TCN and recover its investment within agreed 
+timelines.  
+iii. Secure funding for the SCADA Additional Project not covered under 
+the existing World Bank SCADA Project scope to ensure 
+implementation of a full coverage SCADA system for NESI.  
+ 
+26 Supervisory Control and Data Acquisition  
+27 Mainstream Energy Solution Limited  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+50   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ E. Order No: NERC/2025/057 - Order on the Mandatory Integration of Grid -
+connected Generating Units into the SCADA/EMS28 for the Nigerian Electricity 
+Supply Industry (NESI). The order became effective on 22 May 2025 and has 
+the following objectives:  
+i. Provide clear timelines for the integration of all grid -connected 
+generating units into the SCADA/EMS to enhance real -time monitoring 
+and control of power generation.  
+ii. Enforce compliance with sections 12.2 and 20.16 of the Grid Code, 
+which mandate data exchange and communication protocols between 
+GenCos and NISO.  
+iii. Improve grid reliability by enabling real -time visibility of generation 
+output, fault detection, automated load dispatch and automatic 
+generation control.  
+iv. Minimise system disturbances through proactive monitoring and rapid 
+response to grid anomalies  
+v. Establish penalties for non —compliance to deter violations and ensure 
+adherence to SCADA/EMS integration requirements.  
+vi. Facilitate efficient market operations by ensuring accurate data for 
+settlement, forecasting, and ancillary services.  
+vii. Facilitate stable interstate and international grid operations in the 
+emerging multitier electricity market.  
+F. Order No : NERC/2025/058  — Transfer of Regulatory Oversight of the Electricity 
+Market in Abia State from the Nigerian Electricity Regulatory Commission to the 
+Abia State Electricity Regulatory Commission (ASERC). The Order became 
+effective on 25  June 2025 with the following objectives : 
+i. Commence the process of the transfer of regulatory oversight for the 
+intrastate electricity market in Abia State from the Commission to 
+ASERC in accordance with the Constitution of the Federal Republic of 
+Nigeria (CFRN) and EA.  
+ii. Provide a transition plan for the transfer of regulatory oversight for the 
+intrastate electricity market in Abia State from the Commission to 
+ASERC in accordance with the CFRN and the EA.  
+ 
+28 Energy Management System  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+51   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ iii. Address ensuing transitional matters arising from the transfer of 
+regulatory oversight for the intrastate electricity market in Abia State 
+from the Commission to ASERA . 
+The Order mandates Enugu Electricity Distribution Company (EEDC) to 
+incorporate, within 60 days, a subsidiary under the CAMA for the assumption of 
+its responsibilities for intrastate supply and distribution of electricity in Abia State.  
+G. Order Nos:  NERC/2025/059 —NERC/2025/069  (11 Orders issued to 11 
+DisCos) — June 2025 Supplementary Order to the Multi -Year Tariff Order for the 
+DisCos. Pursuant to Section 7 of the April 2024 supplementary Orders , which 
+provide for monthly tariff reviews, the June 2025 supplementary Orders 
+(effective date - 01 June 2025) sought to reflect the changes in the pass -through 
+indices outside the control of licensees , including inflation rates, ₦/US$ 
+exchange rate, available generation capacity and gas price for the 
+determination of cost -reflective tariff.  
+Pursuant to the policy directive of the FGN on electricity subsidy, end -user tariffs 
+for June 2025 were frozen at rates payable in July 2024.   
+3.1.3 Directives   
+The Commission did not issue any directive29 to licensees in 2025/Q 2. 
+3.1.4 Guidelines  
+The Commission issued the guidelines on Registration and Engagement of Third -Party 
+Collection Service Providers in 2025/Q2. Th ese guideline s became effective on 27 
+May 2025 with the following objectives:  
+i. To provide clear guidance to DisCos on modalities for registration of 
+third-party collection agents, including applicable service charges.  
+ii. Promote transparency and accountability in revenue collections from 
+electricity sales by third -party collection service partners engaged by 
+DisCos.  
+iii. Standardise the use and engagement of third -party collection service 
+partners.  
+ 
+29 Directives issued by the Commission are general instructions to licensees to guide them on how to comply with 
+regulatory instruments such as Orders and Regulations. For reporting purposes, Rectification Directives (RDs) 
+are treated as enforcement instrume nts and thus are covered under the enforcement section of the report.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+52   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ iv. Enhance revenue collection in the NESI.  
+v. Ensure efficiency of revenue collection contracts.  
+vi. Minimise the risk of loss of revenue arising from DisCos’ engagement 
+of third -party collection service providers.  
+3.1.5 Codes  
+The Commission issued the Code of Corporate Governance for the Nigerian 
+Electricity Supply Industry (NESI) in 2025/Q2. The Objectives of the codes are to:  
+i. Institutionalise best practices in corporate governance.  
+ii. Ensure that all licensees in NESI operate with integrity and 
+professionalism  
+iii. Create an enabling environment for the sector to thrive.  
+3.2 Licences Issued or Renewed   
+In 2025/Q 2, the Commission issued one (1) off-grid generation licence and seven 
+(7) other licences ( Table 12). 
+Table 12: Licences issued by the Commission in 2025/Q2  
+SN  Licensee   Location  Capacity 
+(MW)   License Type  Fuel Type   
+1 Green Power Distribution Nig 
+Ltd Ogun State  N/A IEDN  N/A 
+2 Jichai Power Company 
+Nigeria Ltd  Ogun State  40.00  Embedded  Gas 
+3 Access Power System 
+Engineering Limited  Abuja  N/A Trading  N/A 
+4 Nova Utilities Limited  Lagos State  N/A Trading  N/A 
+5 CET Power Projects Limited  Abuja  12.8MW  Off-Grid 
+ Gas 
+6 Shiroro Solar Generating 
+Company Limited  Abuja  300MW  On-Grid Solar  
+7 Prudmark International 
+Limited  Abuja  N/A Trading  N/A 
+8 
+ Crescendough Nigeria  
+Limited  Lagos State  180MW  
+ On-grid 
+     Gas 
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+53   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 3.3 Captive Power Generation Permits   
+Captive power generation permits are issued to entities that intend to own and 
+maintain power plants exclusively for their consumption , i.e. no sale of electricity 
+generated from the plant to any third party. The Commission approved the  renewal 
+of the captive power generation permit to NNPC for the operation of a 20.8MW 
+captive power plant at NNPC Towers, CBD, Abuja.  
+3.4 Mini -grid Permits and Registration Certificates    
+Pursuant to section 164(m) of the EA 2023 which states that the Commission shall 
+“award licence of mini -grid concessions to renewable energy companies to 
+exclusively serve a specific geographical location indicating aggregate electricity 
+to be generated and distributed from a site with obligation to serve customers to 
+request service”,  the Commission continues to encourage the development and 
+utilisation of renewable energy by issuing permits and registration certificates for 
+mini-grid development.  
+A permit is  issued to a mini -grid developer for the construction, operation, and 
+maintenance of mini -grids with a distribution capacity exceeding 100kW and a 
+generation capacity of up to 1MW. The Commission also issues registration 
+certificates to developers for systems with a distribution capacity below 100kW. In 
+2025/Q2, the Commission issued six (6) permits [gross capacity of 1.54MW].  
+Table 13: Mini -grid Permits issued in 2025/Q2  
+S/N Name   Capacity30 (kW) Location  
+ Permits    
+1 Husk Power Energy Systems Nig Limited  110.00  Ajuye, Kokona LGA, 
+Nasarawa State  
+2 Husk Power Energy Systems Nig Limited  110.00  Jibiyal, Lafia LGA, 
+Nasarawa State  
+3 Husk Power Energy Systems Nig Limited  110.00  Ishugu, Obi LGA, 
+Nasarawa State  
+4 Husk Power Energy Systems Nig Limited  110.00  Gwayaka, Lafia LGA, 
+Nasarawa State  
+5 Husk Power Energy Systems Nig Limited  110.00  Agam, Nasarawa LGA, 
+Nasarawa State  
+ 
+30 A mini -grid developer can choose to get either a registration certificate or a permit for mini -grids with a 
+distribution capacity below 100kW. However, for mini -grids with distribution capacity above 100kW, only a 
+permit can be obtained.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+54   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ S/N Name   Capacity30 (kW) Location  
+6 Nayo Tropical Technology Limited  990.00  Lambata, Gurara LGA, 
+Niger State  
+3.5 Meter Service Providers/Meter Asset Providers   
+A Meter Service Provider (MSP) is an entity certified by the Commission as a 
+manufacturer, supplier, vendor, or installer of electric energy meters and/or 
+metering systems. A Meter Asset Provider (MAP) is an entity that is granted a permit 
+by the Commissio n to provide metering services with roles that may include meter 
+financing, procurement, supply, installation, maintenance, and replacement.    
+The Commission certified seven (7) MSPs – three (3) meter installer companies, three 
+(3) manufacturers and one (1) importer in 2025/Q2. The Commission also issued 
+seven (7) permits for MAP. Details are contained in Table 14. 
+Table 14: Meter Service Providers certified in 2025/Q2  
+S/N  Name  Authorisation Type  
+  Meter Service Providers  
+1 Nicholas Ojo Alokomoko & Son Nig Limited  Installer A1  
+2 Naftech Engineering Limited  Installer A2  
+3 Peamer Power Solution  Installer A1  
+4 Conlog Meter Solutions Nigeria Limited  Manufacturer  
+5 Chris-Ejik Engineering Limited  Manufacturer  
+6 Cartlark International Limited  Manufacturer  
+7 De-Haryor Global Services Limited  Importer  
+  Meter Asset Providers    
+1 Elffy Global Limited  MAP 
+2 Serenade Engineering Nigeria Limited  MAP 
+3 Haiven Smart Systems Limited  MAP 
+4 Bilview Energy Limited  MAP 
+5 Ibay Utilities Limited  MAP 
+6 Bice Energy Limited  MAP 
+7 Advanced Energy Management Solutions Limited  MAP 
+Class “A1” Certification authorises a holder to undertake installations of (i) Low Voltage single -phase and three -phase 
+Metering systems for installation exceeding 750 metering Systems/Contract, and (ii) Installations at grid voltages exceeding 
+5 Metering Systems. Class “C1” Certification authorises a holder to undertake installations of Low Voltage Distribution single -
+phase and three -phase Metering Systems exceeding 500 Metering Systems/Contract.  
+3.6 Hearings and Public Consultations   
+As part of the conditions of their licences, section 72(2)(c) of the EA requires 
+licensees to ‘’refer disputes to the Commission for arbitration, mediation, or 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+55   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ determination by the Commission and file an appeal against the decisions of the 
+Commission’’ . One of the ways  which the Commission performs this quasi -judicial 
+function towards the resolution of disputes between stakeholders is through 
+hearings31. Furthermore, the Business Rules of the Commission - NERC -R-0306 allow 
+the Commission to undertake public consultations through which the Commission 
+aggregates input/opinions on licensee applications and regulatory instruments 
+which are being drafted or re viewed.  
+During 2025/Q2,  the Commission conducted two (2) hearings to consider the 
+petitions filed by different stakeholders on issues pertaining to the provision and 
+utilisation of electricity services. The details of the hearings are contained in  Table 
+15. 
+Table 15: Hearings conducted by the Commission in 2025/Q2  
+3.7 Compliance and Enforcement    
+Section 64(1) of the EA 2023 mandates all licensees to comply with the provisions 
+of their licences, regulations, codes, orders and other requirements issued by the 
+Commission. The Commission is responsible for evaluating the compliance of all its 
+licensee s/permit -holders and carrying out enforcement actions against infractions 
+based on the provisions of the Act and other extant regulatory instruments.  
+Pursuant to the provisions of Section 76 of the EA 2023, the Commission issued 
+thirteen (13) Rectification Directives (RD) and twenty -six (26) Notices of Intention to 
+Commence Enforcement (NICE)  for different breaches/defaults in 2025/Q2 (full list 
+and further details can be found in Table  16). 
+ 
+31 Hearings are proceedings pursuant to the provisions of the Electricity Act through which the Commission seeks 
+additional information on petitions or any matter filed before it by market participants or consumers in order to 
+make a final decision.  S/N Parties  Petition  Date of Hearing  Update  
+1 Prism Steel Mills Limited, Ibadan 
+Electricity Distribution Plc   Petition challenging the award 
+of the competition transition 
+charge in favour of Ibadan 
+Electricity Distribution Plc  07 April 2025  A ruling has 
+been issued  
+2 Green Power Distribution Nigeria 
+Limited  Petition in respect of the 
+application for an 
+independent electricity 
+distribution network  26 May 2025  A ruling has 
+been issued  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+56   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 3.8 Alternative Dispute Resolution   
+Pursuant to the provisions of section 42.3.7 of the Market Rule, the Commission has 
+established an Alternative Dispute Resolution (ADR) process to resolve disputes 
+between market participants in the NESI. This includes the constitution of a Dispute 
+Resolut ion Panel (DRP) and the appointment of a Dispute Resolution Counsellor 
+(DRC). No disputes were brought before the DRP during this quarter.  
+Table 16: Compliance and Enforcement Actions of the Commission in 2025/Q2  
+ RD/NICE  Licensee  Date of Issuance  Deadline  
+SN Rectification Directive  
+1 Non-metering of Maximum demand  Port Harcourt  02 May, 2025  30 September 
+2025  
+2 Non-metering of Maximum demand  Jos DisCo  09 May, 2025  04 June 2025  
+3 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Abuja DisCo  23 June, 2025           - 
+4 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Benin DisCo  23 June, 2025           - 
+5 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Enugu DisCo  23 June, 2025           - 
+6 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Eko DisCo  23 June, 2025           - 
+7 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Ibadan DisCo  23 June, 2025           - 
+8 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Ikeja DisCo  23 June, 2025           - 
+9 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Kaduna DisCo  23 June, 2025           - 
+10 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Kano DisCo  23 June, 2025           - 
+11 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Port Harcourt 
+Disco  23 June, 2025           - 
+12 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Jos DisCo  23 June, 2025           - 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+57   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  RD/NICE  Licensee  Date of Issuance  Deadline  
+13 Non-compliance with the Commission’s 
+order on Performance Monitoring 
+Framework  Yola DisCo  23 June, 2025           - 
+ Notice of Intention to Commence Enforcement (NICE)  
+1 Non-compliance with the Electricity Act, 
+Terms & Conditions of license, Distribution 
+Code and Nesis which led to the electric 
+shock of Mr. Kolawale Wasiu (a staff of 
+EKEDP)  Eko DisCo  07 April, 2025  14 April 2025  
+2 Non-compliance with the resolution of 
+complaints through the NERC Contact 
+Centre  Ikeja DisCo  14 April, 2025  01 May 2025  
+3 Non-compliance with the resolution of 12 
+complaints through the NERC Contact 
+Centre  Ikeja DisCo  16 April,2025  06 May 2025  
+4 Non-compliance with the resolution of 
+complaints through the NERC Contact 
+Centre  Eko, Port Harcourt, 
+and Ikeja DisCo  25 April, 2025  16 May 2025  
+5 Non-compliance with the Electricity Act, 
+Terms & Conditions of licence by failure to 
+provide information on shareholder loans.  Ibadan, Kaduna 
+Jos, Kano, Port 
+Harcourt and Yola 
+DisCos, YEDC, 
+Olorunsogo, 
+Omotosho and 
+Sapele Power Plc.  28 April, 2025  05 May 2025  
+6 Non-compliance with the resolution of 
+complaints through the NERC Contact 
+Centre  Abuja, Ibadan, 
+Ikeja, Kaduna and 
+Port Harcourt  06 May, 2025  26 May 2025  
+7 Non-compliance with the Abuja Forum 
+decision in Appeal No: 
+AFO/2024/11/C302  Abuja DisCo  08 May, 2025  15 May 2025  
+8 Non-compliance with the Awka Forum 
+decision in Appeal No: 
+ANFO/NERC/1599/11/2024  Enugu DisCo  09 May, 2025  16 May 2025  
+9 Non-compliance with the Awka Forum 
+decision in Appeal No: 
+ANFO/NERC/1751/11/2024  Enugu DisCo  06 May, 2025  19 May 2025  
+10 Non-compliance with the Awka Forum 
+decision in Eze Bibian vs EEDC  Enugu DisCo  23 May, 2025  06 June 2025  
+11 Non-compliance with the resolution of 
+complaints through the NERC Contact 
+Centre  Abuja and Eko 
+DisCos  13 May, 2025  02 June 2025  
+12 Non-compliance with the Abuja Forum 
+decision in Appeal No: 
+AFO/2024/12/C327  Abuja  DisCo  06 May, 2025  26 May 2025  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+58   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  RD/NICE  Licensee  Date of Issuance  Deadline  
+13 Non-compliance with the Electricity Act, 
+Terms & Conditions of license, Distribution 
+Code and Nesis, which led to the 
+electrocution of Heritage Olasupo Darasimi 
+in IBEDC’s network  Ibadan DisCo  28 May, 2025  11 June 2025  
+14 Failure to meter MD customers  Ikeja and Yola 
+DisCos  14 May, 2025  28 May 2025  
+15 Non-compliance with the Ikeja Forum 
+decision in Appeal No: 
+IFO/NERC/2023/11/9874/C327  Ikeja DisCo  06 May, 2025  26 May 2025  
+16 Non-compliance with the Abuja Forum 
+decision in Appeal No: 
+AFO/2024/12/C327  Abuja DisCo  06 May, 2025  26 May 2025  
+17 Non-compliance with the Awka Forum 
+decision in Appeal No: 
+ANFO/NERC/1639/2024  Enugu DisCo  05 June, 2025  19 June 2025  
+18 Non-compliance with Electricity Act, Terms 
+& Conditions of license and the Customer 
+Protection Regulation  Jos DisCo  19 June, 2025  26 June 2025  
+19 Non-compliance with the Electricity Act, 
+Terms & Conditions of license and the 
+Customer Protection Regulation  Yola DisCo  19 June, 2025   26 June 2025   
+20 Non-compliance with multiple forum 
+decisions  Enugu DisCo  23 June, 2025  30 June 2025  
+21 Non-compliance with multiple forum 
+decisions  Ibadan DisCo  23 June, 2025  30 June 2025  
+22 Non-compliance with multiple forum 
+decisions  Abuja DisCo  23 June, 2025  30 June 2025  
+23 Non-compliance with the Awka Forum 
+decision in Appeal No: 
+ANFO/NERC/1909/2025  Enugu DisCo  24 June 2025  01 July 2025  
+24 Non-compliance with the Abeokuta Forum 
+decision in Appeal No: 
+NERC/ABKFO/10/2024/263  Ibadan DisCo  24 June 2025  01 July 2025  
+25 Non-compliance with the Electricity Act, 
+Terms & Conditions of license, Distribution 
+Code and Nesis, which led to the 
+electrocution of Abdulakeem Abdullahi  Ibadan DisCo  25 June, 2025  09 July 2025  
+26 Non-compliance with the Abeokuta Forum 
+decision in Appeal No: 
+ASFO/NERC/6/2024/290  Benin DisCo  24 June 2025  01 July 2025  
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+59   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+60   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 4.0 CONSUMER AFFAIRS  
+4.1 Consumer Enlightenment and Stakeholder Engagements  
+The Commission’s main consumer education and enlightenment mechanisms are 
+town hall meetings and customer complaints resolution meetings. These are used to 
+inform consumers and stakeholders about the Commission’s activities, regulatory 
+instruments, consume r rights, and obligations, and to ensure the swift resolution of 
+complaints. These also provide avenues for the Commission to gather feedback from 
+a broad array of stakeholders , which is beneficial to the Commission in its decision -
+making processes.  
+Periodically, the  Commission also engages with relevant stakeholders and the 
+broader public to inform them about its activities and provide general updates on 
+the NESI.  The main avenues for the interface between the Commission and 
+stakeholders are:  
+• NESI stakeholder meetings  
+• Trainings/Workshops  
+• General stakeholder engagement activities  
+The details of these engagements are shared with the public via the Commission’s 
+social media accounts ( LinkedIn , X and Instagram ). In addition to being utilised to 
+provide updates on the Commission’s engagement activities, the social media 
+channels are also used to address relevant issues, including:  
+• Consumer rights and obligations  
+• Service delivery standards  
+• NESI performance factsheets  
+• Regulatory instruments issued by the Commission  
+• Summary of the  Commission’s  statutory reports  
+In 2025/Q2, the Commission held one (1) town hall meeting in Bauchi (26 -28 June 
+2025). Some of the major issues that were discussed at the town hall meeting 
+include:  
+• Serviced -Based  Tariff (SBT) provisions   
+• Capping of estimated bills for unmetered customers  
+• Electricity customer rights and obligations   
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+61   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ • Electricity customer redress mechanisms   
+• Unauthorised electricity access   
+• Metering frameworks and  
+• Strategies by the Commission to ensure improved overall service delivery 
+to customers.    
+The Commission also continued to sponsor jingles across radio stations throughout 
+the country. These jingles educate customers on complaint redress mechanisms and 
+provide addresses of NERC Forum Offices.  
+4.2 Metering End -Use Customers  
+As of 30 June 2025, only 6, 422,933  out of the 11,821,194  active32 registered 
+electricity customers ( 54.33%) across the twelve (12) DisCos were metered 
+(breakdown contained in Table 17).  
+Table 17: Metering Progress as of 30 June 2025  
+DisCos  Total No. of  
+Active Registered 
+Customers  No. of Metered  
+Active Customers  Metering  
+Rate (%)  
+Aba 164,812  74,451  45.17  
+Abuja   1,292,529  944,258  73.06  
+Benin   994,990  500,742  50.33  
+Eko  606,133  505,094  83.33  
+Enugu   1,437,125  675,138  46.98  
+Ibadan   2,370,211  1,173,684  49.52  
+Ikeja  1,270,681  1,075,598  84.65  
+Jos  812,898  239,919  29.51  
+Kaduna   535,179  179,082  33.46  
+Kano   793,450  272,542  34.35  
+Port Harcourt   1,036,044  637,657  61.55  
+Yola  507,142  144,768  28.55  
+Total  11,821,194  6,422,933  54.33  
+*Metering rate: Red <50, Amber 50≤70, Green  ≥70 
+During 2025/Q2, 225,631 end -user customers were metered across all the DisCos , 
+with Ibadan, Ikeja and Abuja DisCos recording the highest number of meter 
+ 
+32 In April 2025, the Commission carried out a rebasing of the registered electricity customers in the NESI to 
+reflect only active registered customers. An active registered customer is a customer who vended or was billed 
+at least once within a 12 -month peri od. 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+62   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ installations – they accounted for 20.12%, 17.44%, and 13.96%  of the total 
+installations , respectively.  
+Relative to 2025/Q1, when 187,161 customers were metered, there was an 
+increase (+20.55%) in the total number of customers metered in 2025/Q2.  Ten (10) 
+DisCos recorded improvements in meter installation between 2025/Q1 and 
+2025/Q2, with Ab a and Yola DisCos recording the most significant improvements 
+of +264.77% and +150.33%, respectively. Kano ( -33.88%) and Ikeja ( -3.55%) 
+DisCos recorded declines in meter installations in 2025/Q2 compared to 2025/Q1 
+(Table 18).   
+Table 18: Meter Deployment by DisCos in 2025/Q2 vs. 2025/Q1  
+DisCos   Total No. of 
+metered active 
+customers as of 
+2025/Q2  No. of 
+customers 
+metered in 
+2025/Q2 No. of 
+customers  
+metered in 
+2025/Q1  Change in 
+meter 
+deployments 
+across 
+quarters  (%) 
+Aba 74,451  17,396  4,769  264.77  
+Abuja   944,258  31,508  25,260  24.73  
+Benin   500,742  28,054  23,591  18.92  
+Eko  505,094  20,843  14,097  47.85  
+Enugu   675,138  17,457  14,459  20.73  
+Ibadan   1,173,684  45,398  42,789  6.10 
+Ikeja  1,075,598  39,361  40,810  -3.55 
+Jos  239,919  5,176  5,140  0.70 
+Kaduna   179,082  4,883  2,477  97.13  
+Kano   272,542  3,229  5,283  -38.88  
+Port Harcourt   637,657  10,421  7,725  34.90  
+Yola  144,768  1,905  761 150.33  
+Total  6,422,933  225,631  187,16133 20.55  
+Out of the 225,631 end -use customers metered in 2025/Q2, 147,823 (65.52%) of 
+customers were metered under the MAP framework, 65,315 (28.95%) were 
+metered under the Meter Acquisition Fund (MAF),  12,259 (5.43%) were metered 
+under the Vendor Financed framework , and 234 (0.10%) were metered under the 
+DisCo Financed framework .  
+ 
+33 The number of meters installed across all metering schemes in 2025/Q1 was 187,161 , as against 187, 194 
+reported in the 2025/Q1 report.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+63   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Under the MAP framework, a total of 147,823 meters were installed in 2025/Q2, 
+representing a  0.52% decrease compared to the 148,600 MAP meter installations 
+recorded in 2025/Q1. Ibadan (36,927), Abuja (28,377), Benin (22,328) and Ikeja 
+(18,357) DisCos recorded the highest number of installations under the MAP 
+framework during the quarter, with 24.9 8%, 19.20%, 15.14% and 12.42% of the 
+total installations, respectively.  
+The Meter Acquisition Fund (MAF)34 was created by the Commission in February 
+2023  and provides for a metering surcharge in the allowed tariffs for all DisCos. 
+The Commission vide the Order: NERC/2024/072 on the Operationalisation of 
+Tranche A of the MAF approved the use of ₦21.00 billion out of the funds that have 
+accrued in the MAF as of the April 2024 settlement cycle, for DisCos to provide 
+meters for Band A customers in their franchise area at no cost. In 2025/Q2, the 
+total number of meter installations was 65,315, bringin g the total installations under 
+Tranche A of the MAF to 1 07,17 0. The Tranche A closed in June 2025 , and 
+processes are underway to kickstart Tranche B.  
+Further details on the historical record of deployments  under the MAF, MAP, Vendor 
+and DisCo financed frameworks are presented in Appendices X, X I and X II, 
+respectively.  
+4.3 Customer Complaints  
+In furtherance of its mandate as contained in section 119(1)(c) of the EA 2023 which 
+states that “ the Commission shall develop in consultation with licensees, the customer 
+complaints handling standard and procedure ”, the Commission provides various 
+channels for customers to lodge complaints against their service providers. The 
+primary channels available for customers to lodge complaints in the NESI are:  
+A. NERC Customer Complaint Unit (NERC -CCU) : This is a unit at the Consumer 
+Affairs Division of the Commission dedicated to receiving complaints directly from 
+customers. Customers can lodge complaints at the NERC -CCU via emails, letters or 
+phone calls (through the NESI Call Centre). Once complaints  are received by the 
+Commission, they are passed on to the DisCos who are the parties responsible for 
+resolution. There is a case management system through which DisCos provide 
+ 
+34 The MAF  provides regulatory -backed long -tenor financing for the procurement of meters. A proportionate 
+amount is deducted from DisCos’ monthly collection and made available for DisCos to purchase meters through 
+a bulk one -off procurement or to cover the repayment of long -term vendor -financed meter deployments.  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+64   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ updates to the Commission on the resolution status of the complaints lodged through 
+the NERC -CCU.  
+B. DisCo Customer Complaint Unit (DisCo -CCU) : This is a department in a DisCo that 
+is dedicated to the receipt and resolution of complaints directly from customers. 
+DisCos submit monthly customer complaints reports which the Commission reviews 
+to identify cases where regulatory intervention is neces sary. 
+C. NERC Forum Offices:  Forum offices serve as the “court of second instance” for 
+customers not happy with the resolution of their complaints at the DisCo -CCU. The 
+Commission set up Forum Offices to hear and resolve customer complaints not 
+satisfactorily resolved at the DisCo -CCUs.  
+The Forum Office is managed by the Forum Secretariat while the hearings are 
+conducted by five (5) forum panel members35, as stipulated in the Customer 
+Protection Regulation (CPR) 2023. The forum panels hear and resolve customer 
+complaints in the state in which it is situated. If there is no Forum Office in a state, 
+the Commission determines which neighbouring Forum Office will oversee customer 
+complaints from the state.  
+As of 30 June 2025, the Commission has twenty -four (24)36 active Forum Offices 
+across twenty -three (23) states and the FCT. The details, including names, addresses, 
+and contacts of the operational Forum Offices , are contained in Appendix XV.  
+ 
+35 The forum panel members are not staff of the Commission. The composition of the panel is as follows:  
+1. A legal practitioner with experience in alternative dispute resolution nominated by the Nigerian Bar 
+Association (NBA).  
+2. A financial expert nominated by either the Manufacturers Association of Nigeria, Nigerian Association 
+of Chambers of Commerce, Industry, Mines and Agriculture (NACCIMA) or any other reputable 
+organisation.  
+3. A qualified electrical engineer nominated by either the Council for Regulation of Engineering in Nigeria 
+(COREN) or the Nigerian Society of Engineers (NSE).  
+4. A nominee of the Federal Competition and Consumer Protection Commission (FCCPC).  
+5. A representative of an NGO based in the distribution company’s operating  area nominated by the 
+Commission  
+ 
+36 The Commission had 33 operational Forum Offices in 31 states and the FCT. However, due to the transfer of 
+regulatory oversight to States, the Commission has closed down the 9 Forum Offices in the following States: 
+Enugu, Imo, Ekiti, Oyo, Kogi, Lagos, Edo and Jigawa States . 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+65   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ D. Power Outage Reporting System (PORS) : This is a mobile application designed 
+for electricity customers to report outages in real time. The application is currently 
+under a pilot and is exclusively available for customers under Abuja DisCo.    
+4.3.1  NERC -CCU 
+In 2025/Q2, 2,474 complaints were filed at the Commission’s CCU.  Customers of 
+Ikeja and Eko DisCos lodged 932 and 516 complaints, accounting for 37.67% and 
+20.86% of the total complaints lodged at NERC -CCU, respectively. Conversely, Aba 
+Power (8) and Kano DisCo (8) had the lowest number o f complaints, respectively.  
+Of the 2,474 complaints lodged at the NERC -CCU during the quarter, 1,129 were 
+satisfactorily resolved by DisCos. This corresponds to a 45.63% resolution rate, 
+representing an 8.36pp increase compared to the 37.27% resolution rate recorded 
+in 2025/Q1. Kadun a (93.75%), Benin (83.72%), and Eko (81.98%) DisCos 
+recorded resolution rates greater than 80%, while Ikeja DisCo recorded the lowest 
+resolution rate (16.52%).  
+The Commission notes the improvement in the complaint resolution rate by DisCos 
+and will continue to take steps to enhance the speed of complaint resolution by 
+DisCos.  
+ 
+ 
+Figure 10: Category  of complaints received at the Commission’s CCU in 2025/Q2  
+729
+29.47%
+422
+17.06%
+34
+1.38%4
+0.16%792
+32.01%226
+9.16%1
+0.04%22
+0.89%238
+9.64%
+METERING
+SERVICE INTERRUPTION
+VOLTAGE INTERRUPTION
+LOADSHEDDING
+BILLING
+DISCONNECTION
+DELAY
+OTHERS
+BAND
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+66   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ During the quarter, customer complaints about billing constituted 32.01% of the total 
+complaints. Other common issues among the 2,474 complaints received were 
+metering (29.47%) and service interruption (17.06%). These three (3) complaint  
+categories cumulatively accounted for 78.54% of the total complaints in the quarter 
+(Figure 10). The complaints about billing that were resolved during the quarter 
+resulted in a credit adjustment on customers' bills to the tune of ₦40,217,949 
+(Appendix XI V). 
+4.3.2  DisCo -CCUs  
+The number of complaints received by DisCos in 2025/Q1 and 2025/Q2, 
+respectively, is contained in Table 1 9. The total number of complaints received in 
+2025/Q2 was 227,267 across all DisCos; this represents a 10.67% decrease 
+compared to the 254,404 received in 2025/Q1. Port Harcourt DisCo received the 
+highest number of complaints (44,012), representing 19.37% of total complaints 
+received. Yola DisCo received the least number of complaints (2,189), representing 
+0.96% of total complaints received.  
+Six (6) DisCos recorded declines in the number of customer complaints received in 
+2025/Q2 compared to 2025/ Q1. Ikeja ( -47.27%), Kano ( -29.47%), and Benin ( -
+27.78%) DisCos recorded the most reductions. Conversely, Aba (+26.07%), Enugu 
+(+25.55%), Abuja (+25.29%), Kaduna (+11.69%), Eko (+11.45%) and Ibadan 
+(+1.83%) DisCos recorded increases in the number of customer complaints received 
+between 2025/Q1 and 2025/Q2.  
+Table 19: Complaints Received by DisCos in 2025/Q1 vs. 2025/Q2  
+DisCos   No. of complaints   
+received in 
+2025/Q1 No. of 
+complaints   
+received  in 
+2025/Q 2 Change in No. 
+of complaints 
+received  Change in No. 
+of complaints 
+received (%)  
+Aba 6,459  8,143  1,684  26.07  
+Abuja  6,225  7,799  1,574  25.29  
+Benin   9,743  7,036  -2,707  -27.78  
+Eko  36,780  40,882  4,102  11.45  
+Enugu   14,851  18,645  3,794  25.55  
+Ibadan   42,393  43,169  776 1.83 
+Ikeja  25,555  13,476  -12,079  -47.27  
+Jos  14,085  12,775  -1,310  -9.31 
+Kaduna   5,724  6,393  669 11.69  
+Kano   32,251  22,748  -9,503  -29.47  
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+67   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ DisCos   No. of complaints   
+received in 
+2025/Q1 No. of 
+complaints   
+received  in 
+2025/Q 2 Change in No. 
+of complaints 
+received  Change in No. 
+of complaints 
+received (%)  
+PH  57,843  44,012  -13,831  -23.91  
+Yola  2,495  2,189  -306 -12.26  
+Total  254,404  227,267  -27,137  -10.67  
+The most common issues among the 22 7,267 complaints received by DisCos in 
+2025/Q2 were metering (47.69%), billing (19.31%) and service interruption 
+(8.57%). These three (3) categories cumulatively accounted for 75.57% of the total 
+complaints in the quarter ( Figure 11). 
+ 
+ 
+Figure 11: Category  of complaints received by DisCos in 2025/Q2  
+4.3.3 Forum Offices  
+Two37 (2) Forum Offices were closed during the quarter , bringing the total number 
+of active Forum Offices  to twenty -four (24) compared to twenty -six (26) in 2025/Q1.   
+There were 1,418 active appeals (378 pending appeals from 2025/Q1 and 1,040 
+new appeals in 2025/Q2) across the 24 Forum Offices in 2025/Q2  (Table 20) . The 
+1,418 active appeals in 2025/Q2 represent a 17.65% decrease compared to the 
+ 
+37 Following the transfer of regulatory oversight to Lagos State, Ikeja and Eko Forum Offices were closed.  
+108,385
+47.69%
+19,475
+8.57%
+3,735
+1.64%196
+0.09%43,876,
+19.31%983
+0.43%4,114
+1.81%46,503
+20.46%METER
+INTERRUPTION
+VOLTAGE
+LOADSHEDDING
+BILLING
+DISCONNECTION
+DELAY
+OTHERS
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+68   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ 1,722 active appeals in the previous quarter (2025/Q1). The significant decrease 
+in the number of active appeals in 2025/Q2 compared to 2025/Q1 can be 
+attributed to the closure of Ikeja and Eko Forum Offices. Historically, these two ( 2) 
+Forum Offices account for approximately 30% of active appeals in a quarter.  
+Compared to 2025/Q1, the pending appeals carried over into 2025/Q2 
+decreased by 166 ( -30.51%), while new appeals decreased by 138 ( -11.71%). The 
+Forum Offices serving Ibadan DisCo have the highest number of active appeals 
+(481), representing 33.92% of the total, while the Forum Office serving Aba has 
+the fewest (6) in 2025/Q2.  
+The total number of Forum sittings in 2025/Q2 decreased by 29.31% from 58 
+sittings in 2025/Q1 to 41. Of the 1,418 active appeals across the Forum Offices, 
+958 were resolved, translating to a 67.56% resolution rate. This is a 6.54pp 
+decrease compared to the 74.10% resolution rate achieved in 2025/Q1.  
+The reduction in the resolution rate is attributable to the decrease in sittings38; 
+therefore, t he Commission will continue efforts to ensure that the forum panels sit 
+regularly to increase the resolution rate and reduce the number of pending appeals 
+carried over across quarters.  
+Table 20: Appeals handled by Forum Offices in 2025/Q2  
+ 
+DisCos   Forum Offices   Appeals  
+Received1 Appeals  
+Resolved2 Appeals  
+Pending3 No. of  
+Sittings  
+Abuja  Abuja and Lafia  42 34 8 3 
+Aba Umuahia  6 1 5 0 
+Benin  Asaba  78 48 30 3 
+Enugu  Abakaliki, Akwa & Umuahia   220 133 87 9 
+Ibadan  Ilorin & Osogbo   481 317 164 9 
+Jos Bauchi, Gombe, Jos & 
+Makurdi   44 16 22 1 
+Kaduna  Gusau, Kaduna, Kebbi &   
+Sokoto   31 25 6 4 
+Kano  Jigawa, Kano & Katsina   47 31 13 2 
+P/Harcourt  Calabar, Port Harcourt & Uyo   426 328 93 9 
+Yola Yola, Damaturu  43 25         18 1 
+All DisCos  All Forum Offices   1,418  958 446 41 
+.1Appeals received include outstanding appeals from the preceding quarter. 2. Appeals resolved exclude  10 appeals rejected 
+and 4 appeals withdrawn. 3. Appeals are still within the regulatory timeframe of 2 months to resolve  
+ 
+ 
+38 Although only 2 FOs closed; 2/26 = 8% drop, the number of hearings dropped by 29%.  
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+69   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The breakdown of the various categories of active appeals at the Forum Offices in 
+2025/Q2 is contained in Figure 12. Similar to 2025/Q1, appeals related to billing 
+were the most prevalent, accounting for 53.17% of the total appeals received 
+(2025/Q1 – 51.32%). Appeals related to metering and disconnection represented 
+28.65% and 6.15% of the appeals, respectively.   
+ 
+ 
+Figure 12: Category  of Complaints Received by Forum Offices in 2025/Q2  
+4.4 Health and Safety  
+Pursuant to Section 34(1)(e) of the EA 2023 which mandates the Commission to 
+“ensure the provision of safe and reliable electricity to consumers ”, the Commission 
+monitors the health and safety performance of the NESI. Licensees are mandated to 
+submit monthly Health and Safety reports to the Commission in accordance with the 
+requirements of their licence. In 2025/Q2, out of the 105 mandatory health  and 
+safety reports expected to be received from licensees, 10239 reports were received.  
+The Commission will continue to enforce 100% reporting compliance by licensees 
+as contained in the terms and conditions of their respective licences and  apply 
+sanctions where applicable.   
+ 
+39 The licensee with outstanding report s is Paras Energy  (April, May and June).  
+553
+53.17%
+64
+6.15%1
+0.10%2
+0.19%298
+28.65%1
+0.10%7
+0.67%114
+10.96%BILLING
+DISCONNECTION
+DELAY IN CONNECTION
+SERVICE INTERRUPTION
+METERING
+LOADSHEDDING
+VOLTAGE
+OTHERS
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+70   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Statistics of accidents in the NESI for 2025/Q2 are presented in Table 21. Relative 
+to 2025/Q1, the number of accidents increased from 31 to 60, the number of 
+fatalities increased from 12 to 38, and the number of injuries increased from 14 to 
+19.  
+Table 21: Health and Safety (H&S) Reports in 2025/Q1 vs. 2025/Q2  
+Item  2025/Q1   2025/Q 2 Net Change   
+Number of Accidents  31 60 29 
+Number of fatalities (employees & third parties)   12 38 26 
+Number of Injuries     14 19 5 
+During the quarter (2025/Q2), none of the GenCos and TCN recorded casualties, 
+whereas all the DisCos recorded casualties40. Out of the fifty -seven (57) casualties 
+reported in the quarter, the licensees with the highest number of casualties were 
+Ibadan (11), Kano (10), Benin (5), Eko (5) and Jos (5) DisCos, which represented 
+19.30%, 17.54%, 8.77%, 8.77% and 8.77% of the total,  respectively.  
+As observed in previous quarters, DisCos continue to account for the majority of the 
+safety challenges experienced in NESI. Cumulatively, they accounted for 100% of 
+casualties recorded in 2025/Q2, having accounted for 92.98%, 93.33% and 
+100% in 2024/Q3, 20 24/Q4 and 2025/Q1, respectively.  
+Summary of casualties recorded by licensees during the quarter is contained  in 
+Figure 13. The breakdown of the causes of casualties arising from the accidents 
+reported in 2025/Q2 is contained in Table 2 2.  
+TCN recorded 11 (eleven) cases of damage to property/infrastructure due to 
+explosions, fire outbreaks or acts of vandalism over the quarter .  
+The Commission has initiated investigations into all reported accidents and will 
+enforce appropriate actions where necessary. Furthermore, the Commission 
+continues to closely monitor the implementation of licensees’ accident reduction 
+strategies for the NE SI. The Commission also organises various programs, including 
+the Health and Safety Manager’s Meeting, aimed at improving the health and safety 
+performance of the NESI.  
+ 
+40 Casualty refers to the count of injuries and deaths arising from any safety accident/incident.  
+ 
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+71   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ The biannual Health and Safety Manager’s meetings organised by the Commission 
+with health and safety officers of licensees are aimed at discussing the reporting 
+obligations of licensees as well as health and safety matters. During the meetings, 
+licensees' scorecards on compliance with health and safety standards are discussed 
+while highlighting areas of improvement. The Commission shall continue to ensure 
+that all licensees comply with the subsisting performance standards in the NESI.  
+In addition, the Commission oversees settlement processes between licensees and 
+families of accident victims in the NESI. This is to ensure transparency of the 
+settlement process and to help the victim’s family secure fair compensation for losses 
+suffered.  In 2025/Q2, the Commission oversaw the successful conclusion of seven 
+(7) compensation negotiations between licensees and families of victims of 
+accidents.  
+Figure 13: Accident Report for 2025/Q2  
+Table 22: Causes of casualties recorded in 2025/Q2  
+Cause of Casualty  Number of Fatalities   Number of Injuries  
+Wire snaps  5 7 
+Illegal/unauthorised access  3 0 
+Vandalism  3 2 
+Unsafe acts/conditions  10 8 
+11 11
+5 5
+4 4 4
+3
+2
+08
+3 3 3 35
+3
+0 03
+12 2 25
+02
+024681012
+                                      CountACCIDENTS INJURY DEATH
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+72   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+  
+ 
+
+SECOND  QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+73   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ APPENDIX  
+Appendix 1: Energy Generation in 2025/Q1 vs. 2025/Q2  
+ 
+ 
+ GenCos Available Capacity 
+(MW)   Average Daily Gen  
+(MWh)  Quarterly Generation  
+(MWh)   
+ 2025/Q1  2025/Q2  2025/Q1  2025/Q2  2025/Q1  2025/Q2  
+Afam_1  73.48  59.92  1,714.14  1,206.93  154,272.90  109,830.24  
+Afam_2  246.63  223.79  6,075.48  5,240.97  546,793.22  476,928.48  
+Alaoji_1  0.00 0.00 0.00 0.00 0.00 0.00 
+Dadin -Kowa_1  16.36  17.49  398.58  415.67  35,872.51  37,825.60  
+Delta_1  489.80  440.83  11,074.17  9,430.90  996,675.55  858,211.48  
+Egbin_1  607.83  709.26  13,748.81  15,844.01  1,237,392.72  1,441,804.65  
+Geregu_1  138.03  288.66  3,026.64  5,361.50  272,397.84  487,896.62  
+Geregu_2  227.29  220.77  4,574.26  2,618.90  411,683.73  238,320.08  
+Ibom power_1  23.46  28.87  580.04  439.08  52,203.95  39,956.52  
+Igbafo_1  20.23  20.22  529.67  545.64  47,670.65  49,652.93  
+Ihovbor_1  51.32  67.16  509.03  871.62  45,812.68  79,317.30  
+Ihovbor_2  446.36  448.90  9,635.37  9,622.49  867,183.27  875,646.60  
+Ikeja_1  109.10  109.28  2,451.11  2,538.55  220,600.26  231,007.68  
+Jebba_1  447.15  433.18  8,032.84  7,737.02  722,956.00  704,068.83  
+Kainji_1  501.58  473.65  11,002.19  10,576.90  990,197.14  962,498.06  
+Odukpani_1  346.87  223.22  7,307.76  4,898.18  657,698.29  445,733.98  
+Okpai_1  282.72  250.42  5,753.62  5,344.34  517,825.87  486,335.03  
+Olorunsogo_1  161.81  137.93  3,705.32  3,192.22  333,479.04  290,491.69  
+Olorunsogo_2  37.43  46.95  340.37  642.41  30,633.22  58,458.91  
+Omoku_1  38.85  21.48  935.54  533.78  84,199.01  48,574.38  
+Omotosho_1  166.05  145.33  3,566.39  3,285.09  320,975.18  298,943.58  
+Omotosho_2  60.85  59.89  996.72  963.37  89,704.70  87,666.97  
+Rivers_1  52.86  26.58  1,277.06  523.50  114,935.52  47,638.60  
+Sapele Steam_1  39.61  31.26  574.30  511.57  51,687.24  46,552.85  
+Sapele_2  97.91  105.46  1,683.22  1,609.24  151,489.38  146,440.41  
+Shiroro_1  332.86  346.11  7,318.32  6,212.63  658,648.56  565,349.28  
+Trans Amadi_1  4.75 5.93 192.02  193.66  17,281.89  17,623.37  
+Zungeru_1  345.70  453.19  7,491.13  7,665.27  674,201.56  697,539.46  
+Total 5,366.88  5,395.72  114,494.13  108,025.42  10,304,471.89  9,830,313.60  
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+74   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix II: Energy Accounting Efficiency (EAE)  by DisCos in 202 5/Q1 and 2025/Q 2 
+DisCos  Energy Offtake (GWh)  Energy Billed (GWh)  Energy Accounting Efficiency  
+2025/Q1 2025/Q2 2025/Q1 2025/Q2 2025/Q1 
+(%) 2025/Q2 
+(%) 
+Jan Feb Mar Apr May Jun Jan Feb Mar Apr May Jun   
+Abuja  383 386 460 407 403 386 273  278  324  323  297  293  71.20  76.31  
+Benin  293 254 260 244 277 218 256  223  231  218  245  210  88.11  91.17  
+Eko 405 366 373 323 393 336 361  325  330  280  344  295  88.87  87.45  
+Enugu  237 227 246 232 220 219 169  170  173  167  156  158  72.05  71.73  
+Ibadan  341 295 295 296 329 290 304  260  259  264  288  257  88.41  88.31  
+Ikeja 445 400 423 394 453 393 357  332  358  335  366  332  82.56  83.29  
+Jos 114 120 155 134 126 107 93  106  114  112  101  89  80.25  82.20  
+Kaduna  138 117 173 142 122 122 75  84  119  110  101  96  64.93  79.75  
+Kano  121 128 180 162 149 135 100  104  141  135  119  112  80.36  81.87  
+P/Harcourt  224 198 206 189 193 201 196  175  182  159  162  169  88.06  84.20  
+Yola 60 60 85 74 86 70 49  48  62  59  54  43  77.58  67.96  
+All DisCos  2,760  2,551  2,858  2,597   2,750  2,477  2,233  2,106  2,293  2,163  2,233  2,054  81.18  82.43  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+75   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix I II: Energy billed and Billing efficiency (BE) by DisCos in 2025/Q 2 
+ Energy Received ( ₦’Billion ) Energy Billed ( ₦’Billion)  Billing 
+Efficiency 
+(%) 
+2025/Q2  2025/Q2  2025/Q2  
+Apr May June Apr May June  
+Abuja   47.73   47.32   45.34  42.25  37.67  36.27  82.76  
+Benin   28.63   32.42   25.58  20.74  22.05  17.55  69.66  
+Eko  38.26   46.46   39.74  38.63  43.72  37.97  96.67  
+Enugu   26.72   25.35   25.31  19.79  19.05  19.34  75.19  
+Ibadan   34.41   38.29   33.79  26.07  27.77  23.80  72.91  
+Ikeja  45.18   51.92   45.13  40.69  45.44  40.70  89.18  
+Jos  15.55   14.53   12.39  13.77  12.72  10.57  87.28  
+Kaduna   16.07   13.80   13.78  9.42 8.67 8.09 59.98  
+Kano   18.76   17.25   15.66  16.55  15.69  14.74  90.94  
+P/Harcourt   21.73   22.15   23.14  18.87  18.57  19.09  84.34  
+Yola  8.90   10.23   8.42  6.13 5.66 4.30 58.38  
+All DisCos   301.90   319.48   288.21   252.92   257.03   232.40  81.61  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+76   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix I V: Monthly revenue performance and collection efficiency by DisCos in 202 5/Q1 and 2025/Q 2 
+DisCos Total Billing ( ₦’ Billion)  Revenue Collected ( ₦’Billion) Collection Efficiency  
+2025/Q1 2025/Q 2 2025/Q1 2025/Q 2 2025/Q1 
+(%) 2025/Q 2 
+(%) 
+Jan Feb Mar Apr May Jun Jan Feb Mar Apr May Jun  
+Abuja 32.61  35.67  41.45  42.25  37.67  36.27  25.82  31.75  31.51  30.27  28.32  30.12  80.29  76.36  
+Benin 23.24  20.33  21.39  20.74  22.05  17.55  17.53  16.85  17.91  17.87  19.20  14.54  80.51  85.55  
+Eko 42.03  41.24  40.49  38.63  43.72  37.97  36.01  36.60  32.32  38.70  33.75  33.18  84.79  87.80  
+Enugu 17.33  17.95  20.28  19.79  19.05  19.34  13.85  15.88  15.22  15.68  14.65  15.23  80.92  78.29  
+Ibadan 29.58  26.88  26.43  26.07  27.77  23.80  21.84  19.27  20.60  21.92  20.50  18.66  74.48  78.68  
+Ikeja 44.00  41.18  44.71  40.69  45.44  40.70  32.81  33.34  35.03  34.68  37.68  32.66  77.91  82.80  
+Jos 10.03  12.56  13.73  13.77  12.72  10.57  4.30 7.00 5.82 6.01 4.52 5.71 47.19  43.82  
+Kaduna  7.76 6.93 9.54 9.42  8.67  8.09  3.06 4.49 4.16 4.69 4.35 3.62 48.41  48.38  
+Kano 12.47  12.61  15.43  16.55  15.69  14.74  7.08 7.82 10.79  10.61  10.38  8.06 63.46  61.82  
+P/ Harcourt  21.04  19.73  21.24  18.87  18.57  19.09  12.56  12.33  12.72  13.18  12.49  14.15  60.68  70.47  
+Yola 4.33 4.42 5.67 6.13  5.66  4.30  2.34 2.89 2.95 3.47 2.86 2.96 56.85  57.73  
+All DisCos  244.42  239.49  260.35  252.92  257.03  232.40  176.25  188.28  189.09  197.08  188.70 178.89 74.39  76.07  
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+77   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix V:  DisCos monthly invoices & remittances to NBET in 202 5/Q1 and 2025/Q 2 
+Notes: 1. Where the remittance by a DisCo for a given period is more than the invoice received (Remittance performance >100%) , it reflects payment for outstanding bills/arrears  
+     2.  All data  is based on  DRO  
+ DisCos  Invoice ( ₦’ Billion)  Remittance ( ₦’ Billion)  Remittance Performance  
+2025/Q1 2025/Q 2 2025/Q1 2025/Q 2 2025/Q1 2025/Q 2 
+Jan Feb Mar Apr May Jun Jan Feb Mar Apr May Jun (%) (%) 
+Abuja  18.96  19.19  22.46  20.31  19.68  19.18  18.01  19.19  22.46  20.75  19.23  19.18  98.43  100.00  
+Benin  12.80  11.75  11.64  10.96  11.92  9.88 12.80  11.75  11.64  11.21  11.68  9.88 100.00  100.00  
+Eko 20.43  18.88  19.12  17.12  19.01  17.07  20.43  18.88  19.12  17.49  18.63  17.07  100.00  100.00  
+Enugu  10.00  10.19  10.87  9.77 9.11 9.11 9.91 10.19  10.74  9.99 8.89 9.11 99.27  100.00  
+Ibadan  14.66  13.23  13.33  12.63  13.30  12.30  14.66  13.23  13.33  12.90  13.03  12.30  100.00  100.00  
+Ikeja 22.18  20.42  21.49  20.12  21.59  19.57  22.18  20.42  21.49  20.57  21.15  19.57  100.00  100.00  
+Jos 4.48 5.03 6.53 5.82 5.44 4.76 2.62 5.03 3.61 3.69 2.58 3.47 70.23  60.85  
+Kaduna  4.75 4.33 6.42 5.37 4.67 4.55 1.36 2.42 2.08 2.34 2.11 1.66 37.77  41.84  
+Kano  4.87 5.28 7.43 6.88 6.35 5.76 4.87 5.28 7.43 7.03 6.21 5.76 100.00  100.00  
+P/Harcourt  8.94 8.30 8.51 7.39 7.33 7.67 8.94 8.30 8.51 7.55 7.17 7.67 100.00  100.00  
+Yola 1.19 1.20 1.52 1.23 1.54 1.28 1.19 1.20 1.52 1.25 1.52 1.28 100.00  100.00  
+All DisCos  123.26  117.79  129.31  117.60  119.94  111.13  116.97  115.88  121.93  114.76  112.20  106.95  95.79  95.77  
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+78   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix V I:  DisCos monthly invoices & remittances  to MO in 2025/Q1 and 2025/Q2  
+DisCos  Invoice ( ₦’ Billion)  Remittance ( ₦’ Billion)  Remittance Performance  
+2025/Q1 2025/Q 2 2025/Q1 2025/Q 2 2025/Q1 
+(%) 2025/Q 2  
+(%) 
+Jan Feb Mar Apr May Jun Jan Feb Mar Apr May Jun   
+Abuja  3.08 2.58 4.21 4.12 3.89 3.71 3.09 2.59 4.22 4.12 3.89 3.71 100.00  100.00  
+Benin  1.70 1.58 2.21 2.12 1.92 1.28 1.70 1.58 2.21 2.12 1.92 1.28 100.00  100.00  
+Eko 2.84 2.57 3.53 3.15 3.12 2.83 2.84 2.57 3.53 3.15 3.12 2.83 100.00  100.00  
+Enugu  1.75 1.55 2.10 2.02 1.94 1.83 1.75 1.55 2.10 2.02 1.94 1.83 100.00  100.00  
+Ibadan  2.64 2.04 2.61 2.86 2.66 2.40 2.64 2.04 2.61 2.86 2.66 2.40 100.00  100.00  
+Ikeja 3.31 2.97 3.58 3.66 3.71 3.27 3.31 2.97 3.58 3.66 3.71 3.27 100.00  100.00  
+Jos 0.75 0.82 1.53 1.48 1.40 1.11 0.54 0.82 0.88 0.98 0.70 0.91 72.07  64.67  
+Kaduna  0.71 0.86 1.70 1.74 1.30 1.06 0.40 0.69 0.62 0.85 0.75 0.53 52.19  51.92  
+Kano  - 0.40 1.41 1.67 1.53 1.30 0.16 0.40 1.42 1.67 1.53 1.30 100.00  100.00  
+Port Harcourt  1.59 1.45 1.96 1.24 0.96 1.52 1.59 1.45 1.96 1.24 0.96 1.52 100.00  100.00  
+Yola 0.48 0.43 0.68 0.67 0.59 0.62 0.48 0.43 0.68 0.67 0.59 0.62 100.00  100.00  
+All DisCos  18.85  17.29  25.57  24.72  23.03  20.94  18.52  17.13  23.84  23.32  21.78  20.20  96.32  95.07  
+ Notes: 1. Where the remittance by a DisCo for a given period is more than the invoice received (Remittance performance >100%) , it reflects payment for outstanding bills/arrears   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+79   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix V II:  DisCos monthly cumulative invoices & remittances to NBET and MO in 2025/Q1 and 2025/Q2   
+DisCos   Invoice ( ₦’ Billion)   Remittance ( ₦’ Billion)   Remittance 
+Performance   
+2025/Q1  2025/Q 2  2025/Q1  2025/Q 2  2025/Q1 
+(%)  2025/Q 2 
+ (%)  
+Jan Feb Mar Apr May Jun Jan Feb Mar Apr May Jun     
+Abuja   22.04  21.77  26.67  24.43  23.57  22.89  21.09   21.78   26.68   24.87  23.12  22.89  98.65  100.00  
+Benin   14.5  13.33  13.85  13.07  13.85  11.16  14.50   13.33   13.85   13.32  13.60  11.16  100.00  100.00  
+Eko  23.27  21.45  22.65  20.26  22.13  19.90  23.28   21.45   22.65   20.64  21.75  19.90  100.00  100.00  
+Enugu   11.75  11.74  12.97  11.79  11.05  10.93  11.67   11.74   12.84   12.01  10.84  10.93  99.38  100.00  
+Ibadan   17.3  15.27  15.94  15.49  15.96  14.71  17.31   15.28   15.95   15.76  15.69  14.71  100.00  100.00  
+Ikeja  25.49  23.39  25.07  23.77  25.30  22.84  25.50   23.39   25.08   24.22  24.86  22.84  100.00  100.00  
+Jos  5.23  5.85  8.06  7.30 6.84 5.87 3.16  5.85  4.49  4.67 3.28 4.38 70.53  61.61  
+Kaduna   5.46  5.19  8.12  7.11 5.97 5.62        1.75 3.11  2.70  3.19 2.86 2.19 40.28  44.05 
+Kano   4.87  5.68  8.84  8.56 7.89 7.06 5.03  5.69  8.85  8.70 7.75 7.06 100.00  100.00  
+Port Harcourt   10.53  9.75  10.47  8.63 8.28 9.19 10.53   9.76  10.48   8.79 8.12 9.19 100.00  100.00  
+Yola  1.67  1.63  2.2  1.90 2.13 1.90 1.67  1.63  2.20  1.92 2.11 1.90 100.00  100.00  
+All DisCos   142.11  135.08  154.88  142.31  142.97  132.06  135.49   133.01   145.77  138.09  133.97  127.15  95.86  95.65 
+  Notes:  Where the remittance by a DisCo for a given period is more than the invoice received (Remittance performance >100%), it refle cts payment for outstanding bills/arrears    
+  
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+80   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix VI II: Domestic and international bilateral customers invoices & remittances to MO in 2025/Q 2 
+ Apr-25 May-25 Jun-25 2025/Q2 2025/Q2  Other 
+Remittances 
+(million)  
+ Invoice 
+(million)  Remittance 
+(million)  Invoice 
+(million)  Remittance 
+(million)  Invoice 
+(million  Remittanc
+e (million)  Invoice 
+(million)  Remittance 
+(million)  Remittance 
+Performance 
+(%)   
+ International Customers   
+PARAS -SBEE ($)  
+PARAS - CEET ($)  1.51 0.00 1.65 0.00 1.61 0.00 4.77 0.00 0.00 0.00 
+TRANSCORP -SBEE (UGHELI) ($)  
+TRANSCORP -SBEE (AFAM3) ($)  2.16 2.16 2.31 1.98 2.26 2.26 6.73 6.40 95.09  0.00 
+MAINSTREAM -NIGELEC ($)  1.69 1.69 0.90 0.90 1.12 0.00 3.71 2.59 69.81  0.00 
+ODUKPANI -CEET ($)  0.98 0.00 0.78 0.00 0.52 0.00 2.28 0.00 0.00 0.00 
+Total 6.34 3.85 5.64 2.88 5.51 2.26 17.49  9.01 51.33  0.00 
+ Bilateral Customers   
+MSTM/INNER GALAXY ( ₦) 
+378.08  378.08  732.85  732.85  668.28  0.00  1,779.21   1,110.9 4  62.44  0.00 MSTM/KAM IND. ( ₦) 
+MSTM/KAM INT. ( ₦) 
+MAINSTREAM/PRISM ( ₦) 
+MSTM ZEBERCED ( ₦) 
+MSTM/ADFV ( ₦) 
+NDPHC/WEEWOOD ( ₦) 44.54  0.00 46.74  0.00 47.85 0.00 139.13  0.00 0.00 0.00 
+NORTH SOUTH/STAR P ( ₦) 10.58 10.58 10.76  0.00 13.90 0.00 35.24  10.58  30.02  0.00 
+TRANS AMADI/ OAU ( ₦) 
+TRANS AMADI/FMPI ( ₦) 11.89 10.86  17.42 15.67  16.06 0.00 45.37  29.53  58.47  10.53  
+NDPHC/SUNFLAG ( ₦) 16.36 16.36  18.62 18.62  16.12 16.12  51.10  51.10  100.00  0.00 OMOTOSHO II/PULKIT ( ₦) 
+ALAOJI GENCO/APLE ( ₦) 108.73  50.00  87.93  50.00 36.66  50.00  233.32  150.00 64.29  0.00 
+TAOPEX/KAM INT ( ₦) 67.24 0.00 115.28  0.00 87.33  0.00 269.85  0.00 0.00 0.00 TAOPEX/KAM STEEL ( ₦) 
+SAPELE/PHOENIX ( ₦) 13.17 13.17  20.02  20.02  15.83 15.83  49.04  49.04 100.00  0.00 
+ZUNGERU/YOUNGXING  0.00 0.00 0.00 0.00 193.93  0.00 193.93  0.00 0.00  
+Total 650.59  479.05  1,049.62  837.16  1,095.96  81.95  2,796.1 9 1,401.19 50.10  10.53  
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+81   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix IX: Meter installation for all Frameworks  (MAF, MAP, NMMP, Vendor 
+and DisCo Financed)  
+DisCos  Meters 
+installed in 
+2022 Meters 
+installed in 
+2023 Meters installed 
+in 202 4 Meters installed 
+in 2025/Q1  Meters 
+installed in 
+2025/Q 2 Total 
+installations 
+since 2019  
+Aba - 9,917  23,728  4,769  17,396  55,810  
+Abuja  83,494  105,154  80,932  25,260  31,508  583,513  
+Benin  6,771  34,344  55,648  23,591  28,054  233,569  
+Eko 44,577  36,484  38,117  14,097  20,843  256,868  
+Enugu  57,751  73,256  53,737  14,459  17,457  385,759  
+Ibadan  146,044  139,138  108,155  42,789  45,398  619,007  
+Ikeja 145,364  151,197  137,261  40,810  39,361  823,482  
+Jos 19,190  12,937  36,974  5,140  5,176  171,549  
+Kaduna  34,385  10,039  9,761  2,477  4,883  88,589  
+Kano  3,476  2,056  3,156  5,283  3,229  101,362  
+Port Harcourt  33,549  48,989  22,990  7,725  10,421  260,537  
+Yola 30,386  19,295  2,586  761 1,905  60,976  
+Total 604,987  642,806  573,045  187,1 61 225,631  3,641,021  
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+82   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix X: Meter installation through the MAF Framework as at 3 0 June 2025  
+DisCos  Meters 
+installed in 
+2024/Q4  Meters 
+installed in 
+2025/Q1 Meters 
+installed in 
+2025/Q 2 Total installations 
+since 2024  
+Aba - - -  -    
+Abuja  - 1,879  2,444  4,323  
+Benin  1,111  1,419  5,726  8,256  
+Eko - 3,348  6,333  9,681  
+Enugu  -        6,743             7,972  14,715  
+Ibadan  - 4,062  8,421  12,483  
+Ikeja - 9,966  21,004  30,970  
+Jos 1,720  2,502  1,950  6,172  
+Kaduna  -  827    2,979  3,806  
+Kano  79 4,089  2,663  6,831  
+Port Harcourt  403  1,404    4,493  6,300  
+Yola 1,755  548 1,330  3,633  
+Total 5,068  36,787   65,315  107,170  
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+83   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix X I: Meter installation through the MAP Framework as at 3 0 June 2025  
+DisCos  Meters 
+contracted  Meters 
+installed 
+in 20 20 Meters 
+installed in 
+2021 Meters 
+installed 
+in 20 22 Meters  
+installed in  
+2023 Meters 
+installed 
+in 202 4 Meters 
+installed 
+in 
+2025/Q1  Meters 
+installed in 
+2025/Q2  Total 
+installations 
+since 2019  
+Aba 12,000  - - - 8,475  4,795  4,592  5,824  23,686  
+Abuja  900,000  87,476  5,289  82,293  103,200  79,069  22,962  28,377  472,591  
+Benin  573,776  11,154  1,104  422 29,181  54,501  22,172  22,328  142,031  
+Eko 204,000  32,293  7,733  29,174  30,184  38,117  10,749  14,510  168,177  
+Enugu  621,545  54,752  5,405  57,372  73,256  53,737  7,716  9,485  278,935  
+Ibadan  988,915  33,418  548 127,418  125,752  108,071  38,616  36,927  475,521  
+Ikeja 1,074,411  160,616  13,781  145,488  147,741  131,263  30,844  18,357  671,355  
+Jos 500,000  3,769  27 3,261  11,934  3,812  1,571  3,042  27,429  
+Kaduna  450,000  7,352  2,767  3,565  9,887  9,472  1,650  1,904  36,726  
+Kano  475,000  3,234  - 972 1,986  1,846  1,194  566 9,820  
+Port Harcourt  137,324  22,334  24,034  33,549  48,989  22,587  6,321  5,928  171,517  
+Yola 664,000  - - - 2,721  831 213 575 4,320  
+Total 6,600,971  416,398  60,688  483,514  593,306  508,101  148,600  147,823  2,482,128  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+84   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix XI I: Meter installation through Vendor and DisCo Finance Frameworks as at 3 0 June 2025  
+ Vendor -Financed Framework  DisCo Financed Framework  
+DisCos  Meters  
+installed 
+in 
+2023 Meters  
+installed in  
+2024 Meters 
+installed 
+in 
+2025/Q1  Meters 
+installed 
+in 
+2025/Q2 Total 
+installations  Meters 
+installed 
+in 20 22 Meters  
+installed 
+in 
+2023 Meters 
+installed 
+in 202 4 Meters 
+installed 
+in 
+2025/
+Q1 Meters 
+installed 
+in 
+2025/Q2  Total 
+installations 
+since 2019  
+Aba 1,442  18,933  177 11,572  32,124    -    - - - - 
+Abuja  1,954  1,863  419 687 6,124  -  -    - - - - 
+Benin  2,849  36 -  3,126  -  -    - - - - 
+Eko - - -   -  -    - - - - 
+Enugu  - - -   105  -    - - - 597 
+Ibadan  - - -   23,532  13,379  84 111 50 13,624  
+Ikeja 3,456  5,998  -  9,454  -  -    - -  - 
+Jos - - -   7,164  9,860  31,442  1,067  184 42,183  
+Kaduna  - - -   96 53 - - - 149 
+Kano  - 1,135  -  1,135  -  -    96 - - 96 
+Port 
+Harcourt  - - -   -  -    - - - - 
+Yola - - -   -  -    - - - - 
+Total 9,701  27,965  596 12,259  51,963  30,897   23,292  31,622  1,178 234 56,649  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+85   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix X III: Category of complaints received by DisCos in 2025/Q 2 
+DisCos  Complaints 
+Received   Complaint Categories  
+Metering  Interruption  Voltage  Loadshedding  Billing  Disconnection  Delay  Others  
+Aba 8,143   5,253  120 50 1 1,117  88 19 1,495  
+Abuja  7,799   2,250  2,201  484 9 1,847  0 0 1,008  
+Benin  7,036   178 683 67 123 883 64 18 5,020  
+Eko 40,882   19,128  5,212  677 0 4,132  0 3,720  8,013  
+Enugu  18,645   16,845  440 115 13 833 17 0 382 
+Ibadan  43, 169   12,271  963 145 0 26,107  58 0 3,625  
+Ikeja 13,476   7,392  1,157  163 22 1,325  56 135 3,226  
+Jos 12,775   6,683  1,357  201 0 2,498  179 0 1,857  
+Kaduna  6,393   1,998  3,328  531 25 294 107 7 103 
+Kano  22,748   20,684  670 40 2 1,188  23 0 141 
+Port Harcourt  44,012   14,520  2,711  1,001  0 3,580  352 215 21,633  
+Yola 2,189   1,183  633 261 1 72 39 0 0 
+All DisCos  227,267   108,385  19,475  3,735  196 43,876  983 4,114  46,503  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+86   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix XI V: Category of complaints received at the NERC -CCU in 2025/Q 2 
+DisCos  Complaints 
+Received  Complaints 
+Resolved  Credit 
+Adjustment 
+(₦’000)  Complaint Categories  
+Metering  Interruption  Voltage  Loadshedding  Billing  Disconnection  Delay Others  Band   
+Aba 8 4 0 2 2 0 0 3 1 1 0 0  
+Abuja  417 221 4,003,385  86                88 9 1 113 38 - 5 76  
+Benin  43 36 2,583,475  13 13 0 0 9 6 - 0 7  
+Eko 516 423 16,516,537  189 80 9 0 126 28 - 7 2  
+Enugu  127 49 958,690  58 13 2 1 30 17 - 0 76  
+Ibadan  194 73 0 66 33 4 0 51 25 - 3 12  
+Ikeja 932 154 16,011,945  259 149 6 1 388 90 -- 4 35  
+Jos 15 9 0 2 6 1 0 1 3 - 1 1  
+Kaduna  16 15 0 2 6 0 1 1 0 - 2 4  
+Kano  8 6 0 4 1 0 0 2 1 - 0 0  
+Port 
+Harcourt  178 131 143,918  45 23 1 0 64 17 - 5 23  
+Yola 20 8 0 3 8 2 0 4 0 -          1 2  
+All DisCos  2,474  1,129  40,217,950  729 422 34 4 792 226 1 28 238  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+87   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix XV: List and addresses of NERC Forum Offices as of June 2025  
+S/N Forum Office  Location  Telephone  Email  
+1 Abakaliki, Ebonyi State  3, Ezekuna Crescent, Off Nsugbe Street, Abakaliki Ebonyi State  09037808590  abakalikiforum@nerc.gov.ng  
+2 Abeokuta, Ogun State  33, First Avenue, Ibara Housing Estate, Ibrar GRA, Abeokuta  09139381008  abeokutaforum@nerc.gov.ng  
+3 Abuja, FCT  14, Road 131, Gwarinpa, Federal Capital Territory, Abuja  08146862225  abujaforum@nerc.gov.ng  
+4 Asaba, Delta State  Denis Osadebe Way, Beside Mobil Filling Station, Asaba, Delta State  09062277247  asabaforum@nerc.gov.ng  
+5 Awka, Anambra State  Plot 80, Aroma Junction Layout, Opp. CBN, Awka, Anambra State  09037808594  awkaforum@nerc.gov.ng  
+6 Bauchi, Bauchi State  37, Old Jos Road, GRA, Bauchi, Bauchi State  09062924607  bauchiforum@nerc.gov.ng  
+7 B/Kebbi, Kebbi State  8, Ahmadu Bello Way, Opp. Kebbi State Govt House, Kebbi State  09062863161  birninkebbiforum@nerc.gov.ng  
+8 Calabar, C/Rivers State  Plot 109, MCC Road by Ibok Street, Calabar, Cross River State  09062863159  calabarforum@nerc.gov.ng  
+9 Damaturu, Yobe State  No. 5, AD Road, Abba Ibrahim Extension, Off Potiskum Road, Damaturu, Yobe State  09169978243  damaturuforum@nerc.gov.ng  
+10 Gombe, Gombe State  Government Layout GDP/2, Along Ministry of Education Road, Gombe State  08140440079  gombeforum@nerc.gov.ng  
+11 Gusau, Zamfara State  2 Canteen Daji, J. B. Yakubu Road, Gusau, Zamfara State  09062863163  gusauforum@nerc.gov.ng  
+12 Ilorin, Kwara State  30, Stadium Road, Off Taiwo Road, Ilorin, Kwara State  09062924603  ilorinforum@nerc.gov.ng  
+13 Jos, Plateau State  5a, Ray -field Road, Jos, Plateau State  09037808597  josforum@nerc.gov.ng  
+14 Kaduna, Kaduna State  22, Ahmadu Bello Way, Opposite NNDC Building, Kaduna, Kaduna State  08106807299  kadunaforum@nerc.gov.ng  
+15 Kano, Kano State  2, Miller Road, Bompai, Nasarawa G.R.A, Kano, Kano State  08146862222  kanoforum@nerc.gov.ng  
+16 Katsina, Katsina State  7, Abuja Crescent, Off Hassan Usman Katsina Road, Katsina, Katsina State  07031704821  katsinaforum@nerc.gov.ng  
+17 Lafia, Nasarawa State  Manyi Street, Off Jos Road, Bukan Sidi, Lafia, Nasarawa State  09062924599  lafiaforum@nerc.gov.ng  
+18 Makurdi, Benue State  Hephzibah Plaza, Atom Kpera Road, Opp. Makurdi Int’l School, Benue State  09062277249  makurdiforum@nerc.gov.ng  
+19 Osogbo, Osun State  51, Isiaka Adeleke Way, Along Okefia -Alekuwodo Rd, Osogbo, Osun State  09062924604  osogboforum@nerc.gov.ng  
+20 P/Harcourt, Rivers State  The Vhelberg Imperial Hotel, Plot 122 & 122a, Bank Anthony Avenue, Off Ordinance Rd, P/Harcourt  08146862223  phforum@nerc.gov.ng  
+21 Sokoto, Sokoto State  1, Garba Duba Road, Sokoto, Sokoto State  09062863157  sokotoforum@nerc.gov.ng  
+22 Umuahia, Abia State  House 2, Adelabu Str., Amaokwe Housing Estate, Umuahia Ibeku, Abia State  09062277251  umuahiaforum@nerc.gov.ng  
+23 Uyo, Akwa Ibom State  63, Osongama Road, Off Oron/Uyo Airport Road, Uyo, Akwa Ibom State  09062863165  uyoforum@nerc.gov.ng  
+24 Yola, Adamawa State  5, Nguroje Str., Karewa Extension, Jimeta, Yola, Adamawa State  09037808535  yolaforum@nerc.gov.ng  
+ 
+ 
+ 
+ 
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+88   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix XV I: Appeals handled by Forum Offices in 202 5/Q1 and 2025/Q 2 
+                       2025/Q1 2025/Q2 
+S/N Forum Offices  Appeals 
+Received  Appeals 
+Resolved  Appeals 
+Pending  Resolution Rate  
+(%) Appeals 
+Received  Appeals 
+Resolved  Appeals 
+Pending  Resolution Rate  
+(%) 
+1 Abakaliki, Ebonyi State  58 47 11 81.03  70 30 40 42.86  
+2 Abeokuta, Ogun State  95 40 14 42.11  0 0 0 0.00 
+3 Abuja, FCT  63 50 13 79.37  42 94 8 80.95  
+4 Asaba, Delta State  79 34 45 43.04  78 48 30 61.54  
+5 Awka, Anambra State  97 75 22 77.32  135 101 34 74.81  
+6 Bauchi, Bauchi State  7 7 0 100.00  13 13 0 100.00  
+7 Damaturu, Yobe State  4 0 4 0.00 13 8 5 0.00 
+8 Calabar, C/Rivers State  28 18 10 64.29  30 16 13 53.33  
+9 Eko, Lagos State  125 125 0 100.00  0 0 0 0.00 
+10 Gombe, Gombe State  10 2 7 20.00  15 0 15 0.00 
+11 Gusau, Zamfara State  14 14 0 100.00  6 6 0 100.00  
+12 Ilorin, Kwara State  119 101 18 84.87  19 73 17 81.11  
+13 Jos, Plateau State  23 23 0 100.00  5 3 2 60.00  
+14 Kaduna, Kaduna State  25 20 3 80.00  19 19 0 100.00  
+15 Kano, Kano State  37 20 17 54.05  46 31 12 67.39  
+16 Katsina, Katsina State  2 1 1 50.00  1 0 1 0.00 
+17 Kebbi, Kebbi State  0 0 0 0.00 0 0 0 0.00 
+18 Lafia, Nasarawa State  0 0 0 0.00 0 0 0 0.00 
+19 Makurdi, Benue State  8 1 2 12.50  0 0 0 0.00 
+20 Osogbo, Osun State  493 384 107 77.89  391 244 127 62.40  
+21 Port Harcourt, Rivers State  129 104 22 80.62  158 130 24 82.28  
+22 Sokoto, Sokoto State  0 0 0 0.00 6 0 6 0.00 
+23 Umuahia, Abia State  11 7 4 63.64  15 2 13 13.33  
+ Umuahia 2, Abia State  12 6 6 50.00  6 1 5 16.67  
+24 Uyo, Akwa Ibom State  248 182 76 70.54  238 182 56 76.47  
+25 Yola, Adamawa State  25 15 10 60.00  30 17 13 56.67   
+All Forum Offices  1,722  1,276  392 74.10  1,418  958 446 67.56  
+SECOND QUARTER 2025  NERC QUARTERLY REPORTS  
+ 
+ 
+89   [NIGERIAN ELECTRICITY REGULATORY COMMISSION]  
+ Appendix XVI I: Category of appeals received by Forum Offices in 202 5/Q1 and 
+2025/Q 2 
+Forum Office  2025/Q1 2025/Q2  Billing  
+Disconnection  
+Con. Delay  
+Interruption  
+Metering  
+Load Shedding  
+Voltage  
+Others  
+Billing  
+Disconnection  
+Con. Delay  
+Interruption  
+Metering  
+Load Shedding  
+Voltage  
+Others  
+Abakaliki, Ebonyi State  43 0 0 0 0 0 0 0 57 0 0 0 2 0 0 0 
+Abeokuta, Ogun State  12 3 0 0 17 10 0 8 0 0 0 0 25 0 0 4 
+Abuja, FCT         0     0 0 0 42 0 0 5 0   0 0 0 0 0 0 0 
+Asaba, Delta State  39     0 4 1 5 0 0 4 23    1  1 1 1 0 1 5 
+Awka, Anambra State  60     3 0 0 9 0 0 3 80  14 0 0 15 0 0 4 
+Bauchi, Bauchi State  1     2    0 0 1 0 0 3 4    3 0 0 3 0 0 3 
+Damaturu, Yobe State  2 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 
+Calabar, C/Rivers State  4 2 0 0 11 0 0 4 6 0 0 0 3 0 0 0 
+Eko, Lagos State  9 2 0 1 13 0 0 2 0 0 0 0 0 0 0 0 
+Gombe, Gombe State  4 0 0 0 1 0 0 2 1 1 0 0 4 0 1 1 
+Gusau, Zamfara State  3 2 0 0 1 0 0 0 1 2 0 0 3 0 0 0 
+Ilorin, Kwara State  19 4 0 0 61 0 0 8 23 6 0 0 26 1 1 15 
+Jos, Plateau State  8 4 0 0 8 0 3 0 2 0 0 0 3 0 0 0 
+Kaduna, Kaduna State  4    4 0 0 7 0 0 6 2 6 0 0 7 0 0 1 
+Kano, Kano State  12    3 0 1 3 0 0 10 20    1 0 0 2 0 0 6 
+Katsina, Katsina State  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+B/Kebbi, Kebbi State        0 0 0 0 0 0 0 0       0 0 0 0 0 0 0 0 
+Lafia, Nasarawa State  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+Makurdi, Benue State  8 0 0 0 0 0 0 0 8 0 0 0 1 0 0 0 
+Osogbo, Osun State  161 2 0 0 80 0 0 38 134 2 0 0 118 0 0 30 
+P/Harcourt, Rivers State  82 16 0 1 19 0 0 11 88 8 0 0 28 0 0 12 
+Sokoto, Sokoto State  0 0 0 0 0 0 0 0 0 1 0 0 0 0 2 3 
+Umuahia, Abia State  6 1 0 1 0 0 0 0 8 0 0 0 1 0 0 2 
+Umuahia 2, Abia State  2 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 
+Uyo, Akwa Ibom State  109 11  0 0 51 0 7 38 76 13 0 0 46 0 2 25 
+Yola, Adamawa State  13 2 0 0 3 0 0 2 10 3 0 1 5 0 0 1 
+All Forum Offices  601 62 4 5 333 10 10 146 553 64 1 2 298 1 7 114 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  

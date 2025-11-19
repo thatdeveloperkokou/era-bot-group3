@@ -7,6 +7,44 @@ import os
 
 db = SQLAlchemy()
 
+
+class RegionProfile(db.Model):
+    """Regional/distribution company profile derived from NERC data"""
+    __tablename__ = 'region_profiles'
+
+    id = db.Column(db.String(50), primary_key=True)
+    disco_name = db.Column(db.String(150), nullable=False)
+    states = db.Column(db.JSON, nullable=False, default=list)
+    keywords = db.Column(db.JSON, nullable=False, default=list)
+    avg_offtake_mwh_per_hour = db.Column(db.Float, nullable=False)
+    avg_available_pcc_mwh_per_hour = db.Column(db.Float, nullable=False)
+    utilisation_percent = db.Column(db.Float, nullable=False)
+    estimated_daily_mwh = db.Column(db.Float, nullable=False)
+    estimated_full_load_hours = db.Column(db.Float, nullable=False)
+    schedule_template = db.Column(db.JSON, nullable=True)
+    source = db.Column(db.String(255), default='NERC Q2 2025')
+    created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+
+    users = db.relationship('User', backref='region_profile', lazy=True)
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'disco_name': self.disco_name,
+            'states': self.states,
+            'keywords': self.keywords,
+            'avg_offtake_mwh_per_hour': self.avg_offtake_mwh_per_hour,
+            'avg_available_pcc_mwh_per_hour': self.avg_available_pcc_mwh_per_hour,
+            'utilisation_percent': self.utilisation_percent,
+            'estimated_daily_mwh': self.estimated_daily_mwh,
+            'estimated_full_load_hours': self.estimated_full_load_hours,
+            'schedule_template': self.schedule_template,
+            'source': self.source,
+            'updated_at': self.updated_at.isoformat() if self.updated_at else None,
+        }
+
+
 class User(db.Model):
     """User model"""
     __tablename__ = 'users'
@@ -17,6 +55,7 @@ class User(db.Model):
     location = db.Column(db.String(500), nullable=True)
     email_verified = db.Column(db.Boolean, default=False, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+    region_id = db.Column(db.String(50), db.ForeignKey('region_profiles.id'), nullable=True)
     
     # Relationships
     power_logs = db.relationship('PowerLog', backref='user', lazy=True, cascade='all, delete-orphan')
@@ -35,6 +74,7 @@ class User(db.Model):
             'location': self.location,
             'email_verified': self.email_verified,
             'created_at': self.created_at.isoformat() if self.created_at else None,
+            'region_id': self.region_id,
             'verified_devices': self.verified_devices
         }
 
@@ -48,6 +88,10 @@ class PowerLog(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     date = db.Column(db.Date, nullable=False)
     location = db.Column(db.String(500), nullable=True)
+    region_id = db.Column(db.String(50), db.ForeignKey('region_profiles.id'), nullable=True)
+    auto_generated = db.Column(db.Boolean, default=False, nullable=False)
+
+    region = db.relationship('RegionProfile', lazy=True)
     
     def to_dict(self):
         """Convert power log to dictionary"""
@@ -56,7 +100,9 @@ class PowerLog(db.Model):
             'event_type': self.event_type,
             'timestamp': self.timestamp.isoformat() if self.timestamp else None,
             'date': self.date.isoformat() if self.date else None,
-            'location': self.location
+            'location': self.location,
+            'region_id': self.region_id,
+            'auto_generated': self.auto_generated
         }
 
 class VerificationCode(db.Model):

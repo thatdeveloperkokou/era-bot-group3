@@ -11,7 +11,8 @@ import uuid
 from dotenv import load_dotenv
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy import or_, and_, func
-from database import db, User, PowerLog, VerificationCode, DeviceId, init_db
+from database import db, User, PowerLog, VerificationCode, DeviceId, RegionProfile, init_db
+from region_mapper import infer_region_from_location
 
 load_dotenv()
 
@@ -83,6 +84,12 @@ except Exception as e:
 
 # Add a marker to confirm app module loaded completely
 print("✅ Flask app module loaded successfully - ready for gunicorn")
+
+
+def resolve_region_id(location: str | None) -> str | None:
+    """Map raw location text to one of the seeded region profile IDs."""
+    return infer_region_from_location(location)
+
 
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
@@ -350,6 +357,7 @@ def register():
         email = data.get('email')
         password = data.get('password')
         location = data.get('location', '')
+        region_id = resolve_region_id(location)
         
         if not username or not password or not email:
             return jsonify({'error': 'Username, email, and password are required'}), 400
@@ -372,6 +380,7 @@ def register():
             email=email,
             location=location,
             email_verified=True,  # Skip verification for now
+            region_id=region_id,
             created_at=datetime.utcnow()
         )
         db.session.add(user)
@@ -506,9 +515,14 @@ def log_power(current_user):
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        # Get user location if not provided
+        # Get user location if not provided and refresh region assignment
         if not location:
             location = user.location or ''
+        elif location and location != user.location:
+            user.location = location
+        inferred_region = resolve_region_id(location or user.location)
+        if inferred_region and inferred_region != user.region_id:
+            user.region_id = inferred_region
         
         timestamp = datetime.utcnow()
         date = timestamp.date()
@@ -519,7 +533,9 @@ def log_power(current_user):
             event_type=event_type,
             timestamp=timestamp,
             date=date,
-            location=location
+            location=location,
+            region_id=user.region_id,
+            auto_generated=False
         )
         db.session.add(power_log)
         db.session.commit()
@@ -729,6 +745,20 @@ def get_report(current_user):
         db.session.rollback()
         print(f"Error in get_report: {str(e)}")
         return jsonify({'error': 'An error occurred while fetching report'}), 500
+
+
+@app.route('/api/region-profiles', methods=['GET', 'OPTIONS'])
+def list_region_profiles():
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    try:
+        profiles = RegionProfile.query.order_by(RegionProfile.disco_name).all()
+        return jsonify({
+            'regions': [profile.to_dict() for profile in profiles]
+        }), 200
+    except Exception as e:
+        print(f"Error fetching region profiles: {str(e)}")
+        return jsonify({'error': 'Failed to load region profiles'}), 500
 
 @app.route('/api/verify-email', methods=['POST', 'OPTIONS'])
 def verify_email():
