@@ -14,6 +14,7 @@ import jwt
 from functools import wraps
 import secrets
 import uuid
+import requests
 from dotenv import load_dotenv
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy import or_, and_, func
@@ -108,142 +109,142 @@ def generate_verification_code():
 
 def send_verification_email(email, code):
     """
-    Send verification email to user.
+    Send verification email to user using Resend API.
     Returns True if email was sent successfully or if email is not configured (for development).
     Returns False if email sending failed.
     """
     try:
-        # Check if mail object is None (initialization failed)
-        if mail is None:
-            print(f"⚠️  Mail not initialized. Verification code for {email}: {code}")
-            return True
-        
+        # Check if email sending is suppressed
         if app.config.get('MAIL_SUPPRESS_SEND'):
             print(f"📧 MAIL_SUPPRESS_SEND enabled. Skipping actual email send for {email}. Verification code: {code}")
             return True
         
-        # Check if email is configured
-        mail_username = app.config.get('MAIL_USERNAME', '')
-        mail_password = app.config.get('MAIL_PASSWORD', '')
-        mail_server = app.config.get('MAIL_SERVER', '')
+        # Get Resend API key
+        resend_api_key = os.environ.get('RESEND_API_KEY', '')
+        resend_from_email = os.environ.get('RESEND_FROM_EMAIL', 'onboarding@resend.dev')
         
-        print(f"📧 Email config check: MAIL_SERVER={mail_server}, MAIL_USERNAME={'SET' if mail_username else 'NOT SET'}, MAIL_PASSWORD={'SET' if mail_password else 'NOT SET'}")
-        
-        if not mail_username or not mail_password:
-            print(f"⚠️  Email not configured. Verification code for {email}: {code}")
-            print(f"   To enable email, configure MAIL_USERNAME and MAIL_PASSWORD in Railway environment variables")
-            print(f"   See EMAIL_SETUP.md for instructions")
+        if not resend_api_key:
+            print(f"⚠️  RESEND_API_KEY not configured. Verification code for {email}: {code}")
+            print(f"   To enable email, set RESEND_API_KEY in Railway environment variables")
             return True  # Return True for development (allow registration to continue)
         
-        print(f"📧 Creating email message for {email}")
-        # Create email message
-        msg = Message(
-            subject='Verify Your Email - Electricity Supply Logger',
-            recipients=[email],
-            html=f'''
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    body {{
-                        font-family: Arial, sans-serif;
-                        line-height: 1.6;
-                        color: #333;
-                    }}
-                    .container {{
-                        max-width: 600px;
-                        margin: 0 auto;
-                        padding: 20px;
-                        background-color: #f9f9f9;
-                    }}
-                    .header {{
-                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                        color: white;
-                        padding: 20px;
-                        text-align: center;
-                        border-radius: 10px 10px 0 0;
-                    }}
-                    .content {{
-                        background: white;
-                        padding: 30px;
-                        border-radius: 0 0 10px 10px;
-                    }}
-                    .code {{
-                        font-size: 32px;
-                        font-weight: bold;
-                        color: #667eea;
-                        text-align: center;
-                        padding: 20px;
-                        background: #f0f4ff;
-                        border-radius: 8px;
-                        margin: 20px 0;
-                        letter-spacing: 5px;
-                    }}
-                    .footer {{
-                        margin-top: 20px;
-                        padding-top: 20px;
-                        border-top: 1px solid #e0e0e0;
-                        font-size: 12px;
-                        color: #666;
-                    }}
-                </style>
-            </head>
-            <body>
-                <div class="container">
-                    <div class="header">
-                        <h1>🔌 Electricity Supply Logger</h1>
-                    </div>
-                    <div class="content">
-                        <h2>Email Verification</h2>
-                        <p>Thank you for registering! Please use the verification code below to verify your email address:</p>
-                        <div class="code">{code}</div>
-                        <p><strong>This code will expire in 10 minutes.</strong></p>
-                        <p>If you didn't request this verification code, please ignore this email.</p>
-                        <div class="footer">
-                            <p>This is an automated message. Please do not reply to this email.</p>
-                        </div>
+        # Email HTML template
+        email_html = f'''
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                body {{
+                    font-family: Arial, sans-serif;
+                    line-height: 1.6;
+                    color: #333;
+                }}
+                .container {{
+                    max-width: 600px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    background-color: #f9f9f9;
+                }}
+                .header {{
+                    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                    color: white;
+                    padding: 20px;
+                    text-align: center;
+                    border-radius: 10px 10px 0 0;
+                }}
+                .content {{
+                    background: white;
+                    padding: 30px;
+                    border-radius: 0 0 10px 10px;
+                }}
+                .code {{
+                    font-size: 32px;
+                    font-weight: bold;
+                    color: #667eea;
+                    text-align: center;
+                    padding: 20px;
+                    background: #f0f4ff;
+                    border-radius: 8px;
+                    margin: 20px 0;
+                    letter-spacing: 5px;
+                }}
+                .footer {{
+                    margin-top: 20px;
+                    padding-top: 20px;
+                    border-top: 1px solid #e0e0e0;
+                    font-size: 12px;
+                    color: #666;
+                }}
+            </style>
+        </head>
+        <body>
+            <div class="container">
+                <div class="header">
+                    <h1>🔌 Electricity Supply Logger</h1>
+                </div>
+                <div class="content">
+                    <h2>Email Verification</h2>
+                    <p>Thank you for registering! Please use the verification code below to verify your email address:</p>
+                    <div class="code">{code}</div>
+                    <p><strong>This code will expire in 10 minutes.</strong></p>
+                    <p>If you didn't request this verification code, please ignore this email.</p>
+                    <div class="footer">
+                        <p>This is an automated message. Please do not reply to this email.</p>
                     </div>
                 </div>
-            </body>
-            </html>
-            '''
-        )
+            </div>
+        </body>
+        </html>
+        '''
         
-        print(f"📧 Attempting to send email via {mail_server}:{app.config.get('MAIL_PORT', 587)}...")
-        # Send email with timeout handling - use threading to prevent blocking
-        import threading
-        import queue
+        print(f"📧 Sending email via Resend API to {email}...")
         
-        result_queue = queue.Queue()
-        error_queue = queue.Queue()
+        # Resend API endpoint
+        resend_url = "https://api.resend.com/emails"
         
-        def send_email_thread():
-            try:
-                mail.send(msg)
-                result_queue.put(True)
-            except Exception as e:
-                error_queue.put(e)
+        # Prepare email payload
+        payload = {
+            "from": resend_from_email,
+            "to": [email],
+            "subject": "Verify Your Email - Electricity Supply Logger",
+            "html": email_html
+        }
         
-        # Start email sending in a separate thread
-        email_thread = threading.Thread(target=send_email_thread, daemon=True)
-        email_thread.start()
+        headers = {
+            "Authorization": f"Bearer {resend_api_key}",
+            "Content-Type": "application/json"
+        }
         
-        # Wait for result with timeout (5 seconds)
-        email_thread.join(timeout=5.0)
-        
-        if not result_queue.empty():
-            print(f"✅ Verification email sent successfully to {email}")
-            return True
-        elif not error_queue.empty():
-            error = error_queue.get()
-            print(f"❌ Error during mail.send(): {type(error).__name__}: {str(error)}")
-            raise error
-        else:
-            # Timeout - email sending is taking too long
-            print(f"⚠️  Email sending timeout after 5 seconds. Email may still be sent, but continuing...")
-            print(f"   Verification code for {email}: {code}")
-            # Return False to indicate email may not have been sent
-            # This will trigger the fallback to return code in response
+        # Send email via Resend API (with timeout)
+        try:
+            response = requests.post(
+                resend_url,
+                json=payload,
+                headers=headers,
+                timeout=10  # 10 second timeout
+            )
+            
+            if response.status_code == 200:
+                result = response.json()
+                print(f"✅ Verification email sent successfully to {email}")
+                print(f"   Resend email ID: {result.get('id', 'N/A')}")
+                return True
+            else:
+                error_data = response.json() if response.content else {}
+                error_msg = error_data.get('message', f'HTTP {response.status_code}')
+                print(f"❌ Resend API error: {error_msg}")
+                print(f"   Status code: {response.status_code}")
+                print(f"   Response: {error_data}")
+                print(f"   📧 Verification code for {email}: {code}")
+                return False
+                
+        except requests.exceptions.Timeout:
+            print(f"⚠️  Resend API timeout after 10 seconds")
+            print(f"   📧 Verification code for {email}: {code}")
+            return False
+        except requests.exceptions.RequestException as e:
+            print(f"❌ Resend API request failed: {str(e)}")
+            print(f"   📧 Verification code for {email}: {code}")
             return False
         
     except Exception as e:
@@ -252,25 +253,6 @@ def send_verification_email(email, code):
         print(f"❌ Error sending email to {email}")
         print(f"   Error type: {error_type}")
         print(f"   Error message: {error_msg}")
-        print(f"   MAIL_SERVER: {app.config['MAIL_SERVER']}")
-        print(f"   MAIL_PORT: {app.config['MAIL_PORT']}")
-        print(f"   MAIL_USE_TLS: {app.config['MAIL_USE_TLS']}")
-        print(f"   MAIL_USERNAME: {'set' if app.config['MAIL_USERNAME'] else 'NOT SET'}")
-        print(f"   MAIL_PASSWORD: {'set' if app.config['MAIL_PASSWORD'] else 'NOT SET'}")
-        print(f"   MAIL_DEFAULT_SENDER: {app.config['MAIL_DEFAULT_SENDER']}")
-        
-        # Provide helpful error messages
-        if "Authentication failed" in error_msg or "535" in error_msg or "534" in error_msg:
-            print(f"   💡 Tip: Authentication failed - Make sure you're using an App Password, not your regular password")
-            print(f"   💡 For Gmail: https://myaccount.google.com/apppasswords")
-            print(f"   💡 For Outlook: https://account.microsoft.com/security")
-        elif "Connection" in error_msg or "timeout" in error_msg.lower() or "refused" in error_msg.lower():
-            print(f"   💡 Tip: Connection issue - Check SMTP server and port settings")
-            print(f"   💡 Try: MAIL_SERVER={app.config['MAIL_SERVER']}, MAIL_PORT={app.config['MAIL_PORT']}")
-        elif "550" in error_msg or "553" in error_msg:
-            print(f"   💡 Tip: Sender verification failed - Verify MAIL_DEFAULT_SENDER is correct")
-        elif "SSL" in error_msg or "TLS" in error_msg:
-            print(f"   💡 Tip: SSL/TLS issue - Try MAIL_USE_TLS=true for port 587, or MAIL_USE_SSL=true for port 465")
         
         # In development, print the code so registration can continue
         print(f"   📧 Verification code for {email}: {code}")
