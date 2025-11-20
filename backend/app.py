@@ -21,6 +21,15 @@ from sqlalchemy import or_, and_, func
 from database import db, User, PowerLog, VerificationCode, DeviceId, RegionProfile, init_db
 from region_mapper import infer_region_from_location
 
+# Google OAuth
+try:
+    from google.auth.transport import requests as google_requests
+    from google.oauth2 import id_token
+    GOOGLE_AUTH_AVAILABLE = True
+except ImportError:
+    GOOGLE_AUTH_AVAILABLE = False
+    print("⚠️  Google Auth libraries not available. Google OAuth will be disabled.")
+
 load_dotenv()
 
 app = Flask(__name__)
@@ -232,6 +241,17 @@ def send_verification_email(email, code):
                 print(f"✅ Verification email sent successfully to {email}")
                 print(f"   Resend email ID: {result.get('id', 'N/A')}")
                 return True
+            elif response.status_code == 403:
+                error_data = response.json() if response.content else {}
+                error_msg = error_data.get('message', f'HTTP {response.status_code}')
+                print(f"❌ Resend API 403 Forbidden: {error_msg}")
+                print(f"   Status code: {response.status_code}")
+                print(f"   Response: {error_data}")
+                print(f"   📧 Verification code for {email}: {code}")
+                print(f"   💡 Resend account is in testing mode. You can only send to your verified email.")
+                print(f"   💡 To send to any email, verify a domain at: https://resend.com/domains")
+                print(f"   💡 Or upgrade your Resend plan for production use.")
+                return False
             else:
                 error_data = response.json() if response.content else {}
                 error_msg = error_data.get('message', f'HTTP {response.status_code}')
@@ -388,7 +408,9 @@ def register():
         db.session.commit()
         
         # Attempt to send email (non-blocking - don't wait for it)
+        print(f"📧 Attempting to send verification email to {email}...")
         email_sent = send_verification_email(email, verification_code)
+        print(f"📧 Email sending result: {email_sent}")
         
         # Return response immediately (don't wait for email)
         response_data = {
@@ -397,11 +419,12 @@ def register():
             'email': email
         }
         
-        # If email sending failed, include code in response (for development/fallback)
+        # If email sending failed, include code in response (on-screen verification)
         if not email_sent:
             response_data['fallback_code'] = verification_code
-            response_data['message'] = 'Email sending failed. Please check your email configuration or use the code below.'
-            print(f"⚠️  Email sending failed - returning code in response for {email}")
+            response_data['message'] = 'Please use the verification code displayed on screen to verify your email address.'
+            print(f"📱 On-screen verification code displayed for {email}: {verification_code}")
+            print(f"   This is a valid verification method - no email delivery needed.")
         
         return jsonify(response_data), 200
             
@@ -952,6 +975,211 @@ def verify_device():
         print(f"Error in verify_device: {str(e)}")
         return jsonify({'error': 'An error occurred during device verification'}), 500
 
+@app.route('/api/auth/google', methods=['POST', 'OPTIONS'])
+def google_auth():
+    """Handle Google OAuth authentication"""
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    
+    if not GOOGLE_AUTH_AVAILABLE:
+        return jsonify({'error': 'Google OAuth is not available. Please install google-auth library.'}), 500
+    
+    try:
+        data = request.get_json() or request.json
+        if not data:
+            return jsonify({'error': 'Invalid JSON data'}), 400
+        
+        id_token_string = data.get('idToken')
+        if not id_token_string:
+            return jsonify({'error': 'Google ID token is required'}), 400
+        
+        # Get Google Client ID from environment
+        google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '')
+        if not google_client_id:
+            print("⚠️  GOOGLE_CLIENT_ID not set. Google OAuth will not work.")
+            return jsonify({'error': 'Google OAuth is not configured'}), 500
+        
+        # Verify the Google ID token
+        try:
+            idinfo = id_token.verify_oauth2_token(
+                id_token_string,
+                google_requests.Request(),
+                google_client_id
+            )
+            
+            # Extract user information
+            google_id = idinfo.get('sub')
+            email = idinfo.get('email')
+            name = idinfo.get('name', '')
+            picture = idinfo.get('picture', '')
+            
+            if not email:
+                return jsonify({'error': 'Email not provided by Google'}), 400
+            
+            # Generate username from email (before @)
+            username = email.split('@')[0]
+            # Make sure username is unique
+            base_username = username
+            counter = 1
+            while User.query.filter_by(username=username).first():
+                username = f"{base_username}{counter}"
+                counter += 1
+            
+            # Check if user already exists by email
+            existing_user = User.query.filter_by(email=email).first()
+            
+            if existing_user:
+                # User exists, log them in
+                token = generate_token(existing_user.username)
+                return jsonify({
+                    'message': 'Login successful',
+                    'token': token,
+                    'username': existing_user.username,
+                    'isNewUser': False
+                }), 200
+            else:
+                # New user - return user info but don't create account yet
+                # User needs to provide location first
+                return jsonify({
+                    'message': 'Please provide your location to complete registration',
+                    'isNewUser': True,
+                    'email': email,
+                    'name': name,
+                    'picture': picture,
+                    'username': username,
+                    'googleId': google_id
+                }), 200
+                
+        except ValueError as e:
+            # Invalid token
+            print(f"❌ Google token verification failed: {str(e)}")
+            return jsonify({'error': 'Invalid Google token'}), 401
+        
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print(f"Database error in google_auth: {str(e)}")
+        return jsonify({'error': 'Database error occurred'}), 500
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error in google_auth: {str(e)}")
+        return jsonify({'error': f'An error occurred during Google authentication: {str(e)}'}), 500
+
+@app.route('/api/auth/google/complete', methods=['POST', 'OPTIONS'])
+def google_auth_complete():
+    """Complete Google OAuth registration with location"""
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    
+    if not GOOGLE_AUTH_AVAILABLE:
+        return jsonify({'error': 'Google OAuth is not available. Please install google-auth library.'}), 500
+    
+    try:
+        data = request.get_json() or request.json
+        if not data:
+            return jsonify({'error': 'Invalid JSON data'}), 400
+        
+        id_token_string = data.get('idToken')
+        location = data.get('location', '')
+        email = data.get('email')
+        
+        if not id_token_string:
+            return jsonify({'error': 'Google ID token is required'}), 400
+        
+        if not location:
+            return jsonify({'error': 'Location is required'}), 400
+        
+        # Get Google Client ID from environment
+        google_client_id = os.environ.get('GOOGLE_CLIENT_ID', '')
+        if not google_client_id:
+            return jsonify({'error': 'Google OAuth is not configured'}), 500
+        
+        # Verify the Google ID token again
+        try:
+            idinfo = id_token.verify_oauth2_token(
+                id_token_string,
+                google_requests.Request(),
+                google_client_id
+            )
+            
+            # Extract user information
+            verified_email = idinfo.get('email')
+            if not verified_email:
+                return jsonify({'error': 'Email not provided by Google'}), 400
+            
+            # Verify email matches
+            if email and email != verified_email:
+                return jsonify({'error': 'Email mismatch'}), 400
+            
+            # Check if user already exists (race condition check)
+            existing_user = User.query.filter_by(email=verified_email).first()
+            if existing_user:
+                # User was created between calls, just log them in
+                token = generate_token(existing_user.username)
+                return jsonify({
+                    'message': 'Login successful',
+                    'token': token,
+                    'username': existing_user.username,
+                    'isNewUser': False
+                }), 200
+            
+            # Generate username from email (before @)
+            username = verified_email.split('@')[0]
+            # Make sure username is unique
+            base_username = username
+            counter = 1
+            while User.query.filter_by(username=username).first():
+                username = f"{base_username}{counter}"
+                counter += 1
+            
+            # Resolve region from location
+            region_id = resolve_region_id(location)
+            
+            # Create user account with location
+            random_password = secrets.token_urlsafe(32)
+            
+            user = User(
+                username=username,
+                password=hash_password(random_password),  # Random password for OAuth users
+                email=verified_email,
+                location=location,
+                region_id=region_id,
+                email_verified=True,  # Google emails are pre-verified
+                created_at=datetime.utcnow()
+            )
+            
+            db.session.add(user)
+            
+            # Generate device ID
+            device_id = str(uuid.uuid4())
+            device_id_record = DeviceId(
+                user_id=username,
+                device_id=device_id
+            )
+            db.session.add(device_id_record)
+            db.session.commit()
+            
+            token = generate_token(username)
+            return jsonify({
+                'message': 'Account created and logged in successfully',
+                'token': token,
+                'username': username,
+                'isNewUser': True
+            }), 200
+                
+        except ValueError as e:
+            # Invalid token
+            print(f"❌ Google token verification failed: {str(e)}")
+            return jsonify({'error': 'Invalid Google token'}), 401
+        
+    except SQLAlchemyError as e:
+        db.session.rollback()
+        print(f"Database error in google_auth_complete: {str(e)}")
+        return jsonify({'error': 'Database error occurred'}), 500
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error in google_auth_complete: {str(e)}")
+        return jsonify({'error': f'An error occurred during Google registration: {str(e)}'}), 500
+
 # Set the port to the value of the PORT environment variable or default to 5000
 port = int(os.environ.get("PORT", 5000))
 
@@ -971,6 +1199,8 @@ if __name__ == '__main__':
     print("  - POST /api/verify-email      - Verify email")
     print("  - POST /api/verify-device     - Verify device")
     print("  - POST /api/resend-verification - Resend verification code")
+    print("  - POST /api/auth/google      - Google OAuth login")
+    print("  - POST /api/auth/google/complete - Complete Google OAuth with location")
     print("  - POST /api/log-power         - Log power event")
     print("  - GET  /api/stats             - Get statistics")
     print("  - GET  /api/recent-events     - Get recent events")

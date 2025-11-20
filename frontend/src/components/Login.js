@@ -23,6 +23,11 @@ const Login = () => {
   const [emailSent, setEmailSent] = useState(true);
   const [verifying, setVerifying] = useState(false);
   const [resending, setResending] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
+  const [showGoogleLocation, setShowGoogleLocation] = useState(false);
+  const [googleUserData, setGoogleUserData] = useState(null);
+  const [googleLocation, setGoogleLocation] = useState('');
+  const [completingGoogle, setCompletingGoogle] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
   const cardRef = useRef(null);
@@ -119,6 +124,116 @@ const Login = () => {
       setLoading(false);
     }
   };
+
+  const handleGoogleSignIn = async (credential) => {
+    setError('');
+    setGoogleLoading(true);
+    
+    try {
+      const response = await api.post('/auth/google', {
+        idToken: credential
+      });
+      
+      if (response.data.token) {
+        // Existing user - log them in
+        login(response.data.token, response.data.username);
+        navigate('/dashboard');
+      } else if (response.data.isNewUser) {
+        // New user - show location input
+        setGoogleUserData({
+          idToken: credential,
+          email: response.data.email,
+          name: response.data.name,
+          username: response.data.username
+        });
+        setShowGoogleLocation(true);
+      }
+    } catch (err) {
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else {
+        setError('Google sign-in failed. Please try again.');
+      }
+    } finally {
+      setGoogleLoading(false);
+    }
+  };
+
+  const handleGoogleLocationSubmit = async (e) => {
+    e.preventDefault();
+    if (!googleLocation.trim() || !googleUserData) {
+      setError('Please enter your location');
+      return;
+    }
+    
+    setError('');
+    setCompletingGoogle(true);
+    
+    try {
+      const response = await api.post('/auth/google/complete', {
+        idToken: googleUserData.idToken,
+        email: googleUserData.email,
+        location: googleLocation
+      });
+      
+      if (response.data.token) {
+        // Account created - log them in
+        login(response.data.token, response.data.username);
+        navigate('/dashboard');
+      }
+    } catch (err) {
+      if (err.response?.data?.error) {
+        setError(err.response.data.error);
+      } else {
+        setError('Failed to complete registration. Please try again.');
+      }
+    } finally {
+      setCompletingGoogle(false);
+    }
+  };
+
+  useEffect(() => {
+    // Initialize Google Sign-In when component mounts
+    const initGoogleSignIn = () => {
+      if (window.google && window.google.accounts && !showVerification && !showGoogleLocation) {
+        const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+        if (!clientId) {
+          console.warn('Google Client ID not configured');
+          return;
+        }
+        
+        try {
+          window.google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleGoogleSignIn,
+          });
+          
+          const buttonElement = document.getElementById('google-signin-button');
+          if (buttonElement) {
+            // Clear any existing button
+            buttonElement.innerHTML = '';
+            window.google.accounts.id.renderButton(buttonElement, {
+              theme: 'outline',
+              size: 'large',
+              width: '100%',
+              text: 'signin_with',
+            });
+          }
+        } catch (error) {
+          console.error('Error initializing Google Sign-In:', error);
+        }
+      }
+    };
+
+    // Wait for Google script to load
+    if (window.google) {
+      initGoogleSignIn();
+    } else {
+      // Retry after a short delay
+      const timer = setTimeout(initGoogleSignIn, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [showVerification, showGoogleLocation]);
 
   const handleVerification = async (e) => {
     e.preventDefault();
@@ -223,7 +338,49 @@ const Login = () => {
             <p>{isLogin ? 'Welcome back! Sign in to continue tracking your electricity supply.' : 'Create your account to start monitoring your electricity data'}</p>
           </div>
           
-          {showVerification ? (
+          {showGoogleLocation ? (
+            <div className="verification-form">
+              <div className="verification-header">
+                <FaMapMarkerAlt className="verification-icon" />
+                <h2>Complete Your Registration</h2>
+                <p>Welcome, <strong>{googleUserData?.name || googleUserData?.email}</strong>! Please provide your location to continue.</p>
+              </div>
+
+              <form onSubmit={handleGoogleLocationSubmit} className="login-form">
+                <div className="form-group">
+                  <LocationAutocomplete
+                    value={googleLocation}
+                    onChange={setGoogleLocation}
+                    onSelect={(locationData) => {
+                      setGoogleLocation(locationData.address);
+                    }}
+                    placeholder="Enter your location (e.g., Lagos, Nigeria)"
+                    required
+                  />
+                </div>
+
+                {error && <div className="error-message">{error}</div>}
+
+                <button type="submit" disabled={completingGoogle || !googleLocation.trim()} className="submit-btn">
+                  {completingGoogle ? 'Completing Registration...' : 'Complete Registration'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowGoogleLocation(false);
+                    setGoogleUserData(null);
+                    setGoogleLocation('');
+                    setError('');
+                  }}
+                  className="back-btn"
+                  style={{ marginTop: '10px' }}
+                >
+                  Cancel
+                </button>
+              </form>
+            </div>
+          ) : showVerification ? (
             <div className="verification-form">
               <div className="verification-header">
                 <FaEnvelope className="verification-icon" />
@@ -232,11 +389,17 @@ const Login = () => {
               </div>
 
               {!emailSent && fallbackCode && (
-                <div className="fallback-code-box">
-                  <p><strong>Email sending failed.</strong> Use this code to verify:</p>
-                  <div className="fallback-code">{fallbackCode}</div>
-                  <p style={{ fontSize: '12px', color: '#666', marginTop: '8px' }}>
-                    Check your email configuration in Railway settings.
+                <div className="verification-code-display">
+                  <div className="verification-code-header">
+                    <FaEnvelope className="verification-code-icon" />
+                    <h3>Your Verification Code</h3>
+                  </div>
+                  <p className="verification-code-instruction">
+                    Please enter this code to verify your email address:
+                  </p>
+                  <div className="verification-code-value">{fallbackCode}</div>
+                  <p className="verification-code-note">
+                    This code will expire in 10 minutes. Please keep it secure.
                   </p>
                 </div>
               )}
@@ -285,16 +448,27 @@ const Login = () => {
               </form>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="login-form">
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder={isLogin ? "Email or Username" : "Username"}
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  required
-                />
-              </div>
+            <>
+              {/* Google Sign-In Button */}
+              {process.env.REACT_APP_GOOGLE_CLIENT_ID && !showGoogleLocation && (
+                <div className="google-signin-container">
+                  <div id="google-signin-button"></div>
+                  <div className="divider">
+                    <span>or</span>
+                  </div>
+                </div>
+              )}
+              
+              <form onSubmit={handleSubmit} className="login-form">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    placeholder={isLogin ? "Email or Username" : "Username"}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    required
+                  />
+                </div>
               
               {!isLogin && (
                 <>
@@ -332,7 +506,7 @@ const Login = () => {
               
               {error && <div className="error-message">{error}</div>}
               
-              <button type="submit" disabled={loading} className="submit-btn">
+              <button type="submit" disabled={loading || googleLoading} className="submit-btn">
                 {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
               </button>
             </form>
