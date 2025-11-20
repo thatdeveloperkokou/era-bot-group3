@@ -510,6 +510,7 @@ const Login = () => {
                 {loading ? 'Please wait...' : (isLogin ? 'Login' : 'Register')}
               </button>
             </form>
+            </>
           )}
           
           <div className="toggle-auth">
