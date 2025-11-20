@@ -123,10 +123,13 @@ def send_verification_email(email, code):
         resend_api_key = os.environ.get('RESEND_API_KEY', '')
         resend_from_email = os.environ.get('RESEND_FROM_EMAIL', 'onboarding@resend.dev')
         
+        print(f"📧 Resend config check: RESEND_API_KEY={'SET' if resend_api_key else 'NOT SET'}, RESEND_FROM_EMAIL={resend_from_email}")
+        
         if not resend_api_key:
             print(f"⚠️  RESEND_API_KEY not configured. Verification code for {email}: {code}")
             print(f"   To enable email, set RESEND_API_KEY in Railway environment variables")
-            return True  # Return True for development (allow registration to continue)
+            print(f"   Go to: Railway Dashboard → Backend Service → Variables → Add RESEND_API_KEY")
+            return False  # Return False so fallback code is shown
         
         # Email HTML template
         email_html = f'''
@@ -232,10 +235,14 @@ def send_verification_email(email, code):
             else:
                 error_data = response.json() if response.content else {}
                 error_msg = error_data.get('message', f'HTTP {response.status_code}')
+                error_details = error_data.get('errors', [])
                 print(f"❌ Resend API error: {error_msg}")
                 print(f"   Status code: {response.status_code}")
                 print(f"   Response: {error_data}")
+                if error_details:
+                    print(f"   Error details: {error_details}")
                 print(f"   📧 Verification code for {email}: {code}")
+                print(f"   💡 Check RESEND_API_KEY is correct and has proper permissions")
                 return False
                 
         except requests.exceptions.Timeout:
