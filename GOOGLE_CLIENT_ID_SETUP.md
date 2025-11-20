@@ -2,9 +2,9 @@
 
 ## ✅ Your Google OAuth Credentials
 
-**Client ID:** `847715031800-ngeofddh32pq0i2n78v85pfsp613tniv.apps.googleusercontent.com`
+**Client ID:** `YOUR_CLIENT_ID_HERE` (Get this from Google Cloud Console)
 
-**Client Secret:** `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` (not needed for our implementation)
+**Client Secret:** `YOUR_CLIENT_SECRET_HERE` (not needed for our implementation, but keep it secure)
 
 ---
 
@@ -19,7 +19,7 @@ I've already set this for you! The Client ID has been added to Railway.
 railway variables | findstr GOOGLE
 ```
 
-Should show: `GOOGLE_CLIENT_ID=847715031800-ngeofddh32pq0i2n78v85pfsp613tniv.apps.googleusercontent.com`
+Should show: `GOOGLE_CLIENT_ID=YOUR_CLIENT_ID_HERE`
 
 ---
 
@@ -30,7 +30,7 @@ Should show: `GOOGLE_CLIENT_ID=847715031800-ngeofddh32pq0i2n78v85pfsp613tniv.app
 
 2. **Add Environment Variable:**
    - **Key:** `REACT_APP_GOOGLE_CLIENT_ID`
-   - **Value:** `847715031800-ngeofddh32pq0i2n78v85pfsp613tniv.apps.googleusercontent.com`
+   - **Value:** `YOUR_CLIENT_ID_HERE` (Your actual Client ID from Google Cloud Console)
    - **Environment:** Select all (Production, Preview, Development)
    - Click **"Save"**
 
