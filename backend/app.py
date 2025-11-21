@@ -113,6 +113,21 @@ def resolve_region_id(location: str | None) -> str | None:
 def hash_password(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+def preview_value(value, length=20):
+    """
+    Safely preview sensitive values without causing slicing errors.
+    Handles None, non-string objects, and values that don't support slicing.
+    """
+    if value is None:
+        return 'None'
+    try:
+        value_str = str(value)
+        if len(value_str) <= length:
+            return value_str
+        return value_str[:length]
+    except Exception:
+        return '<unavailable>'
+
 def generate_verification_code():
     return str(secrets.randbelow(1000000)).zfill(6)
 
@@ -1001,7 +1016,7 @@ def google_auth():
         
         # Verify the Google ID token
         try:
-            print(f"🔍 Verifying Google token with Client ID: {google_client_id[:20]}...")
+            print(f"🔍 Verifying Google token with Client ID: {preview_value(google_client_id, 20)}...")
             print(f"🔍 Token length: {len(id_token_string) if id_token_string else 0} characters")
             
             idinfo = id_token.verify_oauth2_token(
@@ -1059,8 +1074,8 @@ def google_auth():
             # Invalid token - provide more detailed error
             error_msg = str(e)
             print(f"❌ Google token verification failed: {error_msg}")
-            print(f"   Client ID used: {google_client_id[:30]}...")
-            print(f"   Token preview: {id_token_string[:50] if id_token_string else 'None'}...")
+            print(f"   Client ID used: {preview_value(google_client_id, 30)}")
+            print(f"   Token preview: {preview_value(id_token_string, 50)}")
             
             # Check for common error patterns
             if 'Token expired' in error_msg or 'expired' in error_msg.lower():
@@ -1112,7 +1127,7 @@ def google_auth_complete():
         
         # Verify the Google ID token again
         try:
-            print(f"🔍 Verifying Google token (complete registration) with Client ID: {google_client_id[:20]}...")
+            print(f"🔍 Verifying Google token (complete registration) with Client ID: {preview_value(google_client_id, 20)}...")
             
             idinfo = id_token.verify_oauth2_token(
                 id_token_string,
@@ -1191,7 +1206,7 @@ def google_auth_complete():
             # Invalid token - provide more detailed error
             error_msg = str(e)
             print(f"❌ Google token verification failed (complete): {error_msg}")
-            print(f"   Client ID used: {google_client_id[:30]}...")
+            print(f"   Client ID used: {preview_value(google_client_id, 30)}")
             
             # Check for common error patterns
             if 'Token expired' in error_msg or 'expired' in error_msg.lower():
