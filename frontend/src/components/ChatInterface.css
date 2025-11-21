@@ -141,6 +141,16 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.bot-message[class*="auto-"] .message-content {
+  background: #e1f5fe;
+  border-color: #81d4fa;
+  color: #01579b;
+}
+
+.bot-message[class*="auto-"] .message-icon {
+  color: #0288d1;
+}
+
 .bot-message.info .message-content {
   background: #e3f2fd;
   border-color: #90caf9;

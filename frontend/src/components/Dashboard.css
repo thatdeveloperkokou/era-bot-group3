@@ -345,6 +345,15 @@
   gap: 4px;
 }
 
+.region-tracking-label {
+  font-size: 13px;
+  color: #1b5e20;
+}
+
+.auto-logging-banner.inactive .region-tracking-label {
+  color: #495057;
+}
+
 .auto-logging-text strong {
   color: #28a745;
   font-size: 16px;
@@ -589,6 +598,18 @@
   min-height: 500px;
   opacity: 1 !important;
   filter: none !important;
+}
+
+@media (max-width: 768px) {
+  .stats-panel {
+    max-height: none;
+    min-height: auto;
+    height: auto;
+  }
+
+  .stats-content {
+    overflow: visible;
+  }
 }
 
 @media (max-width: 768px) {

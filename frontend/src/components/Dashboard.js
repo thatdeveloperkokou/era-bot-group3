@@ -11,7 +11,7 @@ const Dashboard = () => {
   const [stats, setStats] = useState(null);
   const [period, setPeriod] = useState('week');
   const [loading, setLoading] = useState(true);
-  const [showCharts, setShowCharts] = useState(window.innerWidth > 768);
+  const [showCharts, setShowCharts] = useState(true);
   const [regionProfiles, setRegionProfiles] = useState(null);
   const [loadingRegions, setLoadingRegions] = useState(false);
   const [showRegions, setShowRegions] = useState(false);
@@ -107,6 +107,14 @@ const Dashboard = () => {
                 <FaSync className={`auto-sync-icon ${autoMode ? 'spinning' : ''}`} />
                 <div className="auto-logging-text">
                   <strong>Automatic Logging: {autoMode ? 'ACTIVE' : 'INACTIVE'}</strong>
+                  {stats?.region?.name && (
+                    <span className="region-tracking-label">
+                      Tracking region: <strong>{stats.region.name}</strong>
+                      {Array.isArray(stats.region.states) && stats.region.states.length > 0 && (
+                        <> • Coverage: {stats.region.states.join(', ')}</>
+                      )}
+                    </span>
+                  )}
                   {autoMode && (
                     <span className="auto-logging-details">
                       {autoLogStats.total > 0 ? (

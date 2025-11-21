@@ -20,9 +20,15 @@
   font-style: italic;
 }
 
+.stats-chart .recharts-wrapper,
+.stats-chart .recharts-surface {
+  width: 100% !important;
+}
+
 @media (max-width: 768px) {
   .stats-chart {
     margin-top: 15px;
+    padding: 0 5px;
   }
   
   .stats-chart h3 {
@@ -32,15 +38,6 @@
   
   .chart-line-container {
     margin-top: 20px;
-  }
-  
-  /* Make charts responsive on mobile */
-  .stats-chart :global(.recharts-wrapper) {
-    width: 100% !important;
-  }
-  
-  .stats-chart :global(.recharts-surface) {
-    width: 100% !important;
   }
 }
 

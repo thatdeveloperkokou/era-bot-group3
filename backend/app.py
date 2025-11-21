@@ -591,6 +591,9 @@ def log_power(current_user):
 @token_required
 def get_stats(current_user):
     try:
+        # Fetch user info for region tracking
+        user = User.query.filter_by(username=current_user).first()
+
         period = request.args.get('period', 'week')  # 'day', 'week', 'month'
         
         # Calculate date range
@@ -655,12 +658,26 @@ def get_stats(current_user):
                 'date': date,
                 'hours': round(stats['hours'], 2)
             })
+
+        # Determine region info
+        region_info = None
+        if user and user.region_id:
+            region_profile = RegionProfile.query.filter_by(id=user.region_id).first()
+            if region_profile:
+                region_info = {
+                    'id': region_profile.id,
+                    'name': region_profile.disco_name,
+                    'states': region_profile.states,
+                    'source': region_profile.source
+                }
         
         return jsonify({
             'period': period,
             'total_hours': round(total_hours, 2),
             'daily_stats': chart_data,
-            'events': [log.to_dict() for log in logs[-20:]]  # Last 20 events (to include more auto-generated logs)
+            'events': [log.to_dict() for log in logs[-20:]],  # Last 20 events (to include more auto-generated logs)
+            'region': region_info,
+            'location': user.location if user else None
         }), 200
         
     except SQLAlchemyError as e:

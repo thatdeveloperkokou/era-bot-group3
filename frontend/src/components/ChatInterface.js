@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import api from '../services/api';
-import { FaLightbulb, FaPowerOff, FaCheckCircle, FaChartBar } from 'react-icons/fa';
+import { FaLightbulb, FaPowerOff, FaCheckCircle, FaChartBar, FaRobot } from 'react-icons/fa';
 import './ChatInterface.css';
 
 const ChatInterface = ({ onLogEvent, autoMode = true }) => {
@@ -14,42 +14,68 @@ const ChatInterface = ({ onLogEvent, autoMode = true }) => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const formatEventMessages = useCallback((events) => {
+    return events.map((event) => {
+      const isAuto = event.auto_generated;
+      const timestampValue = new Date(event.timestamp).getTime();
+      return {
+        id: `event-${event.timestamp}-${event.event_type}`,
+        text: `Power turned ${event.event_type === 'on' ? 'ON' : 'OFF'}${isAuto ? ' • Auto-logged' : ''}`,
+        timestamp: new Date(event.timestamp).toLocaleString(),
+        timestampValue,
+        type: isAuto ? `auto-${event.event_type}` : event.event_type,
+        isUser: !isAuto,
+        isSystem: true,
+        icon: isAuto ? <FaRobot /> : null
+      };
+    });
+  }, []);
+
+  const fetchRecentEvents = useCallback(async () => {
+    try {
+      const response = await api.get('/recent-events?limit=20');
+      const events = response.data.events.reverse();
+      const formattedMessages = formatEventMessages(events);
+
+      if (formattedMessages.length === 0) {
+        setMessages((prev) => {
+          const manualMessages = prev.filter(msg => !msg.isSystem);
+          if (manualMessages.length > 0) {
+            return manualMessages;
+          }
+          return [{
+            id: 'welcome',
+            text: 'Welcome! Use the buttons below or type "power on" / "power off" to log electricity events. Type "report" for a summary.',
+            timestamp: new Date().toLocaleString(),
+            timestampValue: Date.now(),
+            type: 'info',
+            isUser: false,
+            isSystem: true
+          }];
+        });
+        return;
+      }
+
+      setMessages((prev) => {
+        const manualMessages = prev.filter(msg => !msg.isSystem);
+        const combined = [...formattedMessages, ...manualMessages];
+        combined.sort((a, b) => (a.timestampValue || 0) - (b.timestampValue || 0));
+        return combined;
+      });
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  }, [formatEventMessages]);
+
   useEffect(() => {
     fetchRecentEvents();
-  }, []);
+    const interval = setInterval(fetchRecentEvents, 30000);
+    return () => clearInterval(interval);
+  }, [fetchRecentEvents]);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
-  const fetchRecentEvents = async () => {
-    try {
-      const response = await api.get('/recent-events?limit=20');
-      const events = response.data.events.reverse();
-      
-      const formattedMessages = events.map(event => ({
-        id: event.timestamp,
-        text: `Power turned ${event.event_type === 'on' ? 'ON' : 'OFF'}`,
-        timestamp: new Date(event.timestamp).toLocaleString(),
-        type: event.event_type,
-        isUser: true
-      }));
-
-      if (formattedMessages.length === 0) {
-        setMessages([{
-          id: 'welcome',
-          text: 'Welcome! Use the buttons below or type "power on" / "power off" to log electricity events. Type "report" for a summary.',
-          timestamp: new Date().toLocaleString(),
-          type: 'info',
-          isUser: false
-        }]);
-      } else {
-        setMessages(formattedMessages);
-      }
-    } catch (error) {
-      console.error('Error fetching events:', error);
-    }
-  };
 
   const fetchReport = async () => {
     try {
@@ -60,8 +86,10 @@ const ChatInterface = ({ onLogEvent, autoMode = true }) => {
         id: Date.now(),
         text: 'report',
         timestamp: new Date().toLocaleString(),
+        timestampValue: Date.now(),
         type: 'user',
-        isUser: true
+        isUser: true,
+        isSystem: false
       };
       setMessages(prev => [...prev, userMessage]);
       
@@ -94,8 +122,10 @@ Total Events:
         id: Date.now() + 1,
         text: reportText,
         timestamp: new Date().toLocaleString(),
+        timestampValue: Date.now() + 1,
         type: 'report',
         isUser: false,
+        isSystem: false,
         icon: <FaChartBar />
       };
       setMessages(prev => [...prev, botMessage]);
@@ -105,8 +135,10 @@ Total Events:
         id: Date.now(),
         text: 'Error fetching report. Please try again.',
         timestamp: new Date().toLocaleString(),
+        timestampValue: Date.now(),
         type: 'error',
-        isUser: false
+        isUser: false,
+        isSystem: false
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -124,8 +156,10 @@ Total Events:
         id: Date.now(),
         text: `Power turned ${eventType.toUpperCase()}`,
         timestamp: new Date().toLocaleString(),
+        timestampValue: Date.now(),
         type: eventType,
-        isUser: true
+        isUser: true,
+        isSystem: false
       };
       
       setMessages(prev => [...prev, newMessage]);
@@ -140,8 +174,10 @@ Total Events:
         id: Date.now() + 1,
         text: `Logged! Power is now ${eventType === 'on' ? 'ON' : 'OFF'}`,
         timestamp: new Date().toLocaleString(),
+        timestampValue: Date.now() + 1,
         type: 'info',
         isUser: false,
+        isSystem: false,
         icon: <FaCheckCircle />
       };
       setMessages(prev => [...prev, botMessage]);
@@ -149,13 +185,16 @@ Total Events:
       if (onLogEvent) {
         onLogEvent();
       }
+      fetchRecentEvents();
     } catch (error) {
       const errorMessage = {
         id: Date.now(),
         text: 'Error logging event. Please try again.',
         timestamp: new Date().toLocaleString(),
+        timestampValue: Date.now(),
         type: 'error',
-        isUser: false
+        isUser: false,
+        isSystem: false
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
@@ -176,8 +215,10 @@ Total Events:
       id: Date.now(),
       text: userInput,
       timestamp: new Date().toLocaleString(),
+      timestampValue: Date.now(),
       type: 'user',
-      isUser: true
+      isUser: true,
+      isSystem: false
     };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
