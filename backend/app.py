@@ -1001,11 +1001,16 @@ def google_auth():
         
         # Verify the Google ID token
         try:
+            print(f"🔍 Verifying Google token with Client ID: {google_client_id[:20]}...")
+            print(f"🔍 Token length: {len(id_token_string) if id_token_string else 0} characters")
+            
             idinfo = id_token.verify_oauth2_token(
                 id_token_string,
                 google_requests.Request(),
                 google_client_id
             )
+            
+            print(f"✅ Token verified successfully. Email: {idinfo.get('email', 'N/A')}")
             
             # Extract user information
             google_id = idinfo.get('sub')
@@ -1051,9 +1056,21 @@ def google_auth():
                 }), 200
                 
         except ValueError as e:
-            # Invalid token
-            print(f"❌ Google token verification failed: {str(e)}")
-            return jsonify({'error': 'Invalid Google token'}), 401
+            # Invalid token - provide more detailed error
+            error_msg = str(e)
+            print(f"❌ Google token verification failed: {error_msg}")
+            print(f"   Client ID used: {google_client_id[:30]}...")
+            print(f"   Token preview: {id_token_string[:50] if id_token_string else 'None'}...")
+            
+            # Check for common error patterns
+            if 'Token expired' in error_msg or 'expired' in error_msg.lower():
+                return jsonify({'error': 'Google token has expired. Please try signing in again.'}), 401
+            elif 'Invalid token' in error_msg or 'invalid' in error_msg.lower():
+                return jsonify({'error': 'Invalid Google token. Please check that your Client ID matches between frontend and backend.'}), 401
+            elif 'audience' in error_msg.lower() or 'client_id' in error_msg.lower():
+                return jsonify({'error': 'Client ID mismatch. The Google Client ID in the backend does not match the one used in the frontend.'}), 401
+            else:
+                return jsonify({'error': f'Google token verification failed: {error_msg}'}), 401
         
     except SQLAlchemyError as e:
         db.session.rollback()
@@ -1095,11 +1112,15 @@ def google_auth_complete():
         
         # Verify the Google ID token again
         try:
+            print(f"🔍 Verifying Google token (complete registration) with Client ID: {google_client_id[:20]}...")
+            
             idinfo = id_token.verify_oauth2_token(
                 id_token_string,
                 google_requests.Request(),
                 google_client_id
             )
+            
+            print(f"✅ Token verified successfully. Email: {idinfo.get('email', 'N/A')}")
             
             # Extract user information
             verified_email = idinfo.get('email')
@@ -1167,9 +1188,20 @@ def google_auth_complete():
             }), 200
                 
         except ValueError as e:
-            # Invalid token
-            print(f"❌ Google token verification failed: {str(e)}")
-            return jsonify({'error': 'Invalid Google token'}), 401
+            # Invalid token - provide more detailed error
+            error_msg = str(e)
+            print(f"❌ Google token verification failed (complete): {error_msg}")
+            print(f"   Client ID used: {google_client_id[:30]}...")
+            
+            # Check for common error patterns
+            if 'Token expired' in error_msg or 'expired' in error_msg.lower():
+                return jsonify({'error': 'Google token has expired. Please try signing in again.'}), 401
+            elif 'Invalid token' in error_msg or 'invalid' in error_msg.lower():
+                return jsonify({'error': 'Invalid Google token. Please check that your Client ID matches between frontend and backend.'}), 401
+            elif 'audience' in error_msg.lower() or 'client_id' in error_msg.lower():
+                return jsonify({'error': 'Client ID mismatch. The Google Client ID in the backend does not match the one used in the frontend.'}), 401
+            else:
+                return jsonify({'error': f'Google token verification failed: {error_msg}'}), 401
         
     except SQLAlchemyError as e:
         db.session.rollback()
