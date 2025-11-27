@@ -3,6 +3,19 @@
   display: flex;
   flex-direction: column;
   background: #f8f9fa;
+  cursor: none;
+  position: relative;
+}
+
+.login-container * {
+  cursor: none;
+}
+
+@media (max-width: 768px) {
+  .login-container,
+  .login-container * {
+    cursor: auto;
+  }
 }
 
 /* Login Navbar */

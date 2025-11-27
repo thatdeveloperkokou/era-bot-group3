@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import { FaBolt, FaEnvelope, FaPhone, FaMapMarkerAlt, FaFacebook, FaTwitter, FaLinkedin, FaGithub } from 'react-icons/fa';
 import LocationAutocomplete from './LocationAutocomplete';
+import ThunderboltCursor from './ThunderboltCursor';
 import './Login.css';
 
 const Login = () => {
@@ -301,18 +302,19 @@ const Login = () => {
 
   return (
     <div className="login-container">
+      <ThunderboltCursor />
       {/* Simple Navbar */}
       <nav className="login-navbar">
         <div className="login-navbar-container">
           <div className="login-navbar-brand">
             <FaBolt className="login-navbar-icon" />
-            <span>Electricity Logger</span>
+            <span data-grayscale-target>Electricity Logger</span>
           </div>
           <button 
             className="login-navbar-home"
             onClick={() => navigate('/')}
           >
-            Home
+            <span data-grayscale-target>Home</span>
           </button>
         </div>
       </nav>
@@ -333,9 +335,9 @@ const Login = () => {
           <div className="login-header">
             <div className="login-header-brand">
               <FaBolt className="login-header-icon" />
-              <h1>Electricity Logger</h1>
+              <h1 data-grayscale-target>Electricity Logger</h1>
             </div>
-            <p>{isLogin ? 'Welcome back! Sign in to continue tracking your electricity supply.' : 'Create your account to start monitoring your electricity data'}</p>
+            <p data-grayscale-target>{isLogin ? 'Welcome back! Sign in to continue tracking your electricity supply.' : 'Create your account to start monitoring your electricity data'}</p>
           </div>
           
           {showGoogleLocation ? (

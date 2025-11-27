@@ -1,7 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   FaChartBar, 
   FaMobileAlt, 
@@ -23,12 +21,73 @@ import {
   FaUserGraduate
 } from 'react-icons/fa';
 import './Landing.css';
+import ThunderboltCursor from './ThunderboltCursor';
 
-gsap.registerPlugin(ScrollTrigger);
+const TypingHeading = ({ text, speed = 55, delay = 150 }) => {
+  const [displayed, setDisplayed] = useState('');
+  const spanRef = useRef(null);
+  const intervalRef = useRef(null);
+  const timeoutRef = useRef(null);
+  const hasStartedRef = useRef(false);
+
+  useEffect(() => {
+    setDisplayed('');
+    hasStartedRef.current = false;
+
+    const startTyping = () => {
+      if (hasStartedRef.current) return;
+      hasStartedRef.current = true;
+      let index = 0;
+      timeoutRef.current = setTimeout(() => {
+        intervalRef.current = setInterval(() => {
+          index += 1;
+          setDisplayed(text.slice(0, index));
+          if (index >= text.length) {
+            clearInterval(intervalRef.current);
+          }
+        }, speed);
+      }, delay);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            startTyping();
+            observer.disconnect();
+          }
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    if (spanRef.current) {
+      observer.observe(spanRef.current);
+    } else {
+      startTyping();
+    }
+
+    return () => {
+      observer.disconnect();
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, [text, speed, delay]);
+
+  return (
+    <span className="typing-heading" aria-label={text} ref={spanRef}>
+      {displayed}
+      {displayed.length < text.length && (
+        <span className="typing-caret" aria-hidden="true">|</span>
+      )}
+    </span>
+  );
+};
 
 // Accordion Component for How It Works
 const AccordionSteps = () => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const intervalRef = useRef(null);
 
   const steps = [
     {
@@ -49,27 +108,74 @@ const AccordionSteps = () => {
   ];
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prevIndex) => (prevIndex + 1) % steps.length);
-    }, 4000); // Switch every 4 seconds
+    const startInterval = () => {
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prevIndex) => (prevIndex + 1) % steps.length);
+      }, 6000);
+    };
 
-    return () => clearInterval(interval);
+    startInterval();
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
   }, [steps.length]);
+
+  const handleSelect = (index) => {
+    setActiveIndex(index);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = setInterval(() => {
+        setActiveIndex((prevIndex) => (prevIndex + 1) % steps.length);
+      }, 6000);
+    }
+  };
+
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handleSelect(index);
+    }
+  };
+
+  const progressWidth = ((activeIndex + 1) / steps.length) * 100;
 
   return (
     <div className="accordion-container">
+      <div className="steps-progress">
+        <div className="steps-progress-label">
+          <span data-grayscale-target>Step {activeIndex + 1} of {steps.length}</span>
+        </div>
+        <div className="steps-progress-track">
+          <div
+            className="steps-progress-thumb"
+            style={{ width: `${progressWidth}%` }}
+          />
+        </div>
+      </div>
       {steps.map((step, index) => (
         <div
           key={index}
           className={`accordion-card ${activeIndex === index ? 'active' : ''}`}
-          onClick={() => setActiveIndex(index)}
+          onClick={() => handleSelect(index)}
+          onMouseEnter={() => handleSelect(index)}
+          onFocus={() => handleSelect(index)}
+          onKeyDown={(event) => handleKeyDown(event, index)}
+          role="button"
+          tabIndex={0}
+          aria-expanded={activeIndex === index}
         >
           <div className="accordion-header">
             <div className="accordion-number">{step.number}</div>
-            <h3 className="accordion-title">{step.title}</h3>
+            <div className="accordion-copy">
+              <p className="accordion-eyebrow" data-grayscale-target>Step {step.number}</p>
+              <h3 className="accordion-title" data-grayscale-target>{step.title}</h3>
+            </div>
           </div>
           <div className="accordion-content">
-            <p>{step.description}</p>
+            <p className="accordion-description" data-grayscale-target>
+              {step.description}
+            </p>
           </div>
         </div>
       ))}
@@ -79,88 +185,38 @@ const AccordionSteps = () => {
 
 const Landing = () => {
   const navigate = useNavigate();
-  const heroRef = useRef(null);
-  const featuresRef = useRef(null);
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const ctaRef = useRef(null);
-  const statsRef = useRef(null);
 
   useEffect(() => {
-    // CSS animations handle hero section (transform only, no opacity changes)
-    // GSAP only for scroll-triggered animations (features, stats)
+    const animatedElements = document.querySelectorAll('[data-animate-on-scroll]');
+    if (!animatedElements.length) return;
 
-    // Capture ref values at the start of the effect
-    const featuresElement = featuresRef.current;
-    const statsElement = statsRef.current;
-
-    // Features animation (scroll-triggered, so opacity animation is OK)
-    if (featuresElement && featuresElement.children) {
-      gsap.fromTo(featuresElement.children,
-        {
-          y: 40,
-          opacity: 0
-        },
-        {
-          duration: 1,
-          y: 0,
-          opacity: 1,
-          stagger: 0.15,
-          delay: 0.3,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: featuresElement,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          },
-          onComplete: function() {
-            // Ensure final opacity is 1
-            this.targets().forEach(target => {
-              if (target) {
-                target.style.setProperty('opacity', '1', 'important');
-              }
-            });
+    const observer = new IntersectionObserver(
+      (entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            obs.unobserve(entry.target);
           }
-        }
-      );
-    }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px 0px -50px 0px'
+      }
+    );
 
-    // Stats animation (scroll-triggered)
-    if (statsElement && statsElement.children) {
-      gsap.fromTo(statsElement.children,
-        {
-          scale: 0.9,
-          opacity: 0,
-          y: 20
-        },
-        {
-          duration: 1,
-          scale: 1,
-          opacity: 1,
-          y: 0,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: statsElement,
-            start: 'top 85%',
-            toggleActions: 'play none none reverse'
-          },
-          onComplete: function() {
-            this.targets().forEach(target => {
-              if (target) {
-                target.style.setProperty('opacity', '1', 'important');
-              }
-            });
-          }
-        }
-      );
-    }
+    animatedElements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
-    return () => {
-      // Clean up any GSAP animations using captured values
-      if (featuresElement) gsap.killTweensOf(featuresElement.children);
-      if (statsElement) gsap.killTweensOf(statsElement.children);
-    };
+  const handleSmoothScroll = useCallback((event, selector) => {
+    event.preventDefault();
+    const target = document.querySelector(selector);
+    if (target) {
+      const navbarOffset = 80;
+      const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarOffset;
+      window.scrollTo({ top: targetPosition, behavior: 'smooth' });
+    }
   }, []);
 
   const features = [
@@ -205,28 +261,53 @@ const Landing = () => {
 
   return (
     <div className="landing-page">
+      <ThunderboltCursor />
+      
       {/* Navbar */}
       <nav className="navbar">
         <div className="navbar-container">
           <div className="navbar-brand">
             <FaBolt className="brand-icon" />
-            <span>Electricity Logger</span>
+            <span className="brand-text">Electricity Logger</span>
           </div>
           <div className="navbar-links">
-            <a href="#features">Features</a>
-            <a href="#how-it-works">How It Works</a>
-            <a href="#use-cases">Use Cases</a>
+            <a
+              href="#features"
+              className="nav-link"
+              onClick={(event) => handleSmoothScroll(event, '#features')}
+            >
+              <span className="nav-link-text">Features</span>
+              <FaChartBar className="nav-link-icon" />
+            </a>
+            <a
+              href="#how-it-works"
+              className="nav-link"
+              onClick={(event) => handleSmoothScroll(event, '#how-it-works')}
+            >
+              <span className="nav-link-text">How It Works</span>
+              <FaBolt className="nav-link-icon" />
+            </a>
+            <a
+              href="#use-cases"
+              className="nav-link"
+              onClick={(event) => handleSmoothScroll(event, '#use-cases')}
+            >
+              <span className="nav-link-text">Use Cases</span>
+              <FaBriefcase className="nav-link-icon" />
+            </a>
             <button 
               className="navbar-link-button"
               onClick={() => navigate('/login?mode=login')}
             >
-              Sign In
+              <span className="nav-link-text">Sign In</span>
+              <FaUserGraduate className="nav-link-icon" />
             </button>
             <button 
               className="navbar-cta"
               onClick={() => navigate('/login?mode=register')}
             >
-              Get Started
+              <span className="nav-link-text">Get Started</span>
+              <FaBolt className="nav-link-icon" />
             </button>
           </div>
         </div>
@@ -235,38 +316,37 @@ const Landing = () => {
       {/* Hero Section */}
       <section 
         className="hero-section" 
-        ref={heroRef}
         style={{
           backgroundImage: `url(${encodeURI('/images/2025-11-12 12.29.png')})`
         }}
       >
-        <div className="hero-content">
-          <h1 className="hero-title" ref={titleRef}>
+        <div className="hero-content animate-on-scroll" data-animate-on-scroll>
+          <h1 className="hero-title" data-grayscale-target>
             Take Control of Your Electricity Supply
           </h1>
-          <p className="hero-subtitle" ref={subtitleRef}>
+          <p className="hero-subtitle" data-grayscale-target>
             The most advanced electricity tracking platform for monitoring power outages, 
             analyzing supply patterns, and making data-driven decisions. Trusted by thousands 
             of users to track and optimize their electricity consumption.
           </p>
-          <div className="hero-cta" ref={ctaRef}>
+          <div className="hero-cta">
             <button 
-              className="cta-button primary"
+              className="cta-button primary hero-bounce"
               onClick={() => navigate('/login?mode=register')}
             >
               Start Free Trial
             </button>
           </div>
           <div className="hero-trust">
-            <p>Trusted by leading organizations</p>
+            <p data-grayscale-target>Trusted by leading organizations</p>
             <div className="trust-badges">
-              <span><FaLock className="trust-icon" /> Secure</span>
-              <span><FaCheckCircle className="trust-icon" /> Verified</span>
-              <span><FaStar className="trust-icon" /> 4.9/5 Rating</span>
+              <span data-grayscale-target><FaLock className="trust-icon" /> Secure</span>
+              <span data-grayscale-target><FaCheckCircle className="trust-icon" /> Verified</span>
+              <span data-grayscale-target><FaStar className="trust-icon" /> 4.9/5 Rating</span>
             </div>
           </div>
         </div>
-        <div className="hero-image">
+        <div className="hero-image animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '120ms' }}>
           <div className="illustration-container">
             <img 
               src={encodeURI('/images/2025-11-13 00.05(1).jpeg')} 
@@ -275,15 +355,32 @@ const Landing = () => {
             />
           </div>
         </div>
+        <div className="scroll-indicator animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '240ms' }}>
+          <button 
+            type="button" 
+            className="scroll-indicator-button"
+            onClick={(event) => handleSmoothScroll(event, '#features')}
+          >
+            Scroll to explore
+          </button>
+          <div className="scroll-indicator-track">
+            <div className="scroll-indicator-dot"></div>
+          </div>
+        </div>
       </section>
 
       {/* Stats Section */}
-      <section className="stats-section">
-        <div className="stats-container" ref={statsRef}>
+      <section className="stats-section animate-on-scroll" data-animate-on-scroll>
+        <div className="stats-container">
           {stats.map((stat, index) => (
-            <div key={index} className="stat-item">
-              <div className="stat-number">{stat.number}</div>
-              <div className="stat-label">{stat.label}</div>
+            <div 
+              key={index} 
+              className="stat-item animate-on-scroll" 
+              data-animate-on-scroll
+              style={{ transitionDelay: `${index * 80}ms` }}
+            >
+              <div className="stat-number" data-grayscale-target>{stat.number}</div>
+              <div className="stat-label" data-grayscale-target>{stat.label}</div>
             </div>
           ))}
         </div>
@@ -292,34 +389,40 @@ const Landing = () => {
       {/* Features Section */}
       <section 
         id="features" 
-        className="features-section"
+        className="features-section animate-on-scroll"
+        data-animate-on-scroll
         style={{
           backgroundImage: `url(${encodeURI('/images/2025-11-12 13.48 (1).jpg')})`
         }}
       >
-        <div className="section-header">
-          <h2 className="section-title">Powerful Features for Modern Electricity Management</h2>
-          <p className="section-subtitle">
+        <div className="section-header animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '80ms' }}>
+          <h2 className="section-title" data-grayscale-target>Powerful Features for Modern Electricity Management</h2>
+          <p className="section-subtitle" data-grayscale-target>
             Everything you need to track, analyze, and optimize your electricity supply 
             in one comprehensive platform
           </p>
         </div>
-        <div className="features-grid" ref={featuresRef}>
+        <div className="features-grid">
           {features.map((feature, index) => (
-            <div key={index} className="feature-card">
+            <div 
+              key={index} 
+              className="feature-card animate-on-scroll"
+              data-animate-on-scroll
+              style={{ transitionDelay: `${index * 100}ms` }}
+            >
               <div className="feature-icon">{feature.icon}</div>
-              <h3 className="feature-title">{feature.title}</h3>
-              <p className="feature-description">{feature.description}</p>
+              <h3 className="feature-title" data-grayscale-target>{feature.title}</h3>
+              <p className="feature-description" data-grayscale-target>{feature.description}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* How It Works Section - Accordion */}
-      <section id="how-it-works" className="how-it-works">
-        <div className="section-header">
-          <h2 className="section-title">Simple Setup, Powerful Results</h2>
-          <p className="section-subtitle">
+      <section id="how-it-works" className="how-it-works animate-on-scroll" data-animate-on-scroll>
+        <div className="section-header animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '80ms' }}>
+          <h2 className="section-title" data-grayscale-target>Simple Setup, Powerful Results</h2>
+          <p className="section-subtitle" data-grayscale-target>
             Get started in minutes and begin tracking your electricity supply immediately
           </p>
         </div>
@@ -329,47 +432,50 @@ const Landing = () => {
       {/* Use Cases Section */}
       <section 
         id="use-cases" 
-        className="use-cases-section"
+        className="use-cases-section animate-on-scroll"
+        data-animate-on-scroll
         style={{
           backgroundImage: `url(${encodeURI('/images/2025-11-12 13.48.jpg')})`
         }}
       >
-        <div className="section-header">
+        <div className="section-header animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '80ms' }}>
           <h2 className="section-title">Built for Everyone</h2>
           <p className="section-subtitle">
             Whether you're a homeowner, business owner, or researcher, our platform adapts to your needs
           </p>
         </div>
         <div className="use-cases-grid">
-          <div className="use-case-card">
+          <div className="use-case-card animate-on-scroll" data-animate-on-scroll>
             <FaHome className="use-case-icon" />
-            <h3>Homeowners</h3>
-            <p>Track your home's electricity supply, plan your daily activities around power availability, and hold utility companies accountable with accurate data.</p>
+            <h3 data-grayscale-target>Homeowners</h3>
+            <p data-grayscale-target>Track your home's electricity supply, plan your daily activities around power availability, and hold utility companies accountable with accurate data.</p>
           </div>
-          <div className="use-case-card">
+          <div className="use-case-card animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '100ms' }}>
             <FaBriefcase className="use-case-icon" />
-            <h3>Businesses</h3>
-            <p>Monitor power outages affecting your operations, generate reports for insurance claims, and optimize your business continuity planning.</p>
+            <h3 data-grayscale-target>Businesses</h3>
+            <p data-grayscale-target>Monitor power outages affecting your operations, generate reports for insurance claims, and optimize your business continuity planning.</p>
           </div>
-          <div className="use-case-card">
+          <div className="use-case-card animate-on-scroll" data-animate-on-scroll style={{ transitionDelay: '200ms' }}>
             <FaUserGraduate className="use-case-icon" />
-            <h3>Researchers</h3>
-            <p>Collect comprehensive data for electricity supply research, analyze regional patterns, and contribute to grid reliability studies.</p>
+            <h3 data-grayscale-target>Researchers</h3>
+            <p data-grayscale-target>Collect comprehensive data for electricity supply research, analyze regional patterns, and contribute to grid reliability studies.</p>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="cta-section">
-        <h2>Ready to Transform Your Electricity Tracking?</h2>
-        <p>Join thousands of users who are already taking control of their electricity supply data</p>
+      <section className="cta-section animate-on-scroll" data-animate-on-scroll>
+        <h2 data-grayscale-target>
+          <TypingHeading text="Ready to Transform Your Electricity Tracking?" />
+        </h2>
+        <p data-grayscale-target>Join thousands of users who are already taking control of their electricity supply data</p>
         <button 
           className="cta-button primary large"
           onClick={() => navigate('/login?mode=register')}
         >
           Get Started Today
         </button>
-        <p className="cta-note">No credit card required • Free forever plan available</p>
+        <p className="cta-note" data-grayscale-target>No credit card required • Free forever plan available</p>
       </section>
 
       {/* Footer */}
