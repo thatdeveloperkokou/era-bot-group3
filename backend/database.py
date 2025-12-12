@@ -168,11 +168,14 @@ def init_db(app):
         print(f"⚠️  DATABASE_URL not set, using local PostgreSQL: {db_host}:{db_port}/{db_name}")
     else:
         print(f"✅ Using DATABASE_URL from environment")
-        # Check if using Railway internal hostname and suggest using public URL
+        # Check if using internal hostname (Railway/Render) and suggest using public URL if connection fails
         if 'railway.internal' in database_url:
             print(f"⚠️  Warning: Using Railway internal hostname. If connection fails, use the public DATABASE_URL from PostgreSQL service Variables tab")
+        if 'onrender.com' in database_url and 'internal' in database_url.lower():
+            print(f"⚠️  Note: Using Render internal database URL. This should work for services in the same Render account.")
     
-    # Handle Railway/Heroku DATABASE_URL format (may include postgres:// instead of postgresql://)
+    # Handle cloud provider DATABASE_URL format (may include postgres:// instead of postgresql://)
+    # Render, Railway, Heroku, etc. may provide postgres:// which needs to be postgresql://
     if database_url.startswith('postgres://'):
         database_url = database_url.replace('postgres://', 'postgresql://', 1)
     

@@ -3,7 +3,8 @@
 Scheduler runner for auto_logger.py
 
 This script runs continuously and executes auto_logger.py every hour.
-It can be used as the Railway service start command to keep the scheduler running.
+It can be used as a cloud platform service start command to keep the scheduler running.
+Note: On Render, use the Cron Job service instead (see render.yaml).
 """
 from __future__ import annotations
 

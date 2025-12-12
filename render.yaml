@@ -1,0 +1,55 @@
+services:
+  # Backend Web Service
+  - type: web
+    name: era-bot-backend
+    env: python
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: era-bot-postgres
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false  # Set this manually in Render dashboard
+      - key: RESEND_API_KEY
+        sync: false  # Set this manually in Render dashboard if using Resend
+      - key: RESEND_FROM_EMAIL
+        sync: false  # Set this manually in Render dashboard if using Resend
+    healthCheckPath: /
+
+  # PostgreSQL Database
+  - type: pspg
+    name: era-bot-postgres
+    databaseName: electricity_logger
+    user: electricity_user
+    plan: free  # Change to starter/pro for production
+
+  # Cron Job for Auto Logger (runs every hour)
+  - type: cron
+    name: era-bot-auto-logger
+    env: python
+    rootDir: backend
+    schedule: "0 * * * *"  # Every hour at minute 0
+    buildCommand: pip install -r requirements.txt
+    startCommand: python auto_logger.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: era-bot-postgres
+          property: connectionString
+      - key: SECRET_KEY
+        fromService:
+          type: web
+          name: era-bot-backend
+          property: envVars.SECRET_KEY
+

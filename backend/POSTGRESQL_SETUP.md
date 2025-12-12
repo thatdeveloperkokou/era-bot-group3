@@ -4,7 +4,47 @@ This guide will help you set up PostgreSQL for the Electricity Supply Logger app
 
 ## 🚀 Quick Setup
 
-### Option 1: Railway (Recommended for Deployment)
+### Option 1: Render (Recommended for Deployment)
+
+Render provides a free PostgreSQL database that's easy to set up:
+
+1. **Create Render Account:**
+   - Go to [render.com](https://render.com)
+   - Sign up with your GitHub account
+
+2. **Create PostgreSQL Database:**
+   - Click **"New +"** → **"PostgreSQL"**
+   - Configure:
+     - **Name**: `era-bot-postgres` (or your preferred name)
+     - **Database**: `electricity_logger`
+     - **Region**: Choose closest to your users
+     - **Plan**: Free (or upgrade for production)
+   - Click **"Create Database"**
+
+3. **Get Connection URL:**
+   - Click on your PostgreSQL service
+   - Go to **"Info"** tab
+   - Copy the **"Internal Database URL"** (for services in same Render account)
+   - Or use **"External Connection String"** if connecting from outside Render
+
+4. **Add to Environment Variables:**
+   - Go to your **backend web service** (not PostgreSQL)
+   - Go to **"Environment"** tab
+   - Add or update: `DATABASE_URL=your-connection-url-here`
+   - Render can auto-link this if using `render.yaml` (see RENDER_MIGRATION.md)
+
+5. **Deploy:**
+   - Push your code to GitHub
+   - Render will automatically deploy and connect to PostgreSQL
+   - Database tables will be created automatically on first run
+
+**That's it!** Your app is now using PostgreSQL. ✅
+
+**Note**: For complete migration from Railway, see [RENDER_MIGRATION.md](../../RENDER_MIGRATION.md)
+
+---
+
+### Option 2: Railway (Alternative Deployment Option)
 
 Railway provides a free PostgreSQL database that's easy to set up:
 
@@ -41,7 +81,7 @@ Railway provides a free PostgreSQL database that's easy to set up:
 
 ---
 
-### Option 2: Local PostgreSQL (For Development)
+### Option 3: Local PostgreSQL (For Development)
 
 1. **Install PostgreSQL:**
    - **Windows:** Download from [postgresql.org](https://www.postgresql.org/download/windows/)
@@ -87,7 +127,7 @@ Railway provides a free PostgreSQL database that's easy to set up:
 
 ---
 
-### Option 3: Other Cloud Providers
+### Option 4: Other Cloud Providers
 
 #### Heroku PostgreSQL
 1. Create Heroku app
@@ -210,6 +250,23 @@ If you have existing data in JSON/CSV files, you can migrate it to PostgreSQL:
   6. Update your backend service's `DATABASE_URL` variable with the public URL
   7. Redeploy your backend service
 
+### Render: "DATABASE_URL not found"
+- **Solution:** 
+  1. Go to Render dashboard
+  2. Select your PostgreSQL service
+  3. Go to **"Info"** tab
+  4. Copy **"Internal Database URL"** (for services in same Render account)
+  5. Add it to your backend web service environment variables
+  6. Or use `render.yaml` to auto-link (see RENDER_MIGRATION.md)
+
+### Render: "could not connect to server"
+- **Solution:** 
+  1. Ensure you're using the correct connection string from Render
+  2. Use "Internal Database URL" for services in the same Render account
+  3. Use "External Connection String" only if connecting from outside Render
+  4. Check that the PostgreSQL service is running (not paused)
+  5. Verify the database name matches what you configured
+
 ---
 
 ## ✅ Verification
@@ -254,7 +311,7 @@ DB_NAME=electricity_logger
 
 ### Notes:
 - `DATABASE_URL` takes precedence over individual parameters
-- Railway/Heroku automatically provide `DATABASE_URL`
+- Render/Railway/Heroku automatically provide `DATABASE_URL`
 - For local development, you can use either method
 
 ---
@@ -275,7 +332,9 @@ Your application is now using PostgreSQL instead of file-based storage. Data wil
 ## 📚 Additional Resources
 
 - [PostgreSQL Documentation](https://www.postgresql.org/docs/)
+- [Render PostgreSQL](https://render.com/docs/databases)
 - [Railway PostgreSQL](https://docs.railway.app/databases/postgresql)
+- [Render Migration Guide](../../RENDER_MIGRATION.md) - Complete guide for migrating from Railway to Render
 - [SQLAlchemy Documentation](https://docs.sqlalchemy.org/)
 - [Flask-SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/)
 

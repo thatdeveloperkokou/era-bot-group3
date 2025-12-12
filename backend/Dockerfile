@@ -21,13 +21,13 @@ COPY . .
 COPY start.sh /app/start.sh
 RUN chmod +x /app/start.sh
 
-# Set default PORT (Railway will override this at runtime)
+# Set default PORT (cloud platforms like Render/Railway will override this at runtime)
 ENV PORT=5000
 
-# Expose port (Railway sets PORT dynamically)
+# Expose port (cloud platforms set PORT dynamically)
 EXPOSE 5000
 
 # Run the application via start.sh which expands PORT safely
-# Use shell form to ensure Railway can expand PORT variable
+# Use shell form to ensure cloud platforms can expand PORT variable
 CMD sh -c "/app/start.sh"
 

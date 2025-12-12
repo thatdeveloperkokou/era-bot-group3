@@ -45,7 +45,7 @@ app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', '')
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD', '')
 app.config['MAIL_DEFAULT_SENDER'] = os.environ.get('MAIL_DEFAULT_SENDER', '')
 app.config['MAIL_SUPPRESS_SEND'] = os.environ.get('MAIL_SUPPRESS_SEND', 'false').lower() == 'true'
-# Add timeout settings for Railway deployment
+# Add timeout settings for cloud deployment (Render, Railway, etc.)
 app.config['MAIL_TIMEOUT'] = 10  # 10 second timeout for SMTP operations
 
 try:
@@ -151,8 +151,8 @@ def send_verification_email(email, code):
         
         if not resend_api_key:
             print(f"⚠️  RESEND_API_KEY not configured. Verification code for {email}: {code}")
-            print(f"   To enable email, set RESEND_API_KEY in Railway environment variables")
-            print(f"   Go to: Railway Dashboard → Backend Service → Variables → Add RESEND_API_KEY")
+            print(f"   To enable email, set RESEND_API_KEY in your deployment platform's environment variables")
+            print(f"   Go to: Render/Railway Dashboard → Backend Service → Environment → Add RESEND_API_KEY")
             return False  # Return False so fallback code is shown
         
         # Email HTML template

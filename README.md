@@ -14,7 +14,8 @@ See **[EMAIL_SETUP.md](./backend/EMAIL_SETUP.md)** for detailed email configurat
 
 **Setup:**
 - See **[POSTGRESQL_SETUP.md](./backend/POSTGRESQL_SETUP.md)** for detailed PostgreSQL setup instructions
-- **Railway (Recommended):** Add PostgreSQL database in Railway dashboard
+- **Render (Recommended):** Add PostgreSQL database in Render dashboard (see [RENDER_MIGRATION.md](./RENDER_MIGRATION.md))
+- **Railway (Alternative):** Add PostgreSQL database in Railway dashboard
 - **Local Development:** Install PostgreSQL and configure connection
 - **Migration:** Run `python backend/migrate_to_postgresql.py` to migrate existing data
 
@@ -171,9 +172,15 @@ Typing "report" gives:
 
 • Vercel for Frontend hosting
 
-• Railway for Backend hosting
+• Render for Backend hosting (migrated from Railway)
+
+• PostgreSQL database on Render
+
+• Cron jobs on Render for automated power logging
 
 • GitHub to help with collaboration with my team members and Version control
+
+**Migration**: See [RENDER_MIGRATION.md](./RENDER_MIGRATION.md) for complete migration guide from Railway to Render.
 
 ## Why Our Project Matters
 
