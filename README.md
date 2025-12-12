@@ -180,7 +180,7 @@ Typing "report" gives:
 
 • GitHub to help with collaboration with my team members and Version control
 
-**Migration**: See [RENDER_MIGRATION.md](./RENDER_MIGRATION.md) for complete migration guide from Railway to Render.
+**Render Setup**: See [RENDER_MIGRATION.md](./RENDER_MIGRATION.md) for complete guide to set up PostgreSQL database on Render.
 
 ## Why Our Project Matters
 

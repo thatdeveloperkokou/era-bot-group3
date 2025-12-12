@@ -26,7 +26,7 @@ services:
     healthCheckPath: /
 
   # PostgreSQL Database
-  - type: pspg
+  - type: psql
     name: era-bot-postgres
     databaseName: electricity_logger
     user: electricity_user
