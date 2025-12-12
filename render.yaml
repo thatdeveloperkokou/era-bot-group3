@@ -25,13 +25,6 @@ services:
         sync: false  # Set this manually in Render dashboard if using Resend
     healthCheckPath: /
 
-  # PostgreSQL Database
-  - type: psql
-    name: era-bot-postgres
-    databaseName: electricity_logger
-    user: electricity_user
-    plan: free  # Change to starter/pro for production
-
   # Cron Job for Auto Logger (runs every hour)
   - type: cron
     name: era-bot-auto-logger
@@ -52,4 +45,11 @@ services:
           type: web
           name: era-bot-backend
           property: envVars.SECRET_KEY
+
+databases:
+  # PostgreSQL Database
+  - name: era-bot-postgres
+    databaseName: electricity_logger
+    user: electricity_user
+    plan: free  # Change to starter/pro for production (options: free, starter, pro, etc.)
 
