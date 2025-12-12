@@ -8,11 +8,28 @@ This guide will help you set up a new PostgreSQL database on Render for your bac
 2. **GitHub Repository**: Your code should be in a GitHub repository
 3. **Optional - Migrating Existing Data**: If you have data in an old database (Railway, local, etc.), export it first before setting up the new Render database
 
+## 💳 Payment Method Note
+
+**Good News!** You can use Render's free tier **without providing card details** by using **Manual Setup** (Option A below). The manual setup process allows you to create all services individually without requiring a payment method.
+
+**Important Limitations:**
+- **Cron Jobs**: Require a paid plan on Render - not available on free tier
+- **Blueprints**: May require adding a payment method, even for free tier services
+- **Random Data**: Use the `/api/generate-random-data` endpoint to populate sample data for testing
+
+If you want to avoid providing payment information, follow the **Manual Setup** instructions below.
+
 ## 🚀 Step-by-Step Setup
 
 ### Step 1: Create Services on Render
 
-#### Option A: Using render.yaml (Recommended)
+#### Option A: Manual Setup (Recommended - No Card Required) ✅
+
+**Use this option if you want to avoid providing card details.** Manual setup works perfectly with Render's free tier and doesn't require a payment method.
+
+#### Option B: Using render.yaml (Requires Card)
+
+**Note:** Using Blueprints (render.yaml) may require adding a payment method. If you want to use the free tier without a card, use **Option A: Manual Setup** instead.
 
 1. **Push render.yaml to your repository** (already created in the root directory)
 2. Go to [Render Dashboard](https://dashboard.render.com)
@@ -21,9 +38,9 @@ This guide will help you set up a new PostgreSQL database on Render for your bac
 5. Select the repository containing your code
 6. Render will automatically detect `render.yaml` and create all services
 
-#### Option B: Manual Setup
+---
 
-If you prefer manual setup or need to customize:
+### Manual Setup Instructions (Free Tier - No Card Required)
 
 ##### 1.1 Create PostgreSQL Database
 
@@ -57,21 +74,25 @@ If you prefer manual setup or need to customize:
    - `PORT`: `10000` (Render sets this automatically, but good to have)
 5. Click **"Create Web Service"**
 
-##### 1.3 Create Cron Job
+##### 1.3 Generate Random Data (Optional)
 
-1. Click **"New +"** → **"Cron Job"**
-2. Connect your GitHub repository
-3. Configure:
-   - **Name**: `era-bot-auto-logger`
-   - **Environment**: `Python 3`
-   - **Schedule**: `0 * * * *` (every hour at minute 0)
-   - **Build Command**: `pip install -r backend/requirements.txt`
-   - **Start Command**: `cd backend && python auto_logger.py`
-   - **Plan**: Free
-4. **Environment Variables**:
-   - `DATABASE_URL`: Copy from PostgreSQL service
-   - `SECRET_KEY`: Same as backend service
-5. Click **"Create Cron Job"**
+If you want to populate the database with sample power log data for testing:
+
+1. **Use the random data generator endpoint:**
+   - Endpoint: `POST /api/generate-random-data`
+   - You can call this from your backend or use a tool like Postman
+   - Parameters (optional):
+     - `days`: Number of days to generate data for (default: 7)
+     - `min_events`: Minimum events per day (default: 2)
+     - `max_events`: Maximum events per day (default: 8)
+
+2. **Or run the script directly:**
+   ```bash
+   cd backend
+   python generate_random_data.py --days 7 --min-events 2 --max-events 8
+   ```
+
+**Note:** This generates random power on/off events for all users in the database. Useful for testing and demos.
 
 ### Step 2: Initialize Database
 
@@ -130,7 +151,7 @@ If you have existing data to migrate:
 
 3. **Test Cron Job**:
    - Wait for the next scheduled run (or trigger manually)
-   - Check Render logs to see if `auto_logger.py` runs successfully
+   - Check Render logs to verify backend is running successfully
 
 ### Step 5: Update DNS/URLs (if using custom domains)
 
@@ -166,10 +187,18 @@ If you want to use a custom domain:
 ## 📝 Important Notes
 
 1. **Free Tier Limitations**:
+   - **Manual Setup**: Works without requiring a payment method ✅
+   - **Blueprints**: May require a payment method (even for free tier)
    - Render free tier services spin down after 15 minutes of inactivity
    - First request after spin-down may be slow (~30 seconds)
-   - Consider upgrading to paid plan for production
-   - Free tier PostgreSQL has size limitations (check current limits)
+   - **PostgreSQL Free Tier**: 
+     - 1 GB storage limit
+     - Expires after 30 days (with 14-day grace period to upgrade)
+     - Only one free database per workspace
+   - **Web Services Free Tier**:
+     - 750 instance hours per month
+     - Services spin down after 15 minutes of inactivity
+   - Consider upgrading to paid plan for production use
 
 2. **Database Backups**:
    - Render provides automatic backups on paid plans
@@ -177,9 +206,10 @@ If you want to use a custom domain:
    - Export data regularly using `pg_dump`
    - Keep backups of important data
 
-3. **Cron Job Timing**:
-   - Cron jobs run on schedule regardless of web service status
-   - Ensure cron job has proper error handling
+3. **Random Data Generation**:
+   - Use `/api/generate-random-data` endpoint to populate sample data
+   - Or run `python generate_random_data.py` script directly
+   - Useful for testing and demos
    - Check logs regularly to ensure cron jobs are running successfully
 
 4. **Environment Variables**:
@@ -202,8 +232,7 @@ If you want to use a custom domain:
 - [ ] User registration/login works
 - [ ] Power logging works
 - [ ] Data persists correctly
-- [ ] Cron job created and scheduled
-- [ ] Cron job runs successfully (check logs)
+- [ ] (Optional) Random data generated for testing
 - [ ] Frontend updated with new API URL
 - [ ] CORS configured correctly
 - [ ] All environment variables set
@@ -222,13 +251,6 @@ If you want to use a custom domain:
 - Check that the database service is running (not paused)
 - Verify the database name matches what you configured
 
-### Cron Job Not Running
-
-**Check**:
-1. Go to Cron Job service → **"Logs"** tab
-2. Verify the schedule is correct
-3. Check for errors in logs
-4. Ensure `DATABASE_URL` is set correctly
 
 ### Backend Not Starting
 

@@ -675,7 +675,7 @@ def get_stats(current_user):
             'period': period,
             'total_hours': round(total_hours, 2),
             'daily_stats': chart_data,
-            'events': [log.to_dict() for log in logs[-20:]],  # Last 20 events (to include more auto-generated logs)
+            'events': [log.to_dict() for log in logs[-20:]],  # Last 20 events
             'region': region_info,
             'location': user.location if user else None
         }), 200
@@ -1244,6 +1244,48 @@ def google_auth_complete():
         print(f"Error in google_auth_complete: {str(e)}")
         return jsonify({'error': f'An error occurred during Google registration: {str(e)}'}), 500
 
+
+@app.route('/api/generate-random-data', methods=['POST', 'OPTIONS'])
+def generate_random_data():
+    """
+    Generate random power logs for all users.
+    Useful for populating the database with sample data.
+    """
+    if request.method == 'OPTIONS':
+        return jsonify({}), 200
+    
+    try:
+        data = request.get_json() or {}
+        
+        # Get parameters from request or use defaults
+        days_back = data.get('days', 7)
+        min_events = data.get('min_events', 2)
+        max_events = data.get('max_events', 8)
+        
+        # Import here to avoid circular imports
+        from generate_random_data import generate_random_power_logs
+        
+        # Generate random data
+        count = generate_random_power_logs(
+            days_back=days_back,
+            min_events_per_day=min_events,
+            max_events_per_day=max_events,
+            dry_run=False
+        )
+        
+        return jsonify({
+            'message': f'Generated {count} random power log events',
+            'count': count,
+            'timestamp': datetime.utcnow().isoformat()
+        }), 200
+        
+    except Exception as e:
+        print(f"Error in generate_random_data: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred: {str(e)}'}), 500
+
+
 # Set the port to the value of the PORT environment variable or default to 5000
 port = int(os.environ.get("PORT", 5000))
 
@@ -1269,6 +1311,7 @@ if __name__ == '__main__':
     print("  - GET  /api/stats             - Get statistics")
     print("  - GET  /api/recent-events     - Get recent events")
     print("  - GET  /api/report            - Get brief report summary")
+    print("  - POST /api/generate-random-data - Generate random power logs for all users")
     
     # Make migrate available as Flask CLI command
     @app.cli.command()

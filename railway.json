@@ -5,10 +5,6 @@
     "dockerfilePath": "backend/Dockerfile"
   },
   "deploy": {
-    "cron": {
-      "schedule": "0 * * * *",
-      "command": "python backend/auto_logger.py"
-    }
   }
 }
 

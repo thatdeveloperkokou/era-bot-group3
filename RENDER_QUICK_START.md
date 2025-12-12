@@ -14,7 +14,7 @@ This is a quick reference for deploying to Render. For detailed migration instru
    - Render will automatically create:
      - ✅ Backend Web Service
      - ✅ PostgreSQL Database
-     - ✅ Cron Job (auto-logger)
+     - ✅ Random data generator available
 
 3. **Set Environment Variables** (in Backend Web Service):
    - `FRONTEND_URL`: Your frontend URL (e.g., `https://your-frontend.vercel.app`)
@@ -59,7 +59,7 @@ If you prefer manual setup or need customization:
   - Root Directory: `backend`
   - Schedule: `0 * * * *` (every hour)
   - Build Command: `pip install -r requirements.txt`
-  - Start Command: `python auto_logger.py`
+  - Start Command: `python generate_random_data.py` (optional, for generating test data)
 - **Environment Variables**:
   - `DATABASE_URL`: (Auto-linked from PostgreSQL)
   - `SECRET_KEY`: (Same as backend)

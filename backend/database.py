@@ -168,6 +168,32 @@ def init_db(app):
         print(f"⚠️  DATABASE_URL not set, using local PostgreSQL: {db_host}:{db_port}/{db_name}")
     else:
         print(f"✅ Using DATABASE_URL from environment")
+        
+        # Validate DATABASE_URL format
+        if database_url.startswith('postgresql://') or database_url.startswith('postgres://'):
+            # Extract hostname to check if it's complete
+            try:
+                # Parse the URL to check hostname
+                if '@' in database_url:
+                    host_part = database_url.split('@')[1].split('/')[0]
+                    if ':' in host_part:
+                        hostname = host_part.split(':')[0]
+                    else:
+                        hostname = host_part
+                    
+                    # Check if hostname looks incomplete (missing domain)
+                    if hostname.startswith('dpg-') and '.' not in hostname:
+                        print(f"⚠️  WARNING: DATABASE_URL hostname appears incomplete!")
+                        print(f"   Hostname: {hostname}")
+                        print(f"   Render PostgreSQL hostnames should include the full domain (e.g., .oregon-postgres.render.com)")
+                        print(f"   Please check your DATABASE_URL in Render dashboard:")
+                        print(f"   1. Go to your PostgreSQL service in Render")
+                        print(f"   2. Go to 'Info' tab")
+                        print(f"   3. Copy the complete 'Internal Database URL' or 'External Connection String'")
+                        print(f"   4. Make sure it includes the full domain (e.g., dpg-xxxxx-a.oregon-postgres.render.com)")
+            except Exception as e:
+                print(f"⚠️  Could not parse DATABASE_URL for validation: {str(e)}")
+        
         # Check if using internal hostname (Railway/Render) and suggest using public URL if connection fails
         if 'railway.internal' in database_url:
             print(f"⚠️  Warning: Using Railway internal hostname. If connection fails, use the public DATABASE_URL from PostgreSQL service Variables tab")

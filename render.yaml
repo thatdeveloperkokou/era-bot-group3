@@ -25,24 +25,6 @@ services:
         sync: false  # Set this manually in Render dashboard if using Resend
     healthCheckPath: /
 
-  # Cron Job for Auto Logger (runs every hour)
-  - type: cron
-    name: era-bot-auto-logger
-    env: python
-    rootDir: backend
-    schedule: "0 * * * *"  # Every hour at minute 0
-    buildCommand: pip install -r requirements.txt
-    startCommand: python auto_logger.py
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11.0
-      - key: DATABASE_URL
-        fromDatabase:
-          name: era-bot-postgres
-          property: connectionString
-      - key: SECRET_KEY
-        sync: false  # Set this manually to match the backend service's SECRET_KEY
-
 databases:
   # PostgreSQL Database
   - name: era-bot-postgres

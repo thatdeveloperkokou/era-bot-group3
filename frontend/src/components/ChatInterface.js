@@ -3,7 +3,7 @@ import api from '../services/api';
 import { FaLightbulb, FaPowerOff, FaCheckCircle, FaChartBar, FaRobot } from 'react-icons/fa';
 import './ChatInterface.css';
 
-const ChatInterface = ({ onLogEvent, autoMode = true }) => {
+const ChatInterface = ({ onLogEvent }) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -20,7 +20,7 @@ const ChatInterface = ({ onLogEvent, autoMode = true }) => {
       const timestampValue = new Date(event.timestamp).getTime();
       return {
         id: `event-${event.timestamp}-${event.event_type}`,
-        text: `Power turned ${event.event_type === 'on' ? 'ON' : 'OFF'}${isAuto ? ' • Auto-logged' : ''}`,
+        text: `Power turned ${event.event_type === 'on' ? 'ON' : 'OFF'}`,
         timestamp: new Date(event.timestamp).toLocaleString(),
         timestampValue,
         type: isAuto ? `auto-${event.event_type}` : event.event_type,
@@ -254,11 +254,7 @@ Total Events:
       <div className="chat-header">
         <h2>Power Logging</h2>
         <p>
-          {autoMode ? (
-            <>Automatic logging is active. You can also log manually below.</>
-          ) : (
-            <>Manual logging mode. Log your electricity supply events.</>
-          )}
+          Log your electricity supply events manually.
         </p>
       </div>
       

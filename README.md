@@ -176,7 +176,7 @@ Typing "report" gives:
 
 • PostgreSQL database on Render
 
-• Cron jobs on Render for automated power logging
+• Random data generator for testing and demos
 
 • GitHub to help with collaboration with my team members and Version control
 

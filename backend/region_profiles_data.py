@@ -112,7 +112,7 @@ DISCO_Q2_DATA = [
 def build_schedule_template(full_load_hours: float) -> List[Dict[str, str]]:
     """
     Construct a simplistic ON-block schedule based on the estimated full-load hours.
-    Each block represents a window of expected supply that the auto-logger can use.
+    Each block represents a window of expected supply based on NERC Q2 2025 data.
     """
     if full_load_hours >= 23:
         return [{"start": "00:00", "end": "23:59"}]

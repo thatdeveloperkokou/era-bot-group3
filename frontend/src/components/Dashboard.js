@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
 import ChatInterface from './ChatInterface';
 import StatsChart from './StatsChart';
-import { FaBolt, FaChartBar, FaMapMarkerAlt, FaSync, FaToggleOn, FaToggleOff, FaCheckCircle, FaClock } from 'react-icons/fa';
+import { FaBolt, FaChartBar, FaMapMarkerAlt, FaClock, FaCheckCircle } from 'react-icons/fa';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -15,8 +15,6 @@ const Dashboard = () => {
   const [regionProfiles, setRegionProfiles] = useState(null);
   const [loadingRegions, setLoadingRegions] = useState(false);
   const [showRegions, setShowRegions] = useState(false);
-  const [autoMode, setAutoMode] = useState(true); // Default to automatic mode
-  const [autoLogStats, setAutoLogStats] = useState({ total: 0, lastUpdate: null });
 
   const fetchStats = useCallback(async () => {
     try {
@@ -24,15 +22,6 @@ const Dashboard = () => {
       const response = await api.get(`/stats?period=${period}`);
       setStats(response.data);
       
-      // Calculate auto-generated log stats
-      if (response.data && response.data.events) {
-        const autoLogs = response.data.events.filter(event => event.auto_generated === true);
-        const lastAutoLog = autoLogs.length > 0 ? autoLogs[autoLogs.length - 1] : null;
-        setAutoLogStats({
-          total: autoLogs.length,
-          lastUpdate: lastAutoLog ? new Date(lastAutoLog.timestamp) : null
-        });
-      }
     } catch (error) {
       console.error('Error fetching stats:', error);
     } finally {
@@ -100,58 +89,6 @@ const Dashboard = () => {
 
       <div className="dashboard-content">
         <div className="stats-panel">
-          {/* Auto-Logging Status Banner */}
-          <div className={`auto-logging-banner ${autoMode ? 'active' : 'inactive'}`}>
-            <div className="auto-logging-content">
-              <div className="auto-logging-status">
-                <FaSync className={`auto-sync-icon ${autoMode ? 'spinning' : ''}`} />
-                <div className="auto-logging-text">
-                  <strong>Automatic Logging: {autoMode ? 'ACTIVE' : 'INACTIVE'}</strong>
-                  {stats?.region?.name && (
-                    <span className="region-tracking-label">
-                      Tracking region: <strong>{stats.region.name}</strong>
-                      {Array.isArray(stats.region.states) && stats.region.states.length > 0 && (
-                        <> • Coverage: {stats.region.states.join(', ')}</>
-                      )}
-                    </span>
-                  )}
-                  {autoMode && (
-                    <span className="auto-logging-details">
-                      {autoLogStats.total > 0 ? (
-                        <>
-                          {autoLogStats.total} auto-logged events
-                          {autoLogStats.lastUpdate && (
-                            <> • Last update: {autoLogStats.lastUpdate.toLocaleTimeString()}</>
-                          )}
-                        </>
-                      ) : (
-                        <>Waiting for first automatic log...</>
-                      )}
-                    </span>
-                  )}
-                </div>
-              </div>
-              <div className="mode-toggle-container">
-                <label className="mode-toggle-label">
-                  <span className="mode-label-text">{autoMode ? 'Automatic' : 'Manual'}</span>
-                  <button
-                    className={`mode-toggle ${autoMode ? 'auto-active' : 'manual-active'}`}
-                    onClick={() => setAutoMode(!autoMode)}
-                    aria-label={autoMode ? 'Switch to manual mode' : 'Switch to automatic mode'}
-                  >
-                    {autoMode ? <FaToggleOn /> : <FaToggleOff />}
-                  </button>
-                </label>
-              </div>
-            </div>
-            {autoMode && (
-              <div className="auto-logging-info">
-                <FaCheckCircle className="info-icon" />
-                <span>Power events are automatically logged based on your region's schedule. You can still log manually anytime.</span>
-              </div>
-            )}
-          </div>
-
           <div className="stats-header">
             <h2>Statistics</h2>
             <div className="period-selector">
@@ -242,7 +179,7 @@ const Dashboard = () => {
                 <p style={{ margin: 0, color: '#666', fontSize: '14px' }}>
                   <FaMapMarkerAlt style={{ marginRight: '8px', color: '#667eea' }} />
                   <strong>Your power schedule</strong> is automatically determined based on your location and regional power distribution data from NERC Q2 2025.
-                  {autoMode && (
+                  {false && (
                     <> Power events are logged automatically according to this schedule.</>
                   )}
                 </p>
@@ -351,7 +288,7 @@ const Dashboard = () => {
         </div>
 
         <div className="chat-panel">
-          <ChatInterface onLogEvent={fetchStats} autoMode={autoMode} />
+          <ChatInterface onLogEvent={fetchStats} />
         </div>
       </div>
     </div>
