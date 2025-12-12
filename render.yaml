@@ -41,10 +41,7 @@ services:
           name: era-bot-postgres
           property: connectionString
       - key: SECRET_KEY
-        fromService:
-          type: web
-          name: era-bot-backend
-          property: envVars.SECRET_KEY
+        sync: false  # Set this manually to match the backend service's SECRET_KEY
 
 databases:
   # PostgreSQL Database
