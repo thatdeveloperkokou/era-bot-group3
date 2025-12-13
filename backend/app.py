@@ -400,7 +400,7 @@ def register():
         if existing_user:
             return jsonify({'error': 'Username already exists'}), 400
         
-        # Check if email is already registered
+        # Check if email is already registered (and verified)
         existing_email = User.query.filter_by(email=email).first()
         if existing_email:
             return jsonify({'error': 'Email already registered'}), 400
@@ -409,17 +409,31 @@ def register():
         verification_code = generate_verification_code()
         expires_at = datetime.utcnow() + timedelta(minutes=10)
         
-        # Store verification code (this will be used to create user after email verification)
-        verif_code = VerificationCode(
-            email=email,
-            code=verification_code,
-            username=username,
-            password=hash_password(password),
-            location=location,
-            region_id=region_id,
-            expires_at=expires_at
-        )
-        db.session.add(verif_code)
+        # Check if verification code already exists for this email (update instead of insert)
+        existing_verif_code = VerificationCode.query.filter_by(email=email).first()
+        if existing_verif_code:
+            # Update existing verification code
+            existing_verif_code.code = verification_code
+            existing_verif_code.username = username
+            existing_verif_code.password = hash_password(password)
+            existing_verif_code.location = location
+            existing_verif_code.region_id = region_id
+            existing_verif_code.expires_at = expires_at
+            existing_verif_code.device_id = data.get('deviceId')
+        else:
+            # Create new verification code
+            verif_code = VerificationCode(
+                email=email,
+                code=verification_code,
+                username=username,
+                password=hash_password(password),
+                location=location,
+                region_id=region_id,
+                expires_at=expires_at,
+                device_id=data.get('deviceId')
+            )
+            db.session.add(verif_code)
+        
         db.session.commit()
         
         # Attempt to send email (non-blocking - don't wait for it)
@@ -445,15 +459,34 @@ def register():
             
     except IntegrityError as e:
         db.session.rollback()
-        return jsonify({'error': 'Database error: User or email already exists'}), 400
+        error_msg = str(e)
+        print(f"❌ IntegrityError in register: {error_msg}")
+        # Check what specific constraint was violated
+        if 'username' in error_msg.lower() or 'users_username_key' in error_msg:
+            return jsonify({'error': 'Username already exists'}), 400
+        elif 'email' in error_msg.lower() or 'users_email_key' in error_msg:
+            return jsonify({'error': 'Email already registered'}), 400
+        elif 'verification_codes_email_key' in error_msg or 'verification_codes_pkey' in error_msg:
+            # This shouldn't happen now with our fix, but handle it just in case
+            return jsonify({'error': 'Verification code already exists for this email. Please try again or verify your email.'}), 400
+        else:
+            return jsonify({'error': 'Database constraint violation. Username or email may already exist.'}), 400
     except SQLAlchemyError as e:
         db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
+        error_msg = str(e)
+        print(f"❌ SQLAlchemyError in register: {error_msg}")
+        print(f"   Error type: {type(e).__name__}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': 'Database error occurred. Please try again.'}), 500
     except Exception as e:
         db.session.rollback()
-        print(f"Error in register: {str(e)}")
-        return jsonify({'error': 'An error occurred during registration'}), 500
+        error_msg = str(e)
+        error_type = type(e).__name__
+        print(f"❌ Unexpected error in register: {error_type}: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during registration: {error_msg}'}), 500
 
 @app.route('/api/login', methods=['POST', 'OPTIONS'])
 def login():

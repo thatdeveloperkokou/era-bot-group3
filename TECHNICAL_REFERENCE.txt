@@ -1,0 +1,702 @@
+================================================================================
+ELECTRICITY SUPPLY LOGGER - TECHNICAL FUNCTION REFERENCE
+================================================================================
+
+A concise technical reference documenting all functions, their implementations,
+and how features are achieved. Focus on code-level details.
+
+================================================================================
+BACKEND FUNCTIONS (app.py)
+================================================================================
+
+1. hash_password(password)
+   Purpose: Hash user passwords for secure storage
+   Implementation: Uses SHA-256 hashing algorithm
+   Code: hashlib.sha256(password.encode()).hexdigest()
+   Returns: Hexadecimal hash string
+
+2. generate_verification_code()
+   Purpose: Create 6-digit email verification code
+   Implementation: Random number generation with zero-padding
+   Code: str(secrets.randbelow(1000000)).zfill(6)
+   Returns: 6-digit string (e.g., "123456")
+
+3. send_verification_email(email, code)
+   Purpose: Send verification email via Resend API
+   Implementation:
+   - Checks if email sending is suppressed (development mode)
+   - Constructs HTML email template
+   - Makes POST request to Resend API (https://api.resend.com/emails)
+   - Uses Bearer token authentication
+   - Handles timeouts and errors gracefully
+   Returns: True if sent, False if failed
+
+4. generate_token(user_id)
+   Purpose: Create JWT token for authentication
+   Implementation:
+   - Uses PyJWT library
+   - Encodes user_id with SECRET_KEY
+   - Algorithm: HS256
+   Code: jwt.encode({'user_id': user_id}, SECRET_KEY, algorithm='HS256')
+   Returns: JWT token string
+
+5. token_required(f)
+   Purpose: Decorator to protect routes requiring authentication
+   Implementation:
+   - Extracts token from Authorization header
+   - Removes "Bearer " prefix if present
+   - Decodes JWT token
+   - Validates token signature and expiration
+   - Extracts user_id from token
+   - Passes user_id to decorated function as first argument
+   Returns: Decorated function with authentication check
+
+6. resolve_region_id(location)
+   Purpose: Map user location to power distribution region
+   Implementation: Calls infer_region_from_location() from region_mapper
+   Returns: region_id string or None
+
+7. preview_value(value, length=20)
+   Purpose: Safely preview sensitive values for logging
+   Implementation: Converts to string, truncates if needed, handles None
+   Returns: Truncated string representation
+
+8. register()
+   Purpose: Handle user registration
+   Implementation:
+   - Validates input (username, password, email, location)
+   - Checks if username/email already exists
+   - Hashes password using hash_password()
+   - Creates User record in database
+   - Generates verification code
+   - Sends verification email
+   - Creates device_id for multi-device support
+   - Generates JWT token
+   Returns: JSON with token and username
+
+9. login()
+   Purpose: Authenticate user and return token
+   Implementation:
+   - Validates username and password
+   - Queries User table
+   - Compares hashed passwords
+   - Generates JWT token
+   - Returns token and user info
+   Returns: JSON with token and username
+
+10. log_power(current_user)
+    Purpose: Record power ON/OFF events
+    Implementation:
+    - Extracts event_type and location from request
+    - Validates event_type is 'on' or 'off'
+    - Gets User record from database
+    - Updates user location if provided
+    - Resolves region_id from location
+    - Creates PowerLog record with timestamp
+    - Commits to database
+    Returns: JSON with success message and timestamp
+
+11. get_stats(current_user)
+    Purpose: Calculate power supply statistics
+    Implementation:
+    - Gets period from query parameter (day/week/month)
+    - Queries PowerLog table filtered by user_id and date range
+    - Orders logs by timestamp
+    - Pairs ON and OFF events
+    - Calculates time differences between pairs
+    - Aggregates hours by day
+    - Calculates totals and averages
+    - Handles edge cases (missing events, incomplete pairs)
+    Returns: JSON with total_hours, daily_breakdown, averages, events
+
+12. get_recent_events(current_user)
+    Purpose: Get recent power events for display
+    Implementation:
+    - Gets limit from query parameter (default 20)
+    - Queries PowerLog table filtered by user_id
+    - Orders by timestamp descending
+    - Limits results
+    - Converts to dictionaries
+    Returns: JSON with events array
+
+13. get_report(current_user)
+    Purpose: Generate quick summary report
+    Implementation:
+    - Gets today's date
+    - Queries PowerLog for today's events
+    - Calculates today's total hours
+    - Gets last 7 days for weekly average
+    - Gets last 30 days for monthly average
+    - Gets last power event
+    Returns: JSON with summary statistics
+
+14. list_region_profiles()
+    Purpose: Return all power distribution regions
+    Implementation:
+    - Queries RegionProfile table
+    - Orders by disco_name
+    - Converts all to dictionaries
+    Returns: JSON with regions array
+
+15. verify_email()
+    Purpose: Verify user email with code
+    Implementation:
+    - Gets email and code from request
+    - Queries VerificationCode table
+    - Checks if code matches
+    - Validates expiration time
+    - Updates User.email_verified to True
+    - Deletes verification code
+    Returns: JSON with success message
+
+16. google_auth()
+    Purpose: Handle Google OAuth login
+    Implementation:
+    - Gets Google ID token from request
+    - Verifies token with Google API
+    - Extracts user info (email, name)
+    - Returns token for frontend to complete registration
+    Returns: JSON with Google token info
+
+17. google_auth_complete()
+    Purpose: Complete Google OAuth registration
+    Implementation:
+    - Verifies Google token again
+    - Gets location from request
+    - Creates User account if doesn't exist
+    - Generates device_id
+    - Creates JWT token
+    Returns: JSON with token and username
+
+18. generate_random_data()
+    Purpose: Generate random power logs for testing
+    Implementation:
+    - Gets parameters from request (days, min_events, max_events)
+    - Calls generate_random_power_logs() from generate_random_data module
+    - Generates events for all users
+    Returns: JSON with count of generated events
+
+================================================================================
+BACKEND FUNCTIONS (database.py)
+================================================================================
+
+1. init_db(app)
+   Purpose: Initialize database connection and create tables
+   Implementation:
+   - Gets DATABASE_URL from environment
+   - Validates URL format (checks for incomplete hostnames)
+   - Converts postgres:// to postgresql:// if needed
+   - Configures SQLAlchemy with connection string
+   - Sets pool_pre_ping and pool_recycle for connection management
+   - Creates all tables using db.create_all()
+   - Handles connection errors with helpful messages
+   Returns: None (modifies app configuration)
+
+MODEL METHODS:
+--------------
+
+RegionProfile.to_dict()
+- Converts model to JSON-serializable dictionary
+- Includes all fields with proper formatting
+
+User.to_dict()
+- Converts user model to dictionary
+- Includes verified_devices list
+- Formats dates as ISO strings
+
+PowerLog.to_dict()
+- Converts power log to dictionary
+- Formats timestamps as ISO strings
+- Includes all event details
+
+================================================================================
+BACKEND FUNCTIONS (region_mapper.py)
+================================================================================
+
+1. _build_lookup_table()
+   Purpose: Build lookup table for region matching
+   Implementation:
+   - Queries RegionProfile table
+   - Extracts states and keywords from each region
+   - Creates tuples of (keyword, region_id)
+   - Returns list of tuples for fast lookup
+   Returns: List of (keyword, region_id) tuples
+
+2. infer_region_from_location(location)
+   Purpose: Map location string to region_id
+   Implementation:
+   - Normalizes location string (lowercase, strip)
+   - Builds lookup table if not cached
+   - Searches for state names in location
+   - Searches for city names in location
+   - Searches for keywords in location
+   - Returns first matching region_id
+   - Returns None if no match
+   Returns: region_id string or None
+
+================================================================================
+BACKEND FUNCTIONS (generate_random_data.py)
+================================================================================
+
+1. generate_random_power_logs(days_back, min_events_per_day, max_events_per_day, dry_run)
+   Purpose: Generate random power events for all users
+   Implementation:
+   - Gets all users from database
+   - For each user:
+     * Gets last log to determine current state
+     * For each day in range:
+       - Generates random number of events (between min and max)
+       - Creates events at random times (6 AM - 11 PM)
+       - Alternates between ON and OFF states
+       - Checks for duplicates before inserting
+   - Commits all logs to database
+   - Returns count of generated events
+   Returns: Integer count of generated logs
+
+================================================================================
+FRONTEND FUNCTIONS (App.js)
+================================================================================
+
+1. PrivateRoute({ children })
+   Purpose: Protect routes requiring authentication
+   Implementation:
+   - Uses useAuth() hook to get authentication status
+   - If authenticated, renders children
+   - If not authenticated, redirects to /login
+   Returns: React component or Navigate component
+
+2. App()
+   Purpose: Root component with routing
+   Implementation:
+   - Wraps app in AuthProvider for global auth state
+   - Sets up React Router
+   - Defines routes: /, /login, /dashboard
+   - Uses PrivateRoute for dashboard protection
+   Returns: Router with Routes
+
+================================================================================
+FRONTEND FUNCTIONS (AuthContext.js)
+================================================================================
+
+1. useAuth()
+   Purpose: Hook to access authentication context
+   Implementation:
+   - Uses useContext to get AuthContext
+   - Throws error if used outside AuthProvider
+   Returns: Auth context object
+
+2. AuthProvider({ children })
+   Purpose: Provide authentication state to entire app
+   Implementation:
+   - State: isAuthenticated, username, loading
+   - useEffect: Checks localStorage for existing token on mount
+   - login(token, username): Stores token in localStorage, sets auth state
+   - logout(): Removes token, clears state, removes Authorization header
+   - Sets axios default Authorization header when logged in
+   Returns: AuthContext.Provider with value object
+
+================================================================================
+FRONTEND FUNCTIONS (api.js)
+================================================================================
+
+1. getApiUrl()
+   Purpose: Get API base URL from environment
+   Implementation:
+   - Reads REACT_APP_API_URL from environment
+   - Defaults to http://localhost:5000/api
+   - Ensures URL ends with /api
+   Returns: API base URL string
+
+2. api (Axios instance)
+   Purpose: Configured HTTP client
+   Implementation:
+   - Creates axios instance with baseURL
+   - Sets default headers (Content-Type: application/json)
+   - Sets 10-second timeout
+   - Response interceptor for error handling:
+     * Formats error messages
+     * Logs helpful debugging info
+     * Provides solutions for common issues
+   Returns: Axios instance
+
+================================================================================
+FRONTEND FUNCTIONS (Dashboard.js)
+================================================================================
+
+1. Dashboard()
+   Purpose: Main user interface component
+   Implementation:
+   - State management:
+     * stats: Statistics data
+     * period: Selected time period (day/week/month)
+     * regionProfiles: List of regions
+     * showCharts: Chart visibility toggle
+     * showRegions: Region list visibility toggle
+   - fetchStats(): 
+     * Makes GET request to /api/stats?period={period}
+     * Updates stats state
+     * Handles errors
+   - fetchRegionProfiles():
+     * Makes GET request to /api/region-profiles
+     * Updates regionProfiles state
+   - useEffect: Auto-refreshes stats every 30 seconds
+   - Renders: Statistics panel, charts, region profiles, chat interface
+   Returns: JSX with dashboard layout
+
+================================================================================
+FRONTEND FUNCTIONS (ChatInterface.js)
+================================================================================
+
+1. ChatInterface({ onLogEvent })
+   Purpose: Power logging interface
+   Implementation:
+   - State: messages, input, loading, isProcessing
+   - formatEventMessages(events):
+     * Converts events to message format
+     * Adds icons and styling based on event type
+   - fetchRecentEvents():
+     * Gets recent events from /api/recent-events
+     * Formats and adds to messages
+   - handlePowerLog(event_type):
+     * Sets loading state
+     * Makes POST to /api/log-power
+     * Adds success message
+     * Calls onLogEvent callback to refresh stats
+   - handleSubmit():
+     * Parses natural language commands
+     * Maps to power events or report request
+   - useEffect: Fetches recent events on mount and periodically
+   Returns: JSX with chat interface
+
+================================================================================
+FRONTEND FUNCTIONS (Login.js)
+================================================================================
+
+1. Login()
+   Purpose: User registration and login
+   Implementation:
+   - State: isLogin, form data, errors, loading
+   - handleRegister():
+     * Validates form
+     * Makes POST to /api/register
+     * Stores token via AuthContext.login()
+     * Redirects to dashboard
+   - handleLogin():
+     * Validates credentials
+     * Makes POST to /api/login
+     * Stores token
+     * Redirects to dashboard
+   - handleGoogleSignIn():
+     * Calls Google Sign-In API
+     * Sends token to /api/auth/google
+     * Completes registration with location
+   - Renders: Registration form, login form, Google OAuth button
+   Returns: JSX with login/register forms
+
+================================================================================
+FRONTEND FUNCTIONS (StatsChart.js)
+================================================================================
+
+1. StatsChart({ data })
+   Purpose: Visualize statistics data
+   Implementation:
+   - Uses Recharts library
+   - Creates LineChart with:
+     * X-axis: Dates
+     * Y-axis: Hours
+     * Data points from daily_breakdown
+   - Responsive design
+   - Custom styling
+   Returns: JSX with Recharts components
+
+================================================================================
+FRONTEND FUNCTIONS (utils/mapboxGeocoding.js)
+================================================================================
+
+1. searchLocations(query, limit, options)
+   Purpose: Search locations using Mapbox Geocoding API
+   Implementation:
+   - Constructs API URL with query parameters
+   - Limits to Nigeria (country=NG)
+   - Makes GET request to Mapbox API
+   - Normalizes response features
+   - Returns array of location objects
+   Returns: Promise resolving to location array
+
+2. reverseGeocode(lat, lng)
+   Purpose: Get location name from coordinates
+   Implementation:
+   - Makes GET request to Mapbox reverse geocoding API
+   - Returns formatted location string
+   Returns: Promise resolving to location string
+
+3. getPlaceDetails(placeId)
+   Purpose: Get detailed information about a place
+   Implementation:
+   - Makes request to Mapbox API with place ID
+   - Returns detailed place information
+   Returns: Promise resolving to place details
+
+================================================================================
+HOW FEATURES ARE ACHIEVED
+================================================================================
+
+AUTHENTICATION:
+---------------
+1. Registration:
+   - User submits form → Login.js calls api.post('/register')
+   - Backend validates, hashes password, creates user
+   - Backend generates JWT token
+   - Frontend stores token in localStorage via AuthContext.login()
+   - Token added to axios headers automatically
+
+2. Login:
+   - User submits credentials → api.post('/login')
+   - Backend validates, compares hashed password
+   - Returns JWT token
+   - Frontend stores token, sets authenticated state
+
+3. Protected Routes:
+   - @token_required decorator extracts token from Authorization header
+   - Verifies token signature and expiration
+   - Extracts user_id, passes to route handler
+   - Returns 401 if invalid
+
+POWER LOGGING:
+--------------
+1. User clicks "Power ON" button:
+   - ChatInterface.handlePowerLog('on') called
+   - Makes POST /api/log-power with {event_type: 'on'}
+   - Backend creates PowerLog record with current timestamp
+   - Frontend updates UI, refreshes statistics
+
+2. Natural Language:
+   - User types "power on" → handleSubmit() parses
+   - Maps to event_type: 'on'
+   - Same flow as button click
+
+STATISTICS CALCULATION:
+----------------------
+1. User selects time period:
+   - Dashboard.fetchStats() called with period parameter
+   - GET /api/stats?period=week
+   - Backend queries PowerLog table:
+     * Filters by user_id and date range
+     * Orders by timestamp
+   - Pairs ON and OFF events:
+     * Iterates through logs
+     * When finds 'on', looks for next 'off'
+     * Calculates time difference
+   - Aggregates by day:
+     * Groups hours by date
+     * Calculates daily totals
+   - Calculates averages:
+     * Total hours / number of days
+   - Returns JSON with all statistics
+
+2. Chart Rendering:
+   - StatsChart receives data prop
+   - Extracts daily_breakdown array
+   - Maps to Recharts data format
+   - Renders LineChart with dates and hours
+
+REGION MAPPING:
+---------------
+1. User provides location:
+   - Location stored in User.location
+   - resolve_region_id() called
+   - infer_region_from_location() searches:
+     * Extracts state/city names
+     * Searches region_profiles for matching keywords
+     * Returns first match
+   - User.region_id updated
+   - Power logs associated with region
+
+REAL-TIME UPDATES:
+------------------
+1. Auto-refresh:
+   - Dashboard useEffect with 30-second interval
+   - Calls fetchStats() periodically
+   - Updates state, triggers re-render
+   - Charts and statistics update automatically
+
+2. Event Updates:
+   - After logging power event
+   - onLogEvent callback triggers fetchStats()
+   - Statistics recalculated and displayed
+
+EMAIL VERIFICATION:
+------------------
+1. Registration:
+   - generate_verification_code() creates 6-digit code
+   - Code stored in VerificationCode table with expiration
+   - send_verification_email() sends via Resend API
+   - HTML email template with code
+
+2. Verification:
+   - User enters code → POST /api/verify-email
+   - Backend checks code and expiration
+   - Updates User.email_verified = True
+   - Deletes verification code
+
+RANDOM DATA GENERATION:
+-----------------------
+1. Testing/Demo:
+   - POST /api/generate-random-data
+   - generate_random_power_logs() called
+   - For each user:
+     * Generates events for past N days
+     * Random number of events per day
+     * Random times between 6 AM - 11 PM
+     * Alternates ON/OFF states
+   - All events marked auto_generated=True
+   - Useful for demos and testing
+
+================================================================================
+DATA FLOW EXAMPLES
+================================================================================
+
+EXAMPLE 1: User logs power ON
+------------------------------
+1. User clicks "Power ON" button
+2. ChatInterface.handlePowerLog('on') executes
+3. api.post('/api/log-power', {event_type: 'on'}) called
+4. Axios adds Authorization: Bearer <token> header
+5. Request sent to Flask backend
+6. @token_required decorator:
+   - Extracts token from header
+   - Decodes JWT, gets user_id
+7. log_power(user_id) function:
+   - Gets User record from database
+   - Creates PowerLog record:
+     * user_id = user_id
+     * event_type = 'on'
+     * timestamp = datetime.utcnow()
+     * date = today
+   - Commits to database
+8. Returns JSON response
+9. Frontend receives response
+10. ChatInterface updates messages state
+11. onLogEvent() callback triggers
+12. Dashboard.fetchStats() called
+13. Statistics recalculated
+14. UI re-renders with new event and updated stats
+
+EXAMPLE 2: User views weekly statistics
+----------------------------------------
+1. User selects "Week" period
+2. Dashboard.setState({period: 'week'})
+3. useEffect detects period change
+4. fetchStats() called with period='week'
+5. api.get('/api/stats?period=week') called
+6. Backend get_stats(user_id) function:
+   - Calculates date range (last 7 days)
+   - Queries: PowerLog.query.filter_by(user_id=user_id)
+     .filter(PowerLog.date >= start_date)
+     .filter(PowerLog.date <= end_date)
+     .order_by(PowerLog.timestamp)
+   - Pairs events:
+     * Loop through logs
+     * When event_type='on', store timestamp
+     * When event_type='off', calculate difference
+     * Add to daily totals
+   - Calculates:
+     * total_hours = sum of all pairs
+     * average_hours = total_hours / 7
+   - Returns JSON
+7. Frontend receives data
+8. Dashboard.setState({stats: data})
+9. StatsChart receives data prop
+10. Recharts renders line chart
+11. Dashboard displays statistics
+
+EXAMPLE 3: User registers new account
+-------------------------------------
+1. User fills registration form
+2. Login.handleRegister() called
+3. Validates form fields
+4. api.post('/api/register', formData) called
+5. Backend register() function:
+   - Validates input
+   - Checks if username exists
+   - hash_password(password) → hashed string
+   - Creates User record:
+     * username, password (hashed), email, location
+   - generate_verification_code() → "123456"
+   - Creates VerificationCode record
+   - send_verification_email(email, code)
+   - resolve_region_id(location) → region_id
+   - Creates DeviceId record
+   - generate_token(username) → JWT token
+   - Returns {token, username}
+6. Frontend receives response
+7. AuthContext.login(token, username):
+   - localStorage.setItem('token', token)
+   - localStorage.setItem('username', username)
+   - api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+   - setIsAuthenticated(true)
+8. Navigate to /dashboard
+9. Dashboard loads with authenticated state
+
+================================================================================
+KEY IMPLEMENTATION DETAILS
+================================================================================
+
+PASSWORD SECURITY:
+-----------------
+- SHA-256 hashing (one-way function)
+- Never stored in plain text
+- Never sent back to client
+- Comparison: hash(input) == stored_hash
+
+JWT TOKEN STRUCTURE:
+--------------------
+Header: {"alg": "HS256", "typ": "JWT"}
+Payload: {"user_id": "username", "exp": timestamp}
+Signature: HMACSHA256(base64(header) + "." + base64(payload), SECRET_KEY)
+
+TOKEN VALIDATION:
+-----------------
+1. Extract from Authorization header
+2. Remove "Bearer " prefix
+3. Decode with SECRET_KEY
+4. Check expiration (exp claim)
+5. Extract user_id from payload
+6. Use user_id for database queries
+
+STATISTICS PAIRING ALGORITHM:
+------------------------------
+1. Get all logs ordered by timestamp
+2. Initialize variables: current_state = None, last_on_time = None
+3. Loop through logs:
+   - If event_type == 'on':
+     * Store timestamp as last_on_time
+   - If event_type == 'off' and last_on_time exists:
+     * Calculate: hours = (off_time - last_on_time).total_seconds() / 3600
+     * Add to daily total
+     * Reset last_on_time = None
+4. Handle edge cases:
+   - If period starts with 'off', ignore until first 'on'
+   - If period ends with 'on', use current time as end
+   - Missing events handled gracefully
+
+DATABASE QUERIES:
+-----------------
+- SQLAlchemy ORM for type safety
+- Filter by user_id for data isolation
+- Order by timestamp for chronological processing
+- Date range filtering for period selection
+- Relationships for efficient joins
+
+ERROR HANDLING:
+---------------
+- Try-catch blocks around database operations
+- Transaction rollback on errors
+- User-friendly error messages
+- Detailed logging for debugging
+- Graceful degradation (email failures don't block registration)
+
+================================================================================
+END OF TECHNICAL REFERENCE
+================================================================================
+

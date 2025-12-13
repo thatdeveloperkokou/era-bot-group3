@@ -1,0 +1,1258 @@
+================================================================================
+ELECTRICITY SUPPLY LOGGER BOT - COMPLETE PROJECT DOCUMENTATION
+================================================================================
+
+A comprehensive guide to understanding every aspect of this project's code,
+architecture, and functionality. Written for students and developers.
+
+================================================================================
+TABLE OF CONTENTS
+================================================================================
+
+1. PROJECT OVERVIEW
+2. ARCHITECTURE & DESIGN PATTERNS
+3. TECHNOLOGY STACK
+4. PROJECT STRUCTURE
+5. BACKEND COMPONENTS (Detailed)
+6. FRONTEND COMPONENTS (Detailed)
+7. AUTHENTICATION SYSTEM
+8. DATABASE SCHEMA & MODELS
+9. API ENDPOINTS REFERENCE
+10. FEATURES & FUNCTIONALITIES
+11. DATA FLOW DIAGRAMS
+12. DEPLOYMENT & CONFIGURATION
+13. CODE EXPLANATIONS BY FILE
+14. SECURITY CONSIDERATIONS
+15. FUTURE ENHANCEMENTS
+
+================================================================================
+1. PROJECT OVERVIEW
+================================================================================
+
+PROBLEM STATEMENT:
+------------------
+In many areas (especially in Nigeria), electricity supply is unreliable and 
+unpredictable. People don't know:
+- How many hours of power they actually get each day
+- When and how often power goes off
+- How to plan daily tasks around power availability
+- How to hold utility companies (NEPA) accountable with real data
+
+SOLUTION:
+---------
+This application allows users to:
+1. Log power ON/OFF events manually
+2. Track electricity supply hours over time
+3. View statistics and charts showing power availability patterns
+4. Get reports on daily, weekly, and monthly power supply
+5. Associate their location with regional power distribution data from NERC
+
+TARGET USERS:
+------------
+- Individuals tracking their personal power supply
+- Communities monitoring electricity reliability
+- Researchers analyzing power distribution patterns
+- Anyone wanting to hold utility companies accountable with data
+
+================================================================================
+2. ARCHITECTURE & DESIGN PATTERNS
+================================================================================
+
+ARCHITECTURE TYPE:
+-----------------
+This project follows a **Client-Server Architecture** with:
+- **Frontend**: React Single Page Application (SPA)
+- **Backend**: RESTful API built with Flask
+- **Database**: PostgreSQL (relational database)
+- **Deployment**: Frontend on Vercel, Backend on Render
+
+DESIGN PATTERNS USED:
+--------------------
+
+1. **MVC (Model-View-Controller) Pattern**
+   - Models: Database models in database.py
+   - Views: React components (Dashboard, Login, etc.)
+   - Controllers: Flask route handlers in app.py
+
+2. **RESTful API Design**
+   - Standard HTTP methods (GET, POST, PUT, DELETE)
+   - Resource-based URLs (/api/users, /api/log-power)
+   - JSON request/response format
+
+3. **Context API Pattern (React)**
+   - AuthContext for global authentication state
+   - Avoids prop drilling
+
+4. **Component-Based Architecture (React)**
+   - Reusable, modular components
+   - Separation of concerns
+
+5. **Repository Pattern**
+   - Database abstraction through SQLAlchemy ORM
+   - Models handle data access logic
+
+6. **Decorator Pattern**
+   - @token_required decorator for route protection
+   - @app.route decorators for URL routing
+
+DATA FLOW:
+----------
+User Action → React Component → API Service (axios) → Flask Backend → 
+Database (PostgreSQL) → Response → React State Update → UI Re-render
+
+================================================================================
+3. TECHNOLOGY STACK
+================================================================================
+
+FRONTEND:
+---------
+- **React 18**: JavaScript library for building user interfaces
+- **React Router**: Client-side routing
+- **Axios**: HTTP client for API calls
+- **Recharts**: Charting library for data visualization
+- **React Icons**: Icon library (Font Awesome)
+- **CSS3**: Styling (no CSS frameworks, custom CSS)
+
+BACKEND:
+--------
+- **Python 3.11**: Programming language
+- **Flask 3.0**: Web framework
+- **Flask-SQLAlchemy**: ORM (Object-Relational Mapping)
+- **Flask-CORS**: Cross-Origin Resource Sharing support
+- **PyJWT**: JSON Web Token implementation
+- **Flask-Mail**: Email functionality
+- **psycopg2**: PostgreSQL database adapter
+- **python-dotenv**: Environment variable management
+
+DATABASE:
+---------
+- **PostgreSQL**: Relational database management system
+- **SQLAlchemy**: Python SQL toolkit and ORM
+
+DEPLOYMENT:
+-----------
+- **Vercel**: Frontend hosting (serverless)
+- **Render**: Backend hosting (PaaS)
+- **PostgreSQL on Render**: Database hosting
+
+DEVELOPMENT TOOLS:
+------------------
+- **Git**: Version control
+- **GitHub**: Code repository
+- **npm/yarn**: Package management (frontend)
+- **pip**: Package management (backend)
+
+================================================================================
+4. PROJECT STRUCTURE
+================================================================================
+
+ROOT DIRECTORY:
+--------------
+group-3-bot-project/
+│
+├── backend/                    # Backend Flask application
+│   ├── app.py                  # Main Flask application file
+│   ├── database.py              # Database models and configuration
+│   ├── requirements.txt        # Python dependencies
+│   ├── region_mapper.py        # Location to region mapping logic
+│   ├── region_profiles_data.py # NERC data and region profiles
+│   ├── generate_random_data.py # Random data generator for testing
+│   ├── migrate_to_postgresql.py # Data migration script
+│   ├── Dockerfile              # Docker configuration
+│   ├── .env                    # Environment variables (not in git)
+│   └── data/                   # Legacy CSV data (if any)
+│
+├── frontend/                   # React frontend application
+│   ├── src/
+│   │   ├── App.js              # Main React component, routing
+│   │   ├── index.js            # React entry point
+│   │   ├── components/        # React components
+│   │   │   ├── Dashboard.js   # Main dashboard component
+│   │   │   ├── Login.js        # Login/Register component
+│   │   │   ├── ChatInterface.js # Power logging interface
+│   │   │   ├── StatsChart.js   # Statistics chart component
+│   │   │   └── Landing.js      # Landing page
+│   │   ├── context/            # React Context providers
+│   │   │   └── AuthContext.js  # Authentication context
+│   │   ├── services/           # API services
+│   │   │   └── api.js          # Axios API client
+│   │   └── utils/              # Utility functions
+│   │       ├── loadGooglePlaces.js
+│   │       └── mapboxGeocoding.js
+│   ├── public/                 # Static files
+│   └── package.json            # Node.js dependencies
+│
+├── render.yaml                 # Render deployment configuration
+├── vercel.json                 # Vercel deployment configuration
+├── README.md                   # Project readme
+└── PROJECT_DOCUMENTATION.txt   # This file
+
+================================================================================
+5. BACKEND COMPONENTS (DETAILED)
+================================================================================
+
+5.1 MAIN APPLICATION FILE (app.py)
+-----------------------------------
+
+PURPOSE:
+--------
+This is the heart of the backend. It contains:
+- Flask application initialization
+- All API route handlers
+- Authentication logic
+- Business logic for power logging
+- Statistics calculation
+- Email verification
+
+KEY SECTIONS:
+
+A. IMPORTS & CONFIGURATION (Lines 1-67)
+   - Imports Flask, database, JWT, email libraries
+   - Loads environment variables
+   - Configures Flask app
+   - Sets up email (SMTP/Resend)
+   - Initializes database connection
+   - Configures CORS (Cross-Origin Resource Sharing)
+
+B. HELPER FUNCTIONS (Lines 108-340)
+   - hash_password(): Hashes passwords using SHA-256
+   - generate_verification_code(): Creates 6-digit verification codes
+   - send_verification_email(): Sends emails via Resend API
+   - generate_token(): Creates JWT tokens for authentication
+   - verify_token(): Validates JWT tokens
+   - token_required(): Decorator to protect routes
+
+C. API ROUTES:
+
+   1. Health Check (GET /)
+      - Returns server status and database connection status
+      
+   2. User Registration (POST /api/register)
+      - Creates new user account
+      - Validates input
+      - Hashes password
+      - Sends verification email
+      - Returns JWT token
+      
+   3. User Login (POST /api/login)
+      - Validates credentials
+      - Returns JWT token
+      
+   4. Email Verification (POST /api/verify-email)
+      - Verifies email with code
+      - Marks email as verified
+      
+   5. Power Logging (POST /api/log-power)
+      - Protected route (requires authentication)
+      - Records power ON/OFF events
+      - Associates with user and region
+      - Stores timestamp and location
+      
+   6. Statistics (GET /api/stats)
+      - Calculates power supply hours
+      - Returns daily/weekly/monthly statistics
+      - Includes charts data
+      
+   7. Recent Events (GET /api/recent-events)
+      - Returns last N power events
+      
+   8. Report (GET /api/report)
+      - Quick summary of power supply
+      
+   9. Region Profiles (GET /api/region-profiles)
+      - Returns all power distribution regions
+      
+   10. Google OAuth (POST /api/auth/google)
+       - Handles Google Sign-In
+       
+   11. Random Data Generator (POST /api/generate-random-data)
+       - Generates sample power logs for testing
+
+D. STATISTICS CALCULATION LOGIC:
+   - Pairs ON and OFF events
+   - Calculates time differences
+   - Aggregates by day/week/month
+   - Handles edge cases (missing events, incomplete pairs)
+
+5.2 DATABASE MODELS (database.py)
+---------------------------------
+
+PURPOSE:
+--------
+Defines all database tables and their relationships using SQLAlchemy ORM.
+
+MODELS:
+
+A. RegionProfile
+   - Stores power distribution company information
+   - Fields: id, disco_name, states, keywords, schedule_template
+   - Relationship: One-to-Many with Users
+   
+B. User
+   - Stores user account information
+   - Fields: username (PK), password, email, location, region_id
+   - Relationships: 
+     * One-to-Many with PowerLog
+     * One-to-Many with DeviceId
+     * Many-to-One with RegionProfile
+     
+C. PowerLog
+   - Stores power ON/OFF events
+   - Fields: id, user_id, event_type, timestamp, date, location, region_id
+   - Relationship: Many-to-One with User and RegionProfile
+   
+D. VerificationCode
+   - Stores email verification codes
+   - Fields: email (PK), code, expires_at, username
+   
+E. DeviceId
+   - Stores device IDs for multi-device support
+   - Fields: id, user_id, device_id
+
+DATABASE INITIALIZATION:
+-----------------------
+- init_db() function:
+  * Reads DATABASE_URL from environment
+  * Validates connection string format
+  * Creates all tables if they don't exist
+  * Handles connection errors gracefully
+
+5.3 REGION MAPPING (region_mapper.py)
+--------------------------------------
+
+PURPOSE:
+--------
+Maps user locations to power distribution regions based on:
+- State names
+- City names
+- Keywords in location string
+- NERC Q2 2025 data
+
+HOW IT WORKS:
+-------------
+1. Takes user's location string
+2. Extracts state/city names
+3. Searches region profiles for matching keywords
+4. Returns region_id if match found
+5. Returns None if no match
+
+5.4 REGION PROFILES DATA (region_profiles_data.py)
+---------------------------------------------------
+
+PURPOSE:
+--------
+Contains data from NERC (Nigerian Electricity Regulatory Commission) Q2 2025 report.
+
+DATA INCLUDED:
+-------------
+- Distribution company names (DISCOs)
+- States covered by each DISCO
+- Power supply schedules
+- Average power availability metrics
+
+5.5 RANDOM DATA GENERATOR (generate_random_data.py)
+---------------------------------------------------
+
+PURPOSE:
+--------
+Generates random power ON/OFF events for testing and demos.
+
+FEATURES:
+---------
+- Generates events for specified number of days
+- Configurable min/max events per day
+- Realistic event timing (6 AM - 11 PM)
+- Alternates between ON and OFF states
+- Marks events as auto_generated=True
+
+USAGE:
+------
+```bash
+python generate_random_data.py --days 7 --min-events 2 --max-events 8
+```
+
+================================================================================
+6. FRONTEND COMPONENTS (DETAILED)
+================================================================================
+
+6.1 MAIN APP (App.js)
+---------------------
+
+PURPOSE:
+--------
+Root component that sets up routing and authentication context.
+
+STRUCTURE:
+----------
+- Wraps entire app in AuthProvider
+- Sets up React Router
+- Defines routes:
+  * / → Landing page
+  * /login → Login/Register page
+  * /dashboard → Protected dashboard (requires auth)
+- PrivateRoute component protects dashboard
+
+6.2 AUTHENTICATION CONTEXT (context/AuthContext.js)
+----------------------------------------------------
+
+PURPOSE:
+--------
+Manages global authentication state using React Context API.
+
+FEATURES:
+---------
+- Stores authentication status
+- Stores username
+- Manages JWT token in localStorage
+- Provides login() and logout() functions
+- Automatically checks for existing token on mount
+- Sets Authorization header for API calls
+
+HOW IT WORKS:
+-------------
+1. On app load, checks localStorage for token
+2. If token exists, sets authenticated state
+3. All API calls include token in Authorization header
+4. Login stores token in localStorage
+5. Logout removes token and clears state
+
+6.3 API SERVICE (services/api.js)
+----------------------------------
+
+PURPOSE:
+--------
+Centralized HTTP client using Axios.
+
+FEATURES:
+---------
+- Configures base URL from environment variable
+- Sets default headers
+- Handles errors globally
+- Provides helpful error messages
+- Automatically adds /api to URLs
+
+ERROR HANDLING:
+--------------
+- Network errors: Shows connection issues
+- Server errors: Displays error messages from backend
+- Timeout errors: 10-second timeout
+
+6.4 DASHBOARD COMPONENT (components/Dashboard.js)
+--------------------------------------------------
+
+PURPOSE:
+--------
+Main user interface after login. Shows statistics, charts, and power logging.
+
+FEATURES:
+---------
+- Displays power supply statistics
+- Shows interactive charts (Recharts)
+- Period selector (day/week/month)
+- Region profiles display
+- Power logging interface (ChatInterface)
+- Real-time data updates (30-second refresh)
+
+STATE MANAGEMENT:
+-----------------
+- stats: Current statistics data
+- period: Selected time period
+- regionProfiles: List of power regions
+- showCharts: Toggle chart visibility
+- showRegions: Toggle region list
+
+DATA FETCHING:
+--------------
+- fetchStats(): Gets statistics for selected period
+- fetchRegionProfiles(): Gets all region profiles
+- Auto-refreshes every 30 seconds
+
+6.5 CHAT INTERFACE (components/ChatInterface.js)
+--------------------------------------------------
+
+PURPOSE:
+--------
+Interactive interface for logging power events.
+
+FEATURES:
+---------
+- Power ON/OFF buttons
+- Natural language input ("power on", "power off", "report")
+- Message history display
+- Recent events from database
+- Real-time updates
+
+HOW IT WORKS:
+-------------
+1. User clicks button or types command
+2. Sends POST request to /api/log-power
+3. Updates local message state
+4. Fetches recent events from database
+5. Displays in chat-like interface
+
+6.6 STATS CHART (components/StatsChart.js)
+-------------------------------------------
+
+PURPOSE:
+--------
+Visualizes power supply data using Recharts library.
+
+CHART TYPES:
+------------
+- Line chart: Shows power hours over time
+- Bar chart: Daily breakdown
+- Area chart: Cumulative hours
+
+6.7 LOGIN COMPONENT (components/Login.js)
+------------------------------------------
+
+PURPOSE:
+--------
+Handles user registration and login.
+
+FEATURES:
+---------
+- Registration form
+- Login form
+- Email verification
+- Google OAuth integration
+- Location autocomplete
+- Error handling
+
+FLOW:
+-----
+1. User enters credentials
+2. Sends POST to /api/register or /api/login
+3. Receives JWT token
+4. Stores token in localStorage
+5. Redirects to dashboard
+
+6.8 LANDING PAGE (components/Landing.js)
+----------------------------------------
+
+PURPOSE:
+--------
+Public-facing homepage explaining the application.
+
+FEATURES:
+---------
+- Project description
+- Features overview
+- Call-to-action buttons
+- Navigation to login
+
+================================================================================
+7. AUTHENTICATION SYSTEM
+================================================================================
+
+AUTHENTICATION FLOW:
+--------------------
+
+1. REGISTRATION:
+   User → Frontend (Login.js) → POST /api/register
+   → Backend validates input
+   → Hashes password (SHA-256)
+   → Creates user in database
+   → Sends verification email
+   → Returns JWT token
+   → Frontend stores token in localStorage
+   → Redirects to dashboard
+
+2. LOGIN:
+   User → Frontend (Login.js) → POST /api/login
+   → Backend validates credentials
+   → Compares hashed passwords
+   → Returns JWT token
+   → Frontend stores token
+   → Redirects to dashboard
+
+3. PROTECTED ROUTES:
+   User → Frontend makes API call
+   → Axios adds Authorization header: "Bearer <token>"
+   → Backend @token_required decorator
+   → Verifies JWT token
+   → Extracts username from token
+   → Allows request if valid
+   → Rejects with 401 if invalid
+
+JWT TOKEN STRUCTURE:
+--------------------
+{
+  "username": "user123",
+  "exp": 1234567890  // Expiration timestamp
+}
+
+TOKEN STORAGE:
+--------------
+- Stored in browser localStorage
+- Sent in Authorization header for all API calls
+- Valid for 24 hours (configurable)
+
+PASSWORD SECURITY:
+------------------
+- Passwords hashed using SHA-256
+- Never stored in plain text
+- Never sent back to client
+
+EMAIL VERIFICATION:
+------------------
+- 6-digit code sent to user's email
+- Code expires after 10 minutes
+- User must verify before full access (optional)
+
+GOOGLE OAUTH:
+-------------
+- Alternative authentication method
+- Uses Google Sign-In
+- Verifies Google ID token
+- Creates user account automatically
+- Links to location for region mapping
+
+================================================================================
+8. DATABASE SCHEMA & MODELS
+================================================================================
+
+DATABASE: PostgreSQL
+---------------------
+
+TABLES:
+
+1. users
+   ------------
+   Column          Type          Constraints
+   ------------    ------------  ------------
+   username        VARCHAR(100)   PRIMARY KEY
+   password        VARCHAR(255)   NOT NULL
+   email           VARCHAR(255)   UNIQUE, NULLABLE
+   location        VARCHAR(500)   NULLABLE
+   email_verified  BOOLEAN       DEFAULT FALSE
+   created_at      TIMESTAMP     DEFAULT NOW()
+   region_id       VARCHAR(50)   FOREIGN KEY → region_profiles.id
+
+2. power_logs
+   ------------
+   Column          Type          Constraints
+   ------------    ------------  ------------
+   id              INTEGER       PRIMARY KEY, AUTO_INCREMENT
+   user_id         VARCHAR(100)   FOREIGN KEY → users.username
+   event_type      VARCHAR(10)    NOT NULL ('on' or 'off')
+   timestamp       TIMESTAMP     NOT NULL
+   date            DATE          NOT NULL
+   location        VARCHAR(500)   NULLABLE
+   region_id       VARCHAR(50)   FOREIGN KEY → region_profiles.id
+   auto_generated  BOOLEAN       DEFAULT FALSE
+
+3. region_profiles
+   ------------
+   Column                      Type          Constraints
+   ------------                ------------  ------------
+   id                          VARCHAR(50)   PRIMARY KEY
+   disco_name                  VARCHAR(150)  NOT NULL
+   states                      JSON          NOT NULL
+   keywords                    JSON          NOT NULL
+   avg_offtake_mwh_per_hour    FLOAT         NOT NULL
+   avg_available_pcc_mwh_per_hour FLOAT      NOT NULL
+   utilisation_percent         FLOAT         NOT NULL
+   estimated_daily_mwh         FLOAT         NOT NULL
+   estimated_full_load_hours    FLOAT         NOT NULL
+   schedule_template           JSON          NULLABLE
+   source                      VARCHAR(255)  DEFAULT 'NERC Q2 2025'
+   created_at                  TIMESTAMP     DEFAULT NOW()
+   updated_at                  TIMESTAMP     DEFAULT NOW()
+
+4. verification_codes
+   ------------
+   Column          Type          Constraints
+   ------------    ------------  ------------
+   email           VARCHAR(255)  PRIMARY KEY
+   code            VARCHAR(6)    NOT NULL
+   expires_at      TIMESTAMP     NOT NULL
+   username        VARCHAR(100)  NULLABLE
+   password        VARCHAR(255)  NULLABLE (hashed)
+   location        VARCHAR(500)  NULLABLE
+   device_id       VARCHAR(255)  NULLABLE
+
+5. device_ids
+   ------------
+   Column          Type          Constraints
+   ------------    ------------  ------------
+   id              INTEGER       PRIMARY KEY, AUTO_INCREMENT
+   user_id         VARCHAR(100)  FOREIGN KEY → users.username
+   device_id       VARCHAR(255)  NOT NULL
+
+RELATIONSHIPS:
+--------------
+- User → PowerLog: One-to-Many
+- User → DeviceId: One-to-Many
+- User → RegionProfile: Many-to-One
+- PowerLog → RegionProfile: Many-to-One
+
+INDEXES:
+--------
+- Primary keys automatically indexed
+- Foreign keys for fast joins
+- Consider adding indexes on:
+  * power_logs.timestamp (for date range queries)
+  * power_logs.user_id (for user-specific queries)
+  * users.email (for email lookups)
+
+================================================================================
+9. API ENDPOINTS REFERENCE
+================================================================================
+
+BASE URL: http://localhost:5000/api (development)
+          https://your-backend.onrender.com/api (production)
+
+AUTHENTICATION:
+---------------
+Most endpoints require JWT token in Authorization header:
+  Authorization: Bearer <token>
+
+PUBLIC ENDPOINTS:
+-----------------
+
+GET  /                    Health check
+GET  /api                 API information
+POST /api/register        User registration
+POST /api/login           User login
+POST /api/verify-email    Email verification
+POST /api/auth/google     Google OAuth login
+
+PROTECTED ENDPOINTS (Require Authentication):
+---------------------------------------------
+
+POST /api/log-power       Log power ON/OFF event
+GET  /api/stats           Get statistics (query: ?period=day|week|month)
+GET  /api/recent-events   Get recent power events (query: ?limit=20)
+GET  /api/report          Get quick report summary
+GET  /api/region-profiles Get all region profiles
+
+UTILITY ENDPOINTS:
+------------------
+
+POST /api/generate-random-data  Generate random test data
+
+ENDPOINT DETAILS:
+
+1. POST /api/register
+   Request Body:
+   {
+     "username": "user123",
+     "password": "password123",
+     "email": "user@example.com",
+     "location": "Lagos, Nigeria"
+   }
+   
+   Response:
+   {
+     "message": "Registration successful. Verification code sent to email.",
+     "token": "jwt_token_here",
+     "username": "user123"
+   }
+
+2. POST /api/login
+   Request Body:
+   {
+     "username": "user123",
+     "password": "password123"
+   }
+   
+   Response:
+   {
+     "message": "Login successful",
+     "token": "jwt_token_here",
+     "username": "user123"
+   }
+
+3. POST /api/log-power
+   Headers: Authorization: Bearer <token>
+   Request Body:
+   {
+     "event_type": "on",  // or "off"
+     "location": "Lagos, Nigeria"  // optional
+   }
+   
+   Response:
+   {
+     "message": "Power on logged successfully",
+     "timestamp": "2025-01-15T10:30:00",
+     "date": "2025-01-15",
+     "location": "Lagos, Nigeria"
+   }
+
+4. GET /api/stats?period=week
+   Headers: Authorization: Bearer <token>
+   
+   Response:
+   {
+     "total_hours": 120.5,
+     "daily_breakdown": [
+       {"date": "2025-01-15", "hours": 18.5},
+       ...
+     ],
+     "average_hours": 17.2,
+     "events": [...],
+     "region": {...}
+   }
+
+5. GET /api/recent-events?limit=20
+   Headers: Authorization: Bearer <token>
+   
+   Response:
+   {
+     "events": [
+       {
+         "user_id": "user123",
+         "event_type": "on",
+         "timestamp": "2025-01-15T10:30:00",
+         "date": "2025-01-15",
+         "location": "Lagos, Nigeria",
+         "auto_generated": false
+       },
+       ...
+     ]
+   }
+
+================================================================================
+10. FEATURES & FUNCTIONALITIES
+================================================================================
+
+CORE FEATURES:
+--------------
+
+1. USER REGISTRATION & AUTHENTICATION
+   - Username/password registration
+   - Email verification (optional)
+   - Google OAuth login
+   - Secure JWT-based authentication
+   - Multi-device support
+
+2. POWER EVENT LOGGING
+   - Manual power ON/OFF logging
+   - Natural language commands
+   - Automatic timestamp recording
+   - Location tracking
+   - Region association
+
+3. STATISTICS & ANALYTICS
+   - Daily power supply hours
+   - Weekly summaries
+   - Monthly averages
+   - Interactive charts
+   - Trend analysis
+
+4. REPORTS
+   - Quick summary reports
+   - Today's power hours
+   - Weekly/monthly averages
+   - Last event information
+
+5. REGION PROFILES
+   - NERC Q2 2025 data integration
+   - Distribution company information
+   - State coverage mapping
+   - Power supply schedules
+
+6. DATA VISUALIZATION
+   - Line charts for trends
+   - Bar charts for daily breakdown
+   - Area charts for cumulative data
+   - Responsive design
+
+ADVANCED FEATURES:
+------------------
+
+1. LOCATION-BASED REGION MAPPING
+   - Automatic region detection from location
+   - State and city name matching
+   - Keyword-based matching
+   - Fallback to default region
+
+2. REAL-TIME UPDATES
+   - Auto-refresh every 30 seconds
+   - Instant UI updates on new events
+   - Live statistics calculation
+
+3. RANDOM DATA GENERATION
+   - Generate test data for demos
+   - Configurable parameters
+   - Realistic event timing
+
+4. RESPONSIVE DESIGN
+   - Mobile-friendly interface
+   - Desktop optimization
+   - Touch-friendly buttons
+
+================================================================================
+11. DATA FLOW DIAGRAMS
+================================================================================
+
+POWER LOGGING FLOW:
+-------------------
+User clicks "Power ON"
+    ↓
+ChatInterface.js handles click
+    ↓
+Calls api.post('/log-power', {event_type: 'on'})
+    ↓
+Axios adds Authorization header with JWT token
+    ↓
+Request sent to Flask backend
+    ↓
+@app.route('/api/log-power') receives request
+    ↓
+@token_required decorator verifies JWT
+    ↓
+Extracts username from token
+    ↓
+Creates PowerLog record in database
+    ↓
+Associates with user and region
+    ↓
+Returns success response
+    ↓
+Frontend updates local state
+    ↓
+UI re-renders with new event
+    ↓
+Auto-refresh fetches updated statistics
+
+STATISTICS CALCULATION FLOW:
+-----------------------------
+User selects time period (day/week/month)
+    ↓
+Dashboard.js calls fetchStats()
+    ↓
+GET /api/stats?period=week
+    ↓
+Backend queries PowerLog table
+    ↓
+Filters by user_id and date range
+    ↓
+Orders by timestamp
+    ↓
+Pairs ON and OFF events
+    ↓
+Calculates time differences
+    ↓
+Aggregates by day
+    ↓
+Calculates totals and averages
+    ↓
+Returns JSON response
+    ↓
+Frontend updates stats state
+    ↓
+StatsChart.js renders charts
+    ↓
+Dashboard displays statistics
+
+AUTHENTICATION FLOW:
+---------------------
+User enters credentials
+    ↓
+Login.js sends POST /api/login
+    ↓
+Backend validates credentials
+    ↓
+Hashes password and compares
+    ↓
+Generates JWT token
+    ↓
+Returns token to frontend
+    ↓
+AuthContext.login() stores token
+    ↓
+Token saved in localStorage
+    ↓
+Authorization header set for future requests
+    ↓
+User redirected to dashboard
+    ↓
+Protected routes now accessible
+
+================================================================================
+12. DEPLOYMENT & CONFIGURATION
+================================================================================
+
+FRONTEND DEPLOYMENT (Vercel):
+------------------------------
+
+1. Connect GitHub repository to Vercel
+2. Set environment variables:
+   - REACT_APP_API_URL: Backend API URL
+3. Vercel automatically builds and deploys
+4. Updates on every git push
+
+BACKEND DEPLOYMENT (Render):
+----------------------------
+
+1. Create PostgreSQL database on Render
+2. Create Web Service:
+   - Connect GitHub repository
+   - Build command: pip install -r backend/requirements.txt
+   - Start command: cd backend && gunicorn app:app --bind 0.0.0.0:$PORT
+3. Set environment variables:
+   - DATABASE_URL: PostgreSQL connection string
+   - SECRET_KEY: Random secret for JWT
+   - FRONTEND_URL: Frontend URL for CORS
+   - RESEND_API_KEY: (Optional) For email
+   - RESEND_FROM_EMAIL: (Optional)
+
+ENVIRONMENT VARIABLES:
+---------------------
+
+BACKEND (.env):
+---------------
+DATABASE_URL=postgresql://user:pass@host:port/dbname
+SECRET_KEY=your-secret-key-here
+FRONTEND_URL=https://your-frontend.vercel.app
+RESEND_API_KEY=your-resend-key (optional)
+RESEND_FROM_EMAIL=your-email@domain.com (optional)
+MAIL_SUPPRESS_SEND=false
+GOOGLE_CLIENT_ID=your-google-client-id (optional)
+
+FRONTEND (.env):
+----------------
+REACT_APP_API_URL=https://your-backend.onrender.com/api
+
+DATABASE SETUP:
+---------------
+1. Create PostgreSQL database
+2. Get connection string
+3. Set DATABASE_URL environment variable
+4. Tables created automatically on first run
+5. Seed region profiles data (optional)
+
+================================================================================
+13. CODE EXPLANATIONS BY FILE
+================================================================================
+
+BACKEND FILES:
+--------------
+
+app.py - Main Flask Application
+--------------------------------
+- Lines 1-67: Imports, configuration, initialization
+- Lines 108-340: Helper functions (hashing, tokens, email)
+- Lines 340-460: Registration endpoint
+- Lines 458-530: Login endpoint
+- Lines 530-590: Power logging endpoint
+- Lines 590-700: Statistics calculation
+- Lines 700-810: Report and recent events
+- Lines 810-1250: Additional endpoints (OAuth, verification, etc.)
+
+KEY FUNCTIONS:
+- hash_password(): Uses SHA-256 to hash passwords
+- generate_token(): Creates JWT with username and expiration
+- verify_token(): Validates JWT and extracts username
+- token_required(): Decorator that protects routes
+- calculate_stats(): Complex logic to pair ON/OFF events and calculate hours
+
+database.py - Database Models
+------------------------------
+- Lines 1-8: SQLAlchemy setup
+- Lines 11-45: RegionProfile model definition
+- Lines 48-79: User model definition
+- Lines 81-106: PowerLog model definition
+- Lines 108-153: VerificationCode and DeviceId models
+- Lines 154-200: init_db() function for database initialization
+
+KEY CONCEPTS:
+- SQLAlchemy ORM: Maps Python classes to database tables
+- Relationships: Defines how models relate to each other
+- to_dict(): Converts models to JSON-serializable dictionaries
+
+region_mapper.py - Location Mapping
+-----------------------------------
+- infer_region_from_location(): Main function
+- Extracts state/city from location string
+- Searches region profiles for matches
+- Returns region_id or None
+
+FRONTEND FILES:
+---------------
+
+App.js - Root Component
+------------------------
+- Sets up React Router
+- Wraps app in AuthProvider
+- Defines routes and navigation
+- PrivateRoute protects dashboard
+
+AuthContext.js - Authentication State
+--------------------------------------
+- Creates React Context for auth
+- Manages token in localStorage
+- Provides login/logout functions
+- Auto-checks for existing token
+
+Dashboard.js - Main Interface
+------------------------------
+- Fetches and displays statistics
+- Manages multiple states (stats, period, regions)
+- Auto-refreshes data every 30 seconds
+- Renders charts and power logging interface
+
+ChatInterface.js - Power Logging
+---------------------------------
+- Handles user input (buttons and text)
+- Sends power events to API
+- Displays message history
+- Fetches recent events from database
+
+api.js - HTTP Client
+--------------------
+- Configures Axios instance
+- Sets base URL from environment
+- Handles errors globally
+- Adds helpful error messages
+
+================================================================================
+14. SECURITY CONSIDERATIONS
+================================================================================
+
+IMPLEMENTED SECURITY MEASURES:
+-------------------------------
+
+1. PASSWORD HASHING
+   - SHA-256 hashing (consider upgrading to bcrypt for production)
+   - Passwords never stored in plain text
+   - Passwords never sent back to client
+
+2. JWT TOKENS
+   - Tokens expire after 24 hours
+   - Tokens signed with secret key
+   - Tokens verified on every protected request
+
+3. CORS CONFIGURATION
+   - Only allows requests from configured frontend URLs
+   - Prevents unauthorized cross-origin requests
+
+4. INPUT VALIDATION
+   - Validates all user input
+   - Prevents SQL injection (SQLAlchemy handles this)
+   - Sanitizes location strings
+
+5. ERROR HANDLING
+   - Doesn't expose sensitive information in errors
+   - Generic error messages for users
+   - Detailed logs for debugging (server-side only)
+
+RECOMMENDATIONS FOR PRODUCTION:
+-------------------------------
+
+1. Use HTTPS everywhere
+2. Implement rate limiting
+3. Use bcrypt instead of SHA-256 for passwords
+4. Add CSRF protection
+5. Implement session timeout
+6. Add input sanitization
+7. Regular security audits
+8. Keep dependencies updated
+
+================================================================================
+15. FUTURE ENHANCEMENTS
+================================================================================
+
+PLANNED FEATURES:
+-----------------
+
+1. NOTIFICATIONS
+   - Push notifications for power changes
+   - Email alerts
+   - SMS notifications
+
+2. ADVANCED ANALYTICS
+   - Predictive power supply forecasting
+   - Pattern recognition
+   - Anomaly detection
+
+3. SOCIAL FEATURES
+   - Community power supply maps
+   - Regional comparisons
+   - Sharing statistics
+
+4. MOBILE APP
+   - Native iOS/Android apps
+   - Offline logging
+   - Background sync
+
+5. API IMPROVEMENTS
+   - GraphQL endpoint
+   - WebSocket for real-time updates
+   - Bulk data export
+
+6. ADMIN DASHBOARD
+   - User management
+   - Data analytics
+   - System monitoring
+
+================================================================================
+LEARNING RESOURCES
+================================================================================
+
+TECHNOLOGIES TO LEARN:
+----------------------
+
+1. React:
+   - Official docs: https://react.dev
+   - React Router: https://reactrouter.com
+   - React Context API
+
+2. Flask:
+   - Official docs: https://flask.palletsprojects.com
+   - Flask-SQLAlchemy: https://flask-sqlalchemy.palletsprojects.com
+   - RESTful API design
+
+3. PostgreSQL:
+   - Official docs: https://www.postgresql.org/docs
+   - SQL basics
+   - Database design
+
+4. JWT:
+   - https://jwt.io
+   - Token-based authentication
+
+5. Axios:
+   - https://axios-http.com
+   - HTTP client usage
+
+CONCEPTS TO UNDERSTAND:
+-----------------------
+- RESTful API design
+- Authentication and authorization
+- Database relationships
+- State management in React
+- Component lifecycle
+- Async/await in JavaScript
+- Python decorators
+- ORM (Object-Relational Mapping)
+
+================================================================================
+CONCLUSION
+================================================================================
+
+This project demonstrates a full-stack web application with:
+- Modern frontend (React)
+- RESTful backend (Flask)
+- Relational database (PostgreSQL)
+- Authentication (JWT)
+- Real-time updates
+- Data visualization
+- Production deployment
+
+It's a great learning project covering:
+- Frontend development
+- Backend development
+- Database design
+- API design
+- Authentication
+- Deployment
+
+For questions or contributions, refer to the code comments and this documentation.
+
+================================================================================
+END OF DOCUMENTATION
+================================================================================
+
