@@ -2,6 +2,7 @@
 Random data generator for power logs.
 
 Generates random power on/off events for users to populate the database with sample data.
+Uses file storage instead of PostgreSQL.
 """
 from __future__ import annotations
 
@@ -10,7 +11,10 @@ from datetime import datetime, timedelta
 from typing import List
 
 from app import app
-from database import db, User, PowerLog
+from storage_adapter import (
+    get_power_logs_by_user,
+    create_power_log
+)
 
 
 def generate_random_power_logs(
@@ -35,22 +39,25 @@ def generate_random_power_logs(
     total_generated = 0
     
     with app.app_context():
-        users: List[User] = User.query.all()
+        # Get all users from file storage
+        from file_storage import get_file_storage
+        storage = get_file_storage()
+        users_data = storage.users
         
-        if not users:
+        if not users_data:
             print("⚠️  No users found. Create users first.")
             return 0
         
-        print(f"🔄 Generating random power logs for {len(users)} users...")
+        print(f"🔄 Generating random power logs for {len(users_data)} users...")
         print(f"   Days: {days_back}, Events per day: {min_events_per_day}-{max_events_per_day}")
         
-        for user in users:
+        for user_data in users_data:
+            username = user_data.get('username')
+            user_generated_count = 0
+            
             # Get the last log for this user to determine starting state
-            last_log = (
-                PowerLog.query.filter_by(user_id=user.username)
-                .order_by(PowerLog.timestamp.desc())
-                .first()
-            )
+            existing_logs = get_power_logs_by_user(username)
+            last_log = existing_logs[-1] if existing_logs else None
             
             # Start with random state if no previous logs
             current_state = "on" if not last_log else last_log.event_type
@@ -63,12 +70,12 @@ def generate_random_power_logs(
                 target_date = (now - timedelta(days=day_offset)).date()
                 
                 # Skip if we already have logs for this date
-                existing_logs = PowerLog.query.filter_by(
-                    user_id=user.username,
-                    date=target_date
-                ).count()
+                existing_logs_for_date = [
+                    log for log in existing_logs 
+                    if hasattr(log, 'date') and log.date == target_date
+                ]
                 
-                if existing_logs > 0 and day_offset < days_back:
+                if existing_logs_for_date and day_offset < days_back:
                     # Already have logs for this date, skip
                     continue
                 
@@ -87,31 +94,30 @@ def generate_random_power_logs(
                     current_state = "off" if current_state == "on" else "on"
                     
                     # Check if this exact log already exists
-                    existing = PowerLog.query.filter_by(
-                        user_id=user.username,
-                        event_type=current_state,
-                        timestamp=timestamp
-                    ).first()
+                    existing = next(
+                        (log for log in existing_logs 
+                         if hasattr(log, 'timestamp') and log.timestamp == timestamp 
+                         and hasattr(log, 'event_type') and log.event_type == current_state),
+                        None
+                    )
                     
                     if existing:
                         continue
                     
                     if not dry_run:
-                        log_entry = PowerLog(
-                            user_id=user.username,
-                            event_type=current_state,
-                            timestamp=timestamp,
-                            date=target_date,
-                            location=user.location,
-                            region_id=user.region_id,
-                            auto_generated=True,
-                        )
-                        db.session.add(log_entry)
+                        log_data = {
+                            'user_id': username,
+                            'event_type': current_state,
+                            'timestamp': timestamp,
+                            'date': target_date,
+                            'location': user_data.get('location'),
+                            'region_id': user_data.get('region_id'),
+                            'auto_generated': True
+                        }
+                        create_power_log(log_data)
                     
+                    user_generated_count += 1
                     total_generated += 1
-        
-        if not dry_run and total_generated > 0:
-            db.session.commit()
         
         suffix = " (dry-run)" if dry_run else ""
         print(f"✅ Generated {total_generated} random power log events{suffix}")
@@ -154,4 +160,3 @@ if __name__ == "__main__":
         max_events_per_day=args.max_events,
         dry_run=args.dry_run
     )
-

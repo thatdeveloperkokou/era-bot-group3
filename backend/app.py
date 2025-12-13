@@ -16,9 +16,7 @@ import secrets
 import uuid
 import requests
 from dotenv import load_dotenv
-from sqlalchemy.exc import SQLAlchemyError, IntegrityError
-from sqlalchemy import or_, and_, func
-from database import db, User, PowerLog, VerificationCode, DeviceId, RegionProfile, init_db, STORAGE_MODE
+from database import init_db, STORAGE_MODE
 import database
 from region_mapper import infer_region_from_location
 from storage_adapter import (
@@ -63,12 +61,9 @@ except Exception as e:
     print("   Email functionality may not work, but continuing...")
     mail = None
 
-# Initialize database (with file storage fallback)
+# Initialize file-based storage
 try:
     init_db(app)
-    # Initialize Flask-Migrate if available (only for PostgreSQL)
-    if FLASK_MIGRATE_AVAILABLE and Migrate and database.STORAGE_MODE == 'postgresql':
-        migrate = Migrate(app, db)
 except Exception as e:
     print(f"❌ Fatal: Storage initialization failed: {str(e)}")
     print("   Application cannot start without storage")
@@ -348,16 +343,17 @@ def token_required(f):
 @app.route('/', methods=['GET'])
 def health_check():
     try:
-        # Test database connection
-        db.session.execute(db.text('SELECT 1'))
-        db_status = 'connected'
+        # Test file storage
+        from file_storage import get_file_storage
+        storage = get_file_storage()
+        storage_status = 'connected (file storage)'
     except Exception as e:
-        db_status = f'error: {str(e)}'
+        storage_status = f'error: {str(e)}'
     
     return jsonify({
         'status': 'ok',
         'message': 'Electricity Supply Logger API is running',
-        'database': db_status,
+        'storage': storage_status,
         'endpoints': {
             'register': '/api/register',
             'login': '/api/login',
@@ -473,10 +469,9 @@ def register():
         
         return jsonify(response_data), 200
             
-    except IntegrityError as e:
-        db.session.rollback()
+    except ValueError as e:
         error_msg = str(e)
-        print(f"❌ IntegrityError in register: {error_msg}")
+        print(f"❌ Validation error in register: {error_msg}")
         # Check what specific constraint was violated
         if 'username' in error_msg.lower() or 'users_username_key' in error_msg:
             return jsonify({'error': 'Username already exists'}), 400
@@ -487,16 +482,7 @@ def register():
             return jsonify({'error': 'Verification code already exists for this email. Please try again or verify your email.'}), 400
         else:
             return jsonify({'error': 'Database constraint violation. Username or email may already exist.'}), 400
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        error_msg = str(e)
-        print(f"❌ SQLAlchemyError in register: {error_msg}")
-        print(f"   Error type: {type(e).__name__}")
-        import traceback
-        traceback.print_exc()
-        return jsonify({'error': 'Database error occurred. Please try again.'}), 500
     except Exception as e:
-        db.session.rollback()
         error_msg = str(e)
         error_type = type(e).__name__
         print(f"❌ Unexpected error in register: {error_type}: {error_msg}")
@@ -522,9 +508,9 @@ def login():
             return jsonify({'error': 'Email/Username and password are required'}), 400
         
         # Try to find user by username or email
-        user = User.query.filter(
-            or_(User.username == username_or_email, User.email == username_or_email)
-        ).first()
+        user = get_user_by_username(username_or_email)
+        if not user:
+            user = get_user_by_email(username_or_email)
         
         if not user:
             return jsonify({'error': 'Invalid credentials'}), 401
@@ -539,42 +525,27 @@ def login():
         # Store device ID if provided
         if device_id:
             # Check if device ID already exists
-            existing_device = DeviceId.query.filter_by(
-                user_id=user.username,
-                device_id=device_id
-            ).first()
+            existing_devices = get_device_ids_by_user(user.username)
             
-            if not existing_device:
-                device_id_record = DeviceId(
-                    user_id=user.username,
-                    device_id=device_id
-                )
-                db.session.add(device_id_record)
-                db.session.commit()
+            if device_id not in existing_devices:
+                device_data = {
+                    'user_id': user.username,
+                    'device_id': device_id
+                }
+                create_device_id(device_data)
         
         return jsonify({
             'message': 'Login successful',
             'token': token,
             'username': user.username
         }), 200
-        
-        # TODO: Re-enable device verification later
-        # Old code for device verification (commented out for easy restoration):
-        # verified_devices = user.verified_devices or []
-        # if device_id and device_id in verified_devices:
-        #     # Device verified, allow login
-        # else:
-        #     # Require email verification for new device
-        #     send_verification_email(user.email, verification_code)
                 
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
-        print(f"Error in login: {str(e)}")
-        return jsonify({'error': 'An error occurred during login'}), 500
+        error_msg = str(e)
+        print(f"❌ Error in login: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during login: {error_msg}'}), 500
 
 @app.route('/api/log-power', methods=['POST', 'OPTIONS'])
 @token_required
@@ -591,34 +562,30 @@ def log_power(current_user):
             return jsonify({'error': 'event_type must be "on" or "off"'}), 400
         
         # Get user
-        user = User.query.filter_by(username=current_user).first()
+        user = get_user_by_username(current_user)
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
         # Get user location if not provided and refresh region assignment
         if not location:
             location = user.location or ''
-        elif location and location != user.location:
-            user.location = location
+        
         inferred_region = resolve_region_id(location or user.location)
-        if inferred_region and inferred_region != user.region_id:
-            user.region_id = inferred_region
         
         timestamp = datetime.utcnow()
         date = timestamp.date()
         
-        # Save to database
-        power_log = PowerLog(
-            user_id=current_user,
-            event_type=event_type,
-            timestamp=timestamp,
-            date=date,
-            location=location,
-            region_id=user.region_id,
-            auto_generated=False
-        )
-        db.session.add(power_log)
-        db.session.commit()
+        # Save to file storage
+        log_data = {
+            'user_id': current_user,
+            'event_type': event_type,
+            'timestamp': timestamp,
+            'date': date,
+            'location': location,
+            'region_id': inferred_region or user.region_id,
+            'auto_generated': False
+        }
+        create_power_log(log_data)
         
         return jsonify({
             'message': f'Power {event_type} logged successfully',
@@ -627,21 +594,19 @@ def log_power(current_user):
             'location': location
         }), 200
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
-        print(f"Error in log_power: {str(e)}")
-        return jsonify({'error': 'An error occurred while logging power event'}), 500
+        error_msg = str(e)
+        print(f"❌ Error in log_power: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred while logging power event: {error_msg}'}), 500
 
 @app.route('/api/stats', methods=['GET', 'OPTIONS'])
 @token_required
 def get_stats(current_user):
     try:
         # Fetch user info for region tracking
-        user = User.query.filter_by(username=current_user).first()
+        user = get_user_by_username(current_user)
 
         period = request.args.get('period', 'week')  # 'day', 'week', 'month'
         
@@ -657,15 +622,10 @@ def get_stats(current_user):
             start_date = (now - timedelta(days=7)).date()
         
         # Get power logs for user
-        logs = PowerLog.query.filter(
-            and_(
-                PowerLog.user_id == current_user,
-                PowerLog.date >= start_date
-            )
-        ).order_by(PowerLog.timestamp).all()
+        logs = get_power_logs_by_user(current_user, start_date=start_date, end_date=end_date)
         
         # Convert to dictionaries
-        log_dicts = [log.to_dict() for log in logs]
+        log_dicts = [log.to_dict() if hasattr(log, 'to_dict') else log for log in logs]
         
         # Calculate hours per day
         daily_stats = {}
@@ -710,15 +670,24 @@ def get_stats(current_user):
 
         # Determine region info
         region_info = None
-        if user and user.region_id:
-            region_profile = RegionProfile.query.filter_by(id=user.region_id).first()
+        if user and hasattr(user, 'region_id') and user.region_id:
+            all_regions = get_all_region_profiles()
+            region_profile = next((r for r in all_regions if (r.get('id') if isinstance(r, dict) else getattr(r, 'id', None)) == user.region_id), None)
             if region_profile:
-                region_info = {
-                    'id': region_profile.id,
-                    'name': region_profile.disco_name,
-                    'states': region_profile.states,
-                    'source': region_profile.source
-                }
+                if isinstance(region_profile, dict):
+                    region_info = {
+                        'id': region_profile.get('id'),
+                        'name': region_profile.get('disco_name'),
+                        'states': region_profile.get('states', []),
+                        'source': region_profile.get('source', 'NERC Q2 2025')
+                    }
+                else:
+                    region_info = {
+                        'id': region_profile.id,
+                        'name': region_profile.disco_name,
+                        'states': region_profile.states,
+                        'source': region_profile.source
+                    }
         
         return jsonify({
             'period': period,
@@ -729,12 +698,7 @@ def get_stats(current_user):
             'location': user.location if user else None
         }), 200
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
         print(f"Error in get_stats: {str(e)}")
         return jsonify({'error': 'An error occurred while fetching statistics'}), 500
 
@@ -745,30 +709,26 @@ def get_recent_events(current_user):
         limit = int(request.args.get('limit', 10))
         
         # Get recent power logs for user
-        logs = PowerLog.query.filter_by(user_id=current_user)\
-            .order_by(PowerLog.timestamp.desc())\
-            .limit(limit)\
-            .all()
+        logs = get_recent_power_logs(current_user, limit=limit)
         
-        return jsonify({'events': [log.to_dict() for log in logs]}), 200
+        # Convert to dictionaries
+        events = [log.to_dict() if hasattr(log, 'to_dict') else log for log in logs]
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
+        return jsonify({'events': events}), 200
+        
     except Exception as e:
-        db.session.rollback()
-        print(f"Error in get_recent_events: {str(e)}")
-        return jsonify({'error': 'An error occurred while fetching recent events'}), 500
+        error_msg = str(e)
+        print(f"❌ Error in get_recent_events: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred while fetching recent events: {error_msg}'}), 500
 
 @app.route('/api/report', methods=['GET', 'OPTIONS'])
 @token_required
 def get_report(current_user):
     try:
         # Get all power logs for user
-        logs = PowerLog.query.filter_by(user_id=current_user)\
-            .order_by(PowerLog.timestamp)\
-            .all()
+        logs = get_power_logs_by_user(current_user)
         
         now = datetime.utcnow()
         
@@ -834,12 +794,7 @@ def get_report(current_user):
         
         return jsonify(report), 200
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
         print(f"Error in get_report: {str(e)}")
         return jsonify({'error': 'An error occurred while fetching report'}), 500
 
@@ -849,9 +804,22 @@ def list_region_profiles():
     if request.method == 'OPTIONS':
         return jsonify({}), 200
     try:
-        profiles = RegionProfile.query.order_by(RegionProfile.disco_name).all()
+        profiles = get_all_region_profiles()
+        # Convert to dict format if needed
+        regions = []
+        for profile in profiles:
+            if isinstance(profile, dict):
+                regions.append(profile)
+            elif hasattr(profile, 'to_dict'):
+                regions.append(profile.to_dict())
+            else:
+                regions.append(profile)
+        
+        # Sort by disco_name
+        regions.sort(key=lambda x: x.get('disco_name', ''))
+        
         return jsonify({
-            'regions': [profile.to_dict() for profile in profiles]
+            'regions': regions
         }), 200
     except Exception as e:
         print(f"Error fetching region profiles: {str(e)}")
@@ -938,15 +906,26 @@ def resend_verification():
             return jsonify({'error': 'Email is required'}), 400
         
         # Get verification code
-        verif_code = VerificationCode.query.filter_by(email=email).first()
+        verif_code = get_verification_code_by_email(email)
         if not verif_code:
             return jsonify({'error': 'No pending verification found for this email'}), 400
         
         # Generate new code
         verification_code = generate_verification_code()
-        verif_code.code = verification_code
-        verif_code.expires_at = datetime.utcnow() + timedelta(minutes=10)
-        db.session.commit()
+        expires_at = datetime.utcnow() + timedelta(minutes=10)
+        
+        # Update verification code
+        code_data = {
+            'email': email,
+            'code': verification_code,
+            'username': verif_code.username,
+            'password': verif_code.password,
+            'location': getattr(verif_code, 'location', None),
+            'region_id': getattr(verif_code, 'region_id', None),
+            'device_id': getattr(verif_code, 'device_id', None),
+            'expires_at': expires_at
+        }
+        create_or_update_verification_code(code_data)
         
         # Attempt to send email (non-blocking)
         email_sent = send_verification_email(email, verification_code)
@@ -960,12 +939,7 @@ def resend_verification():
                 'fallback_code': verification_code
             }), 200
             
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
         print(f"Error in resend_verification: {str(e)}")
         return jsonify({'error': 'An error occurred while resending verification code'}), 500
 
@@ -988,13 +962,12 @@ def verify_device():
         code_key = f"{email}_device"
         
         # Get verification code
-        verif_code = VerificationCode.query.filter_by(email=code_key).first()
+        verif_code = get_verification_code_by_email(code_key)
         if not verif_code:
             return jsonify({'error': 'Invalid verification code'}), 400
         
-        if datetime.utcnow() > verif_code.expires_at:
-            db.session.delete(verif_code)
-            db.session.commit()
+        if verif_code.is_expired():
+            delete_verification_code(code_key)
             return jsonify({'error': 'Verification code has expired'}), 400
         
         if verif_code.code != code:
@@ -1002,34 +975,24 @@ def verify_device():
         
         # Verify device
         username = verif_code.username
-        device_id = verif_code.device_id or str(uuid.uuid4())
+        device_id = getattr(verif_code, 'device_id', None) or str(uuid.uuid4())
         
         # Get user
-        user = User.query.filter_by(username=username).first()
+        user = get_user_by_username(username)
         if not user:
             return jsonify({'error': 'User not found'}), 404
         
-        # Add device to verified devices
-        if device_id not in (user.verified_devices or []):
-            if user.verified_devices is None:
-                user.verified_devices = []
-            user.verified_devices.append(device_id)
-        
-        # Save device ID
-        existing_device = DeviceId.query.filter_by(
-            user_id=username,
-            device_id=device_id
-        ).first()
-        if not existing_device:
-            device_id_record = DeviceId(
-                user_id=username,
-                device_id=device_id
-            )
-            db.session.add(device_id_record)
+        # Save device ID if it doesn't exist
+        existing_devices = get_device_ids_by_user(username)
+        if device_id not in existing_devices:
+            device_data = {
+                'user_id': username,
+                'device_id': device_id
+            }
+            create_device_id(device_data)
         
         # Remove verification code
-        db.session.delete(verif_code)
-        db.session.commit()
+        delete_verification_code(code_key)
         
         token = generate_token(username)
         return jsonify({
@@ -1039,12 +1002,7 @@ def verify_device():
             'deviceId': device_id
         }), 200
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
         print(f"Error in verify_device: {str(e)}")
         return jsonify({'error': 'An error occurred during device verification'}), 500
 
@@ -1099,12 +1057,12 @@ def google_auth():
             # Make sure username is unique
             base_username = username
             counter = 1
-            while User.query.filter_by(username=username).first():
+            while get_user_by_username(username):
                 username = f"{base_username}{counter}"
                 counter += 1
             
             # Check if user already exists by email
-            existing_user = User.query.filter_by(email=email).first()
+            existing_user = get_user_by_email(email)
             
             if existing_user:
                 # User exists, log them in
@@ -1145,12 +1103,7 @@ def google_auth():
             else:
                 return jsonify({'error': f'Google token verification failed: {error_msg}'}), 401
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error in google_auth: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
         print(f"Error in google_auth: {str(e)}")
         return jsonify({'error': f'An error occurred during Google authentication: {str(e)}'}), 500
 
@@ -1205,7 +1158,7 @@ def google_auth_complete():
                 return jsonify({'error': 'Email mismatch'}), 400
             
             # Check if user already exists (race condition check)
-            existing_user = User.query.filter_by(email=verified_email).first()
+            existing_user = get_user_by_email(verified_email)
             if existing_user:
                 # User was created between calls, just log them in
                 token = generate_token(existing_user.username)
@@ -1221,7 +1174,7 @@ def google_auth_complete():
             # Make sure username is unique
             base_username = username
             counter = 1
-            while User.query.filter_by(username=username).first():
+            while get_user_by_username(username):
                 username = f"{base_username}{counter}"
                 counter += 1
             
@@ -1231,26 +1184,23 @@ def google_auth_complete():
             # Create user account with location
             random_password = secrets.token_urlsafe(32)
             
-            user = User(
-                username=username,
-                password=hash_password(random_password),  # Random password for OAuth users
-                email=verified_email,
-                location=location,
-                region_id=region_id,
-                email_verified=True,  # Google emails are pre-verified
-                created_at=datetime.utcnow()
-            )
-            
-            db.session.add(user)
+            user_data = {
+                'username': username,
+                'password': hash_password(random_password),  # Random password for OAuth users
+                'email': verified_email,
+                'location': location,
+                'region_id': region_id,
+                'email_verified': True  # Google emails are pre-verified
+            }
+            user = create_user(user_data)
             
             # Generate device ID
             device_id = str(uuid.uuid4())
-            device_id_record = DeviceId(
-                user_id=username,
-                device_id=device_id
-            )
-            db.session.add(device_id_record)
-            db.session.commit()
+            device_data = {
+                'user_id': username,
+                'device_id': device_id
+            }
+            create_device_id(device_data)
             
             token = generate_token(username)
             return jsonify({
@@ -1276,14 +1226,12 @@ def google_auth_complete():
             else:
                 return jsonify({'error': f'Google token verification failed: {error_msg}'}), 401
         
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error in google_auth_complete: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
-        print(f"Error in google_auth_complete: {str(e)}")
-        return jsonify({'error': f'An error occurred during Google registration: {str(e)}'}), 500
+        error_msg = str(e)
+        print(f"❌ Error in google_auth_complete: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during Google registration: {error_msg}'}), 500
 
 
 @app.route('/api/generate-random-data', methods=['POST', 'OPTIONS'])

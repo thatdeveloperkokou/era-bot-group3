@@ -1,15 +1,15 @@
 """
-Database models and configuration for PostgreSQL
-Falls back to file storage if PostgreSQL is unavailable
+File-based storage using JSON files
+All data is stored in backend/data/ directory
 """
-from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 
-db = SQLAlchemy()
+# Storage mode is always 'file' now
+STORAGE_MODE = 'file'
 
-# Storage mode: 'postgresql' or 'file'
-STORAGE_MODE = 'postgresql'
+# Keep db for compatibility but it won't be used
+db = None
 
 
 class RegionProfile(db.Model):
@@ -156,90 +156,18 @@ class DeviceId(db.Model):
         }
 
 def init_db(app):
-    """Initialize database"""
-    # Get database URL from environment
-    database_url = os.environ.get('DATABASE_URL')
+    """Initialize file-based storage"""
+    global STORAGE_MODE
+    STORAGE_MODE = 'file'
     
-    if not database_url:
-        # Fallback to local PostgreSQL if DATABASE_URL not set
-        db_user = os.environ.get('DB_USER', 'postgres')
-        db_password = os.environ.get('DB_PASSWORD', 'postgres')
-        db_host = os.environ.get('DB_HOST', 'localhost')
-        db_port = os.environ.get('DB_PORT', '5432')
-        db_name = os.environ.get('DB_NAME', 'electricity_logger')
-        
-        database_url = f'postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}'
-        print(f"⚠️  DATABASE_URL not set, using local PostgreSQL: {db_host}:{db_port}/{db_name}")
-    else:
-        print(f"✅ Using DATABASE_URL from environment")
-        
-        # Validate DATABASE_URL format
-        if database_url.startswith('postgresql://') or database_url.startswith('postgres://'):
-            # Extract hostname to check if it's complete
-            try:
-                # Parse the URL to check hostname
-                if '@' in database_url:
-                    host_part = database_url.split('@')[1].split('/')[0]
-                    if ':' in host_part:
-                        hostname = host_part.split(':')[0]
-                    else:
-                        hostname = host_part
-                    
-                    # Check if hostname looks incomplete (missing domain)
-                    if hostname.startswith('dpg-') and '.' not in hostname:
-                        print(f"⚠️  WARNING: DATABASE_URL hostname appears incomplete!")
-                        print(f"   Hostname: {hostname}")
-                        print(f"   Render PostgreSQL hostnames should include the full domain (e.g., .oregon-postgres.render.com)")
-                        print(f"   Please check your DATABASE_URL in Render dashboard:")
-                        print(f"   1. Go to your PostgreSQL service in Render")
-                        print(f"   2. Go to 'Info' tab")
-                        print(f"   3. Copy the complete 'Internal Database URL' or 'External Connection String'")
-                        print(f"   4. Make sure it includes the full domain (e.g., dpg-xxxxx-a.oregon-postgres.render.com)")
-            except Exception as e:
-                print(f"⚠️  Could not parse DATABASE_URL for validation: {str(e)}")
-        
-        # Check if using internal hostname (Railway/Render) and suggest using public URL if connection fails
-        if 'railway.internal' in database_url:
-            print(f"⚠️  Warning: Using Railway internal hostname. If connection fails, use the public DATABASE_URL from PostgreSQL service Variables tab")
-        if 'onrender.com' in database_url and 'internal' in database_url.lower():
-            print(f"⚠️  Note: Using Render internal database URL. This should work for services in the same Render account.")
-    
-    # Handle cloud provider DATABASE_URL format (may include postgres:// instead of postgresql://)
-    # Render, Railway, Heroku, etc. may provide postgres:// which needs to be postgresql://
-    if database_url.startswith('postgres://'):
-        database_url = database_url.replace('postgres://', 'postgresql://', 1)
-    
-    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SQLALCHEMY_ENGINE_OPTIONS'] = {
-        'pool_pre_ping': True,
-        'pool_recycle': 300,
-    }
-    
-    db.init_app(app)
-    
-    with app.app_context():
-        global STORAGE_MODE
-        try:
-            # Test database connection
-            db.session.execute(db.text('SELECT 1'))
-            # Create all tables
-            db.create_all()
-            print("✅ Database tables created successfully")
-            STORAGE_MODE = 'postgresql'
-        except Exception as e:
-            print(f"⚠️  Error connecting to PostgreSQL: {str(e)}")
-            print(f"   Falling back to file-based storage...")
-            # Import file storage
-            try:
-                from file_storage import get_file_storage
-                file_storage = get_file_storage()
-                STORAGE_MODE = 'file'
-                print("✅ File storage fallback activated")
-                print("   Data will be stored in backend/data/ directory")
-                print("   Note: This is a temporary fallback. Fix PostgreSQL connection for production.")
-            except Exception as file_error:
-                print(f"❌ File storage fallback also failed: {file_error}")
-                print("   Application cannot start without storage")
-                raise
+    try:
+        from file_storage import get_file_storage
+        file_storage = get_file_storage()
+        print("✅ File-based storage initialized")
+        print("   Data will be stored in backend/data/ directory")
+        print("   Files: users.json, power_logs.json, verification_codes.json, device_ids.json")
+    except Exception as file_error:
+        print(f"❌ File storage initialization failed: {file_error}")
+        print("   Application cannot start without storage")
+        raise
 
