@@ -219,13 +219,13 @@ def init_db(app):
     db.init_app(app)
     
     with app.app_context():
+        global STORAGE_MODE
         try:
             # Test database connection
             db.session.execute(db.text('SELECT 1'))
             # Create all tables
             db.create_all()
             print("✅ Database tables created successfully")
-            global STORAGE_MODE
             STORAGE_MODE = 'postgresql'
         except Exception as e:
             print(f"⚠️  Error connecting to PostgreSQL: {str(e)}")
@@ -234,7 +234,6 @@ def init_db(app):
             try:
                 from file_storage import get_file_storage
                 file_storage = get_file_storage()
-                global STORAGE_MODE
                 STORAGE_MODE = 'file'
                 print("✅ File storage fallback activated")
                 print("   Data will be stored in backend/data/ directory")
