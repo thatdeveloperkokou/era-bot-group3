@@ -1,11 +1,15 @@
 """
 Database models and configuration for PostgreSQL
+Falls back to file storage if PostgreSQL is unavailable
 """
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 import os
 
 db = SQLAlchemy()
+
+# Storage mode: 'postgresql' or 'file'
+STORAGE_MODE = 'postgresql'
 
 
 class RegionProfile(db.Model):
@@ -216,11 +220,27 @@ def init_db(app):
     
     with app.app_context():
         try:
+            # Test database connection
+            db.session.execute(db.text('SELECT 1'))
             # Create all tables
             db.create_all()
             print("✅ Database tables created successfully")
+            global STORAGE_MODE
+            STORAGE_MODE = 'postgresql'
         except Exception as e:
-            print(f"⚠️  Error creating database tables: {str(e)}")
-            print(f"   Make sure PostgreSQL is running and DATABASE_URL is correct")
-            raise
+            print(f"⚠️  Error connecting to PostgreSQL: {str(e)}")
+            print(f"   Falling back to file-based storage...")
+            # Import file storage
+            try:
+                from file_storage import get_file_storage
+                file_storage = get_file_storage()
+                global STORAGE_MODE
+                STORAGE_MODE = 'file'
+                print("✅ File storage fallback activated")
+                print("   Data will be stored in backend/data/ directory")
+                print("   Note: This is a temporary fallback. Fix PostgreSQL connection for production.")
+            except Exception as file_error:
+                print(f"❌ File storage fallback also failed: {file_error}")
+                print("   Application cannot start without storage")
+                raise
 

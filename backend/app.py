@@ -18,8 +18,16 @@ import requests
 from dotenv import load_dotenv
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy import or_, and_, func
-from database import db, User, PowerLog, VerificationCode, DeviceId, RegionProfile, init_db
+from database import db, User, PowerLog, VerificationCode, DeviceId, RegionProfile, init_db, STORAGE_MODE
+import database
 from region_mapper import infer_region_from_location
+from storage_adapter import (
+    get_user_by_username, get_user_by_email, create_user,
+    get_verification_code_by_email, get_verification_code_by_username,
+    create_or_update_verification_code, delete_verification_code,
+    create_power_log, get_power_logs_by_user, get_recent_power_logs,
+    create_device_id, get_device_ids_by_user, get_all_region_profiles
+)
 
 # Google OAuth
 try:
@@ -55,15 +63,15 @@ except Exception as e:
     print("   Email functionality may not work, but continuing...")
     mail = None
 
-# Initialize database
+# Initialize database (with file storage fallback)
 try:
     init_db(app)
-    # Initialize Flask-Migrate if available
-    if FLASK_MIGRATE_AVAILABLE and Migrate:
+    # Initialize Flask-Migrate if available (only for PostgreSQL)
+    if FLASK_MIGRATE_AVAILABLE and Migrate and database.STORAGE_MODE == 'postgresql':
         migrate = Migrate(app, db)
 except Exception as e:
-    print(f"❌ Fatal: Database initialization failed: {str(e)}")
-    print("   Application cannot start without database connection")
+    print(f"❌ Fatal: Storage initialization failed: {str(e)}")
+    print("   Application cannot start without storage")
     raise
 
 # CORS configuration - allow specific frontend URL in production, all origins in development
@@ -403,61 +411,46 @@ def register():
         
         # Check if username already exists in User table
         print(f"🔍 Checking if username '{username}' exists...")
-        existing_user = User.query.filter_by(username=username).first()
+        existing_user = get_user_by_username(username)
         if existing_user:
-            print(f"⚠️  Username '{username}' already exists in User table (ID: {existing_user.username}, Email: {existing_user.email})")
+            print(f"⚠️  Username '{username}' already exists (Email: {existing_user.email})")
             return jsonify({'error': 'Username already exists'}), 400
         print(f"✅ Username '{username}' is available")
         
         # Also check if username is in pending verification codes (to prevent duplicate registrations)
-        existing_verif_username = VerificationCode.query.filter_by(username=username).first()
+        existing_verif_username = get_verification_code_by_username(username)
         if existing_verif_username:
             # Check if it's expired - if expired, allow new registration
             if existing_verif_username.is_expired():
                 print(f"ℹ️  Found expired verification code for username '{username}', allowing new registration")
                 # Delete expired verification code
-                db.session.delete(existing_verif_username)
-                db.session.commit()
+                delete_verification_code(existing_verif_username.email)
             else:
                 print(f"⚠️  Username '{username}' is pending verification (not expired yet)")
                 return jsonify({'error': 'Username is already being registered. Please complete verification or wait for the code to expire.'}), 400
         
         # Check if email is already registered (and verified) in User table
-        existing_email = User.query.filter_by(email=email).first()
+        existing_email = get_user_by_email(email)
         if existing_email:
-            print(f"⚠️  Email '{email}' already exists in User table")
+            print(f"⚠️  Email '{email}' already exists")
             return jsonify({'error': 'Email already registered'}), 400
         
         # Email verification flow
         verification_code = generate_verification_code()
         expires_at = datetime.utcnow() + timedelta(minutes=10)
         
-        # Check if verification code already exists for this email (update instead of insert)
-        existing_verif_code = VerificationCode.query.filter_by(email=email).first()
-        if existing_verif_code:
-            # Update existing verification code
-            existing_verif_code.code = verification_code
-            existing_verif_code.username = username
-            existing_verif_code.password = hash_password(password)
-            existing_verif_code.location = location
-            existing_verif_code.region_id = region_id
-            existing_verif_code.expires_at = expires_at
-            existing_verif_code.device_id = data.get('deviceId')
-        else:
-            # Create new verification code
-            verif_code = VerificationCode(
-                email=email,
-                code=verification_code,
-                username=username,
-                password=hash_password(password),
-                location=location,
-                region_id=region_id,
-                expires_at=expires_at,
-                device_id=data.get('deviceId')
-            )
-            db.session.add(verif_code)
-        
-        db.session.commit()
+        # Create or update verification code
+        verif_code_data = {
+            'email': email,
+            'code': verification_code,
+            'username': username,
+            'password': hash_password(password),
+            'location': location,
+            'region_id': region_id,
+            'expires_at': expires_at,
+            'device_id': data.get('deviceId')
+        }
+        create_or_update_verification_code(verif_code_data)
         
         # Attempt to send email (non-blocking - don't wait for it)
         print(f"📧 Attempting to send verification email to {email}...")
@@ -881,41 +874,38 @@ def verify_email():
             return jsonify({'error': 'Email and verification code are required'}), 400
         
         # Get verification code
-        verif_code = VerificationCode.query.filter_by(email=email).first()
+        verif_code = get_verification_code_by_email(email)
         if not verif_code:
             return jsonify({'error': 'Invalid verification code'}), 400
         
-        if datetime.utcnow() > verif_code.expires_at:
-            db.session.delete(verif_code)
-            db.session.commit()
+        if verif_code.is_expired():
+            delete_verification_code(email)
             return jsonify({'error': 'Verification code has expired'}), 400
         
         if verif_code.code != code:
             return jsonify({'error': 'Invalid verification code'}), 400
         
         # Create user account
-        user = User(
-            username=verif_code.username,
-            password=verif_code.password,
-            email=email,
-            location=verif_code.location,
-            region_id=verif_code.region_id,
-            email_verified=True,
-            created_at=datetime.utcnow()
-        )
-        db.session.add(user)
+        user_data = {
+            'username': verif_code.username,
+            'password': verif_code.password,
+            'email': email,
+            'location': verif_code.location,
+            'region_id': verif_code.region_id,
+            'email_verified': True
+        }
+        user = create_user(user_data)
         
         # Generate device ID
         device_id = str(uuid.uuid4())
-        device_id_record = DeviceId(
-            user_id=verif_code.username,
-            device_id=device_id
-        )
-        db.session.add(device_id_record)
+        device_data = {
+            'user_id': verif_code.username,
+            'device_id': device_id
+        }
+        create_device_id(device_data)
         
         # Remove verification code
-        db.session.delete(verif_code)
-        db.session.commit()
+        delete_verification_code(email)
         
         token = generate_token(verif_code.username)
         return jsonify({
@@ -926,17 +916,12 @@ def verify_email():
             'deviceId': device_id
         }), 200
         
-    except IntegrityError as e:
-        db.session.rollback()
-        return jsonify({'error': 'User already exists'}), 400
-    except SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Database error: {str(e)}")
-        return jsonify({'error': 'Database error occurred'}), 500
     except Exception as e:
-        db.session.rollback()
-        print(f"Error in verify_email: {str(e)}")
-        return jsonify({'error': 'An error occurred during email verification'}), 500
+        error_msg = str(e)
+        print(f"❌ Error in verify_email: {error_msg}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'An error occurred during email verification: {error_msg}'}), 500
 
 @app.route('/api/resend-verification', methods=['POST', 'OPTIONS'])
 def resend_verification():
