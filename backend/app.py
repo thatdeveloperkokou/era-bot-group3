@@ -386,23 +386,46 @@ def register():
             print("❌ No JSON data in request")
             return jsonify({'error': 'Invalid JSON data'}), 400
         
-        username = data.get('username')
-        email = data.get('email')
+        username = data.get('username', '').strip() if data.get('username') else ''
+        email = data.get('email', '').strip() if data.get('email') else ''
         password = data.get('password')
-        location = data.get('location', '')
+        location = data.get('location', '').strip() if data.get('location') else ''
         region_id = resolve_region_id(location)
         
         if not username or not password or not email:
             return jsonify({'error': 'Username, email, and password are required'}), 400
         
-        # Check if username already exists
+        # Validate username format (alphanumeric and underscores only, 3-20 chars)
+        if len(username) < 3 or len(username) > 20:
+            return jsonify({'error': 'Username must be between 3 and 20 characters'}), 400
+        if not username.replace('_', '').replace('-', '').isalnum():
+            return jsonify({'error': 'Username can only contain letters, numbers, underscores, and hyphens'}), 400
+        
+        # Check if username already exists in User table
+        print(f"🔍 Checking if username '{username}' exists...")
         existing_user = User.query.filter_by(username=username).first()
         if existing_user:
+            print(f"⚠️  Username '{username}' already exists in User table (ID: {existing_user.username}, Email: {existing_user.email})")
             return jsonify({'error': 'Username already exists'}), 400
+        print(f"✅ Username '{username}' is available")
         
-        # Check if email is already registered (and verified)
+        # Also check if username is in pending verification codes (to prevent duplicate registrations)
+        existing_verif_username = VerificationCode.query.filter_by(username=username).first()
+        if existing_verif_username:
+            # Check if it's expired - if expired, allow new registration
+            if existing_verif_username.is_expired():
+                print(f"ℹ️  Found expired verification code for username '{username}', allowing new registration")
+                # Delete expired verification code
+                db.session.delete(existing_verif_username)
+                db.session.commit()
+            else:
+                print(f"⚠️  Username '{username}' is pending verification (not expired yet)")
+                return jsonify({'error': 'Username is already being registered. Please complete verification or wait for the code to expire.'}), 400
+        
+        # Check if email is already registered (and verified) in User table
         existing_email = User.query.filter_by(email=email).first()
         if existing_email:
+            print(f"⚠️  Email '{email}' already exists in User table")
             return jsonify({'error': 'Email already registered'}), 400
         
         # Email verification flow
